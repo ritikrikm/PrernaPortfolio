@@ -36,6 +36,16 @@ function validatePortfolio(portfolio) {
   return portfolio.experiences.every((item) => item.id && item.company && item.title);
 }
 
+function githubErrorMessage(status, fallback = "GitHub publish failed.") {
+  if (status === 404) {
+    return "GitHub repo or file was not found. Check GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH, GITHUB_FILE_PATH, and make sure GITHUB_TOKEN has Contents read/write access to this repo.";
+  }
+  if (status === 401 || status === 403) {
+    return "GitHub token is not authorized. Create a fresh token with Contents read/write access to this repo and update GITHUB_TOKEN in Vercel.";
+  }
+  return fallback;
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Use POST." });
@@ -79,7 +89,9 @@ module.exports = async function handler(req, res) {
       sha = currentFile.sha;
     } else if (currentFileResponse.status !== 404) {
       const details = await currentFileResponse.json().catch(() => ({}));
-      res.status(currentFileResponse.status).json({ error: details.message || "Could not read GitHub file." });
+      res.status(currentFileResponse.status).json({
+        error: githubErrorMessage(currentFileResponse.status, details.message || "Could not read GitHub file.")
+      });
       return;
     }
 
@@ -97,7 +109,9 @@ module.exports = async function handler(req, res) {
 
     const result = await publishResponse.json().catch(() => ({}));
     if (!publishResponse.ok) {
-      res.status(publishResponse.status).json({ error: result.message || "GitHub publish failed." });
+      res.status(publishResponse.status).json({
+        error: githubErrorMessage(publishResponse.status, result.message || "GitHub publish failed.")
+      });
       return;
     }
 
