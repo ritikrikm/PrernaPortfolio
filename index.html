@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.">
+    <title>Prerna Sharma | Graphic Designer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#app">Skip to portfolio</a>
+
+    <header class="site-header">
+      <a class="brand-mark" href="#/" aria-label="Prerna Sharma home">
+        <span class="brand-symbol">PS</span>
+        <span>
+          <strong>Prerna Sharma</strong>
+          <small>Graphic Designer + Motion Artist</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#/" data-route="/">Home</a>
+        <a href="#/work" data-route="/work">Work</a>
+        <a href="#/portfolio" data-route="/portfolio">Portfolio</a>
+        <a href="#/about" data-route="/about">About</a>
+        <a href="#/contact" data-route="/contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="app" class="app-shell" tabindex="-1"></main>
+
+    <template id="home-template">
+      <section class="home-story">
+        <div class="home-intro">
+          <p class="eyebrow">Graphic design portfolio</p>
+          <h1>Design work that moves from brief to brand, campaign, and motion.</h1>
+          <p class="type-line">I am <span id="typewriter" aria-live="polite"></span></p>
+          <p class="hero-summary">
+            A recruiter-friendly portfolio for Prerna Sharma, focused on visual design,
+            brand systems, social campaigns, motion graphics, illustration, and digital storytelling.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="#/work"><span aria-hidden="true">↗</span> View Experience</a>
+            <a class="button ghost" href="#/contact"><span aria-hidden="true">✉</span> Contact</a>
+          </div>
+        </div>
+
+        <aside class="recruiter-panel" aria-label="Recruiter summary">
+          <p class="eyebrow">Quick scan</p>
+          <ul class="scan-list">
+            <li><strong>Best fit</strong><span>Graphic Designer, Multimedia Designer, Motion Designer</span></li>
+            <li><strong>Experience</strong><span>2 years professional + 6 years creative business</span></li>
+            <li><strong>Strength</strong><span>Campaign visuals, brand consistency, social content, motion</span></li>
+            <li><strong>Tools</strong><span>Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma</span></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="content-band">
+        <div class="section-heading">
+          <p class="eyebrow">Portfolio path</p>
+          <h2>Start with work experience, then open the projects inside each role.</h2>
+        </div>
+        <div id="home-experience-grid" class="experience-grid"></div>
+      </section>
+    </template>
+
+    <template id="work-template">
+      <section class="work-band">
+        <div class="dashboard-hero">
+          <div>
+            <p class="eyebrow">Work experience</p>
+            <h1>Choose an experience to see the work created inside it.</h1>
+          </div>
+        </div>
+
+        <div id="experience-grid" class="experience-grid"></div>
+      </section>
+    </template>
+
+    <template id="experience-template">
+      <section class="experience-detail-band">
+        <a class="back-link" href="#/work">← Back to all experience</a>
+        <div id="experience-detail"></div>
+
+        <div class="work-toolbar">
+          <div class="filter-group" id="filter-group" aria-label="Project category filters"></div>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="project-search" type="search" placeholder="Search project, tool, outcome">
+          </label>
+        </div>
+
+        <section id="project-grid" class="project-grid" aria-live="polite"></section>
+      </section>
+    </template>
+
+    <template id="portfolio-template">
+      <section class="work-band">
+        <div class="dashboard-hero">
+          <div>
+            <p class="eyebrow">Portfolio</p>
+            <h1>Browse selected campaigns, visuals, motion pieces, and illustration work.</h1>
+          </div>
+        </div>
+
+        <div class="work-toolbar">
+          <div class="filter-group" id="portfolio-filter-group" aria-label="Portfolio category filters"></div>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="portfolio-search" type="search" placeholder="Search portfolio, tool, outcome">
+          </label>
+        </div>
+
+        <section id="portfolio-grid" class="project-grid" aria-live="polite"></section>
+      </section>
+    </template>
+
+    <template id="project-template">
+      <section class="experience-detail-band project-detail-band">
+        <div id="project-detail"></div>
+      </section>
+    </template>
+
+    <template id="admin-template">
+      <section class="admin-band">
+        <div class="dashboard-hero">
+          <div>
+            <p class="eyebrow">Studio uploader</p>
+            <h1>Manage experience cards and portfolio projects.</h1>
+          </div>
+          <div class="admin-actions">
+            <button class="button ghost" id="preview-site" type="button"><span aria-hidden="true">◉</span> Test Preview</button>
+            <button class="button primary" id="publish-site" type="button"><span aria-hidden="true">↗</span> Publish</button>
+            <button class="button ghost" id="export-projects" type="button"><span aria-hidden="true">⇩</span> Export</button>
+            <button class="button danger" id="reset-projects" type="button"><span aria-hidden="true">↺</span> Reset</button>
+          </div>
+        </div>
+
+        <section class="experience-form-wrap">
+          <div class="section-heading compact">
+            <p class="eyebrow">Experience cards</p>
+            <h2>Add a work experience first, then attach projects to it.</h2>
+          </div>
+          <form class="experience-form" id="experience-form">
+            <input type="hidden" id="experience-id">
+            <div class="form-grid">
+              <label>
+                Company
+                <input id="experienceCompany" type="text" required placeholder="MSL Global">
+              </label>
+              <label>
+                Role
+                <input id="experienceTitle" type="text" required placeholder="Executive - Design">
+              </label>
+              <label>
+                Dates
+                <input id="experienceDates" type="text" required placeholder="Dec 2023 - Nov 2024">
+              </label>
+              <label>
+                Location
+                <input id="experienceLocation" type="text" required placeholder="Toronto, ON">
+              </label>
+              <label class="wide">
+                Card headline
+                <input id="experienceHeadline" type="text" required placeholder="Campaign visuals, branding, motion, and social content.">
+              </label>
+              <label class="wide">
+                Experience story
+                <textarea id="experienceSummary" rows="3" required placeholder="What kind of work did she create in this role?"></textarea>
+              </label>
+              <label>
+                Impact
+                <input id="experienceImpact" type="text" required placeholder="150+ assets, 6+ brands, 15% engagement lift">
+              </label>
+              <label>
+                Accent
+                <input id="experienceAccent" type="color" value="#0a6f6b">
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="button primary" type="submit"><span aria-hidden="true">✓</span> Save Experience</button>
+              <button class="button ghost" id="clear-experience-form" type="button"><span aria-hidden="true">×</span> Clear</button>
+            </div>
+          </form>
+          <div id="admin-experience-list" class="admin-experience-list"></div>
+        </section>
+
+        <div class="admin-layout">
+          <form class="project-form" id="project-form">
+            <input type="hidden" id="project-id">
+            <input type="hidden" id="project-collection" value="">
+            <div class="form-grid">
+              <label>
+                Where should this show?
+                <select id="projectPlacement" name="projectPlacement" required>
+                  <option value="portfolio">Portfolio page</option>
+                  <option value="work">Inside work experience</option>
+                </select>
+              </label>
+              <label>
+                Work experience
+                <select id="experience" name="experience"></select>
+              </label>
+              <label>
+                Project title
+                <input id="title" name="title" type="text" required placeholder="Campaign visual system">
+              </label>
+              <label>
+                Category
+                <select id="category" name="category" required>
+                  <option>Branding</option>
+                  <option>Social Media</option>
+                  <option>Video Editing</option>
+                  <option>Motion Graphics</option>
+                  <option>Illustration</option>
+                </select>
+              </label>
+              <label>
+                Media type
+                <select id="mediaType" name="mediaType" required>
+                  <option>Image</option>
+                  <option>Video</option>
+                  <option>Mixed Media</option>
+                  <option>Case Study</option>
+                </select>
+              </label>
+              <label>
+                Role
+                <input id="role" name="role" type="text" placeholder="Graphic Designer">
+              </label>
+              <label>
+                Year
+                <input id="year" name="year" type="text" placeholder="2024">
+              </label>
+              <label class="wide">
+                Tools
+                <input id="tools" name="tools" type="text" placeholder="Photoshop, Illustrator, After Effects">
+              </label>
+              <label class="wide">
+                Story / work done
+                <textarea id="summary" name="summary" rows="4" required placeholder="What was the brief, what did you create, and what did it solve?"></textarea>
+              </label>
+              <label class="wide">
+                What Prerna did
+                <textarea id="whatPrernaDid" name="whatPrernaDid" rows="4" placeholder="Write this like a short case-study note: concepts, layout, retouching, motion, editing, visual system, client coordination, etc."></textarea>
+              </label>
+              <section class="media-builder wide" aria-label="Campaign media builder">
+                <div class="section-heading compact">
+                  <p class="eyebrow">Campaign page media</p>
+                  <h2>Add sketches/process assets and final outputs for this campaign page.</h2>
+                </div>
+                <div id="media-builder-fields"></div>
+              </section>
+              <label class="wide">
+                Result / impact
+                <input id="impact" name="impact" type="text" placeholder="50M+ views, 2x conversions, 150+ assets">
+              </label>
+              <label>
+                Project / video link
+                <input id="link" name="link" type="url" placeholder="https://">
+              </label>
+              <label>
+                Accent
+                <input id="accent" name="accent" type="color" value="#0a6f6b">
+              </label>
+              <label class="upload-box wide">
+                <span>Project image / video thumbnail</span>
+                <input id="image" name="image" type="file" accept="image/*">
+                <strong id="image-file-name">Choose an image</strong>
+                <button class="mini-button" id="clear-project-image" type="button">Remove thumbnail</button>
+              </label>
+              <label>
+                Card image fit
+                <select id="imageFit" name="imageFit">
+                  <option value="cover">Crop to fill card</option>
+                  <option value="contain">Show full image</option>
+                </select>
+              </label>
+              <label>
+                Image focus
+                <select id="imagePosition" name="imagePosition">
+                  <option value="center center">Center</option>
+                  <option value="center top">Top</option>
+                  <option value="center bottom">Bottom</option>
+                  <option value="left center">Left</option>
+                  <option value="right center">Right</option>
+                </select>
+              </label>
+              <label class="wide">
+                Card zoom
+                <input id="imageZoom" name="imageZoom" type="range" min="100" max="160" step="5" value="100">
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button class="button primary" type="submit"><span aria-hidden="true">✓</span> Save Project</button>
+              <button class="button ghost" id="clear-form" type="button"><span aria-hidden="true">×</span> Clear</button>
+            </div>
+          </form>
+
+          <aside class="preview-panel" aria-label="Live card preview">
+            <div class="board-topline">
+              <strong>Portfolio Card Preview</strong>
+              <small>Saved locally</small>
+            </div>
+            <div id="admin-preview"></div>
+          </aside>
+        </div>
+
+        <section class="admin-list-wrap">
+          <div class="section-heading compact">
+            <p class="eyebrow">Gallery cards</p>
+            <h2>Current projects</h2>
+          </div>
+          <div id="admin-project-list" class="admin-project-list"></div>
+        </section>
+      </section>
+    </template>
+
+    <template id="about-template">
+      <section class="about-band">
+        <div class="about-layout">
+          <div class="sketch-card">
+            <img src="assets/designer-sketch.png" alt="Sketch-style illustration of a designer creating at a desk">
+          </div>
+          <div class="about-copy">
+            <p class="eyebrow">About the designer</p>
+            <h1>Graphic designer with campaign discipline and a handmade visual voice.</h1>
+            <p>
+              Prerna creates brand visuals, campaign assets, motion graphics,
+              social content, illustration, and digital storytelling work. Her
+              portfolio connects practical production skills with expressive,
+              human visual details.
+            </p>
+            <p>
+              Recruiters can use the Work section to open each experience and
+              see what she created there: campaign graphics, motion pieces,
+              social layouts, illustration-led products, and brand systems.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <article>
+            <span>2023-2024</span>
+            <strong>Executive - Design, MSL Global</strong>
+            <p>Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production.</p>
+          </article>
+          <article>
+            <span>2023</span>
+            <strong>Communications Designer, Cultre Boat</strong>
+            <p>Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands.</p>
+          </article>
+          <article>
+            <span>2018-2024</span>
+            <strong>Founder / Creative Entrepreneur, The Creative Bud</strong>
+            <p>Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling.</p>
+          </article>
+        </div>
+      </section>
+    </template>
+
+    <template id="contact-template">
+      <section class="contact-band">
+        <div class="section-heading">
+          <p class="eyebrow">Contact</p>
+          <h1>Open to graphic design, brand, motion, and multimedia roles.</h1>
+        </div>
+        <div class="contact-grid">
+          <a class="contact-card" href="mailto:visualartist.prerna@gmail.com">
+            <span>✉</span>
+            <strong>Email</strong>
+            <small>visualartist.prerna@gmail.com</small>
+          </a>
+          <a class="contact-card" href="tel:+14168256120">
+            <span>☎</span>
+            <strong>Phone</strong>
+            <small>(416) 825-6120</small>
+          </a>
+          <a class="contact-card" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+            <span>in</span>
+            <strong>LinkedIn</strong>
+            <small>Add her real LinkedIn URL here</small>
+          </a>
+          <a class="contact-card" href="https://www.behance.net/gallery/177375659/PORTFOLIO" target="_blank" rel="noreferrer">
+            <span>Be</span>
+            <strong>Behance</strong>
+            <small>behance.net/gallery/177375659/PORTFOLIO</small>
+          </a>
+        </div>
+      </section>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
