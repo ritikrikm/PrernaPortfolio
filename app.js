@@ -7,6 +7,7 @@ const LOCAL_ADMIN_PASSWORD = "prerna-admin";
 const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
 const PORTFOLIO_FILTERS = ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration"];
+const DEFAULT_PROJECT_CATEGORIES = ["Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Campaign Design", "Graphic Design", "Multimedia"];
 const MEDIA_GROUPS = [
   {
     id: "initialSketch",
@@ -118,6 +119,7 @@ const defaultSiteContent = {
     ],
     featuredEyebrow: "Featured products",
     featuredHeadline: "Small, polished product pieces recruiters can scan first.",
+    featuredFilters: ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Multimedia"],
     workEyebrow: "Portfolio path",
     workHeadline: "Start with work experience, then open the projects inside each role.",
     portfolioEyebrow: "Portfolio cards",
@@ -239,6 +241,7 @@ const CONTENT_FIELDS = [
   { page: "home", key: "home.quickScan.3.text", label: "Quick scan 4 text", path: "home.quickScan.3.text", type: "textarea" },
   { page: "home", key: "home.featuredEyebrow", label: "Featured products eyebrow", path: "home.featuredEyebrow" },
   { page: "home", key: "home.featuredHeadline", label: "Featured products headline", path: "home.featuredHeadline", type: "textarea" },
+  { page: "home", key: "home.featuredFilters", label: "Featured product filters", path: "home.featuredFilters", type: "list", helper: "One filter per line. Use All as the first item." },
   { page: "home", key: "home.workEyebrow", label: "Work section eyebrow", path: "home.workEyebrow" },
   { page: "home", key: "home.workHeadline", label: "Work section headline", path: "home.workHeadline", type: "textarea" },
   { page: "home", key: "home.portfolioEyebrow", label: "Portfolio section eyebrow", path: "home.portfolioEyebrow" },
@@ -354,7 +357,7 @@ const sampleProjects = [
     experienceId: "cultre-boat",
     title: "Devan's Coffee Content Grid",
     category: "Campaign Design",
-    mediaType: "Mixed Media",
+    mediaType: "Multimedia",
     role: "Graphic + Content Designer",
     year: "2023",
     tools: "Photoshop, Illustrator, Premiere Pro",
@@ -414,7 +417,7 @@ const sampleProjects = [
     experienceId: "freelance",
     title: "Product Photography + Social Content",
     category: "Graphic Design",
-    mediaType: "Mixed Media",
+    mediaType: "Multimedia",
     role: "Creative Business Owner",
     year: "2018-2024",
     tools: "Photography, Photoshop, Illustrator, Instagram",
@@ -527,7 +530,7 @@ const sampleFeaturedProducts = [
     placement: "featured",
     title: "Motion + Video Thumbnails",
     category: "Motion Graphics",
-    mediaType: "Mixed Media",
+    mediaType: "Multimedia",
     role: "Motion Designer",
     year: "2024",
     tools: "After Effects, Premiere Pro, Photoshop",
@@ -548,9 +551,11 @@ const state = {
   featuredProducts: [],
   siteContent: cloneItems(defaultSiteContent),
   contentPage: "home",
+  previewContentField: "",
   adminMode: "portfolio",
   filter: "All",
   portfolioFilter: "All",
+  featuredFilter: "All",
   query: "",
   typewriterTimer: null,
   previewImage: "",
@@ -558,6 +563,7 @@ const state = {
   detailMediaImages: {},
   mediaBuilderGroups: null,
   mediaBuilderMeta: null,
+  loadingCount: 0,
   dataLoaded: false,
   adminPassword: sessionStorage.getItem(ADMIN_PASSWORD_KEY) || "",
   adminData: null
@@ -638,6 +644,10 @@ function cloneItems(items = []) {
   return JSON.parse(JSON.stringify(items));
 }
 
+function deepEqual(firstValue, secondValue) {
+  return JSON.stringify(firstValue ?? null) === JSON.stringify(secondValue ?? null);
+}
+
 function mergeDeep(defaultValue, savedValue) {
   if (Array.isArray(defaultValue)) {
     return Array.isArray(savedValue) ? cloneItems(savedValue) : cloneItems(defaultValue);
@@ -690,6 +700,64 @@ function removeTextStyle(key) {
 function resetContentField(field) {
   setPathValue(state.siteContent, field.path, cloneItems(getPathValue(defaultSiteContent, field.path)));
   removeTextStyle(field.key);
+}
+
+function contentFieldDirty(field) {
+  const currentContent = normalizeSiteContent(state.siteContent);
+  const publishedContent = normalizeSiteContent(publishedSiteContent);
+  const currentValue = getPathValue(currentContent, field.path);
+  const publishedValue = getPathValue(publishedContent, field.path);
+  const currentStyle = currentContent.appearance?.textStyles?.[field.key] || null;
+  const publishedStyle = publishedContent.appearance?.textStyles?.[field.key] || null;
+  return !deepEqual(currentValue, publishedValue) || !deepEqual(currentStyle, publishedStyle);
+}
+
+function contentPageDirty(pageId) {
+  return pageFields(pageId).some(contentFieldDirty);
+}
+
+function siteContentDirty() {
+  return !deepEqual(normalizeSiteContent(state.siteContent), normalizeSiteContent(publishedSiteContent));
+}
+
+function portfolioContentDirty() {
+  return !deepEqual(experiences, publishedExperiences)
+    || !deepEqual(state.projects, publishedProjects)
+    || !deepEqual(state.portfolioProjects, publishedPortfolioProjects)
+    || !deepEqual(state.featuredProducts, publishedFeaturedProducts);
+}
+
+function projectCollectionDirty(collection) {
+  if (collection === "featured") return !deepEqual(state.featuredProducts, publishedFeaturedProducts);
+  if (collection === "portfolio") return !deepEqual(state.portfolioProjects, publishedPortfolioProjects);
+  return !deepEqual(state.projects, publishedProjects);
+}
+
+function itemDirty(item, currentCollection, publishedCollection) {
+  const publishedItem = publishedCollection.find((candidate) => candidate.id === item.id);
+  return !publishedItem || !deepEqual(item, publishedItem);
+}
+
+function experienceDirty(experience) {
+  return itemDirty(experience, experiences, publishedExperiences);
+}
+
+function projectDirty(project, collection) {
+  const publishedCollection = collection === "featured"
+    ? publishedFeaturedProducts
+    : collection === "portfolio"
+      ? publishedPortfolioProjects
+      : publishedProjects;
+  return itemDirty(project, null, publishedCollection);
+}
+
+function renderDirtyBadge() {
+  return `<span class="draft-badge">Unpublished draft</span>`;
+}
+
+function refreshDraftIndicators() {
+  renderAdminMode();
+  renderContentTabs();
 }
 
 function portfolioSnapshot(source = {}) {
@@ -868,9 +936,37 @@ function categoryColor(category) {
     "Motion Graphics": "#3557ff",
     "Video Editing": "#d946ef",
     Illustration: "#ff4fa3",
+    Multimedia: "#155e75",
     "Emerging Media": "#155e75"
   };
   return colors[category] || "#087f6f";
+}
+
+function normalizeMediaType(value = "") {
+  if (value === "Mixed Media") return "Multimedia";
+  return value || "Image";
+}
+
+function projectCategories() {
+  const featuredFilters = Array.isArray(state.siteContent?.home?.featuredFilters)
+    ? state.siteContent.home.featuredFilters.filter((item) => item && item !== "All")
+    : [];
+  const usedCategories = [
+    ...state.projects,
+    ...state.portfolioProjects,
+    ...state.featuredProducts
+  ].map((project) => project.category).filter(Boolean);
+  return [...new Set([...DEFAULT_PROJECT_CATEGORIES, ...featuredFilters, ...usedCategories])];
+}
+
+function renderCategoryOptions(selectedValue = "") {
+  const select = document.getElementById("category");
+  if (!select) return;
+  const categories = projectCategories();
+  const selected = categories.includes(selectedValue) ? selectedValue : categories[0];
+  select.innerHTML = categories
+    .map((category) => `<option${category === selected ? " selected" : ""}>${escapeHtml(category)}</option>`)
+    .join("");
 }
 
 function projectGradient(project) {
@@ -910,6 +1006,7 @@ function mediaIcon(mediaType = "") {
   const icons = {
     Image: "□",
     Video: "▶",
+    Multimedia: "✦",
     "Mixed Media": "✦",
     "Case Study": "◎"
   };
@@ -986,7 +1083,7 @@ function coverArt(project, size = "large") {
       <span class="cover-dot dot-two"></span>
       <span class="cover-line line-one"></span>
       <span class="cover-line line-two"></span>
-      <span class="cover-tag">${escapeHtml(project.mediaType || project.category)}</span>
+      <span class="cover-tag">${escapeHtml(normalizeMediaType(project.mediaType) || project.category)}</span>
       <strong>${escapeHtml(titleWords)}</strong>
       <em>${escapeHtml(project.year || "Portfolio")}</em>
     </div>
@@ -1006,7 +1103,7 @@ function projectCard(project, collection = "portfolio") {
       <div class="project-body">
         <div class="project-meta">
           <span class="pill">${escapeHtml(project.category)}</span>
-          <span class="pill">${escapeHtml(project.mediaType || "Work")}</span>
+          <span class="pill">${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</span>
           ${project.year ? `<span class="pill">${escapeHtml(project.year)}</span>` : ""}
         </div>
         <h3>${escapeHtml(project.title)}</h3>
@@ -1075,6 +1172,7 @@ function experienceCard(experience) {
 function adminRow(project, collection = "work") {
   const experience = experiences.find((item) => item.id === project.experienceId);
   const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}">` : "";
+  const isDirty = projectDirty(project, collection);
   const source = collection === "featured"
     ? "Featured product"
     : collection === "portfolio"
@@ -1082,11 +1180,12 @@ function adminRow(project, collection = "work") {
       : experience ? experience.company : "Work experience";
 
   return `
-    <div class="admin-row" data-id="${project.id}" data-collection="${collection}">
+    <div class="admin-row ${isDirty ? "draft-dirty" : ""}" data-id="${project.id}" data-collection="${collection}">
       <div class="admin-row-thumb" style="background: ${projectGradient(project)}">${image}</div>
       <div>
         <strong>${escapeHtml(project.title)}</strong>
-        <small>${escapeHtml(source)} · ${escapeHtml(project.category)} · ${escapeHtml(project.mediaType || "Work")}</small>
+        <small>${escapeHtml(source)} · ${escapeHtml(project.category)} · ${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</small>
+        ${isDirty ? renderDirtyBadge() : ""}
       </div>
       <div class="row-actions">
         <button class="icon-button" type="button" data-action="edit" aria-label="Edit ${escapeHtml(project.title)}">✎</button>
@@ -1134,11 +1233,13 @@ async function renderRoute() {
   if (name === "/contact") setupContact();
   if (name === "/admin" || name === "/studio") setupAdmin();
   app.focus({ preventScroll: true });
+  window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 }
 
 function setupHome() {
   const home = state.siteContent.home;
   const featuredGrid = document.getElementById("home-featured-grid");
+  const featuredFilters = document.getElementById("home-featured-filters");
   const portfolioGrid = document.getElementById("home-portfolio-grid");
   const featuredBand = document.querySelector(".featured-products-band");
   const typeLine = document.querySelector(".type-line");
@@ -1174,11 +1275,14 @@ function setupHome() {
 
   if (state.featuredProducts.length) {
     featuredBand.hidden = false;
-    featuredGrid.innerHTML = state.featuredProducts.map(featuredProductCard).join("");
+    renderFeaturedFilters(featuredFilters);
+    renderFeaturedProducts(featuredGrid);
     featuredGrid.addEventListener("click", handleFeaturedProductOpen);
     featuredGrid.addEventListener("keydown", handleFeaturedProductKeydown);
+    featuredFilters.addEventListener("click", handleFeaturedFilter);
   } else {
     featuredBand.hidden = true;
+    featuredFilters.innerHTML = "";
     featuredGrid.innerHTML = "";
   }
 
@@ -1188,6 +1292,46 @@ function setupHome() {
     : `<div class="empty-state"><strong>Portfolio projects will appear here after the admin adds them.</strong></div>`;
 
   portfolioGrid.addEventListener("click", handleProjectGridClick);
+}
+
+function featuredFilters() {
+  const filters = Array.isArray(state.siteContent.home?.featuredFilters) && state.siteContent.home.featuredFilters.length
+    ? state.siteContent.home.featuredFilters
+    : defaultSiteContent.home.featuredFilters;
+  return filters.includes("All") ? filters : ["All", ...filters];
+}
+
+function featuredProductMatchesFilter(product) {
+  return state.featuredFilter === "All" || product.category === state.featuredFilter;
+}
+
+function renderFeaturedFilters(target = document.getElementById("home-featured-filters")) {
+  if (!target) return;
+  const filters = featuredFilters();
+  if (!filters.includes(state.featuredFilter)) state.featuredFilter = "All";
+  target.innerHTML = filters
+    .map((filter) => `
+      <button class="filter-chip ${filter === state.featuredFilter ? "active" : ""}" type="button" data-featured-filter="${escapeHtml(filter)}">
+        ${escapeHtml(filter)}
+      </button>
+    `)
+    .join("");
+}
+
+function renderFeaturedProducts(target = document.getElementById("home-featured-grid")) {
+  if (!target) return;
+  const filteredProducts = state.featuredProducts.filter(featuredProductMatchesFilter);
+  target.innerHTML = filteredProducts.length
+    ? filteredProducts.map(featuredProductCard).join("")
+    : `<div class="empty-state"><strong>No featured products match this filter yet.</strong></div>`;
+}
+
+function handleFeaturedFilter(event) {
+  const button = event.target.closest("[data-featured-filter]");
+  if (!button) return;
+  state.featuredFilter = button.dataset.featuredFilter;
+  renderFeaturedFilters();
+  renderFeaturedProducts();
 }
 
 function featuredProductPreviewItem(product) {
@@ -1752,6 +1896,46 @@ function showToast(message) {
   window.setTimeout(() => toast.remove(), 2600);
 }
 
+function showLoadingBanner(message = "Polishing the portfolio...") {
+  let banner = document.querySelector(".loading-banner");
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.className = "loading-banner";
+    banner.setAttribute("role", "status");
+    banner.innerHTML = `
+      <span class="loading-blossom" aria-hidden="true"></span>
+      <strong></strong>
+    `;
+    document.body.append(banner);
+  }
+  state.loadingCount += 1;
+  banner.querySelector("strong").textContent = message;
+  banner.hidden = false;
+}
+
+function hideLoadingBanner() {
+  state.loadingCount = Math.max(0, state.loadingCount - 1);
+  if (state.loadingCount) return;
+  document.querySelector(".loading-banner")?.setAttribute("hidden", "");
+}
+
+function setButtonLoading(button, isLoading, label = "Working") {
+  if (!button) return;
+  if (isLoading) {
+    button.dataset.originalText = button.innerHTML;
+    button.disabled = true;
+    button.classList.add("is-loading");
+    button.innerHTML = `<span class="loading-blossom mini" aria-hidden="true"></span> ${escapeHtml(label)}`;
+    return;
+  }
+  button.disabled = false;
+  button.classList.remove("is-loading");
+  if (button.dataset.originalText) {
+    button.innerHTML = button.dataset.originalText;
+    delete button.dataset.originalText;
+  }
+}
+
 function confirmAction(message, confirmLabel = "Confirm") {
   document.querySelector(".confirm-dialog")?.remove();
 
@@ -1793,6 +1977,133 @@ function confirmAction(message, confirmLabel = "Confirm") {
     document.addEventListener("keydown", handleKeydown);
     modal.querySelector("[data-confirm-accept]").focus({ preventScroll: true });
   });
+}
+
+function choosePublishScope() {
+  document.querySelector(".confirm-dialog")?.remove();
+
+  return new Promise((resolve) => {
+    const modal = document.createElement("div");
+    modal.className = "confirm-dialog";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", "Choose publish scope");
+    modal.innerHTML = `
+      <div class="confirm-panel publish-choice-panel">
+        <p class="eyebrow">Publish scope</p>
+        <h2>What should go live?</h2>
+        <div class="publish-choice-grid">
+          <button class="publish-choice ${portfolioContentDirty() ? "has-unpublished" : ""}" type="button" data-publish-scope="portfolio">
+            <strong>Experience, Work & Portfolio</strong>
+            <span>Publish cards, projects, media, featured products, and experience changes.</span>
+          </button>
+          <button class="publish-choice ${siteContentDirty() ? "has-unpublished" : ""}" type="button" data-publish-scope="content">
+            <strong>Text & Appearance</strong>
+            <span>Publish Home, About, Contact, Header, filters, and color changes.</span>
+          </button>
+          <button class="publish-choice ${(portfolioContentDirty() || siteContentDirty()) ? "has-unpublished" : ""}" type="button" data-publish-scope="both">
+            <strong>Publish Both</strong>
+            <span>Push every saved draft in one GitHub update.</span>
+          </button>
+        </div>
+        <div class="confirm-actions">
+          <button class="button ghost" type="button" data-publish-cancel>Cancel</button>
+        </div>
+      </div>
+    `;
+
+    const finish = (scope = "") => {
+      modal.remove();
+      document.body.classList.remove("modal-open");
+      document.removeEventListener("keydown", handleKeydown);
+      resolve(scope);
+    };
+
+    function handleKeydown(event) {
+      if (event.key === "Escape") finish("");
+    }
+
+    modal.addEventListener("click", (event) => {
+      const scopeButton = event.target.closest("[data-publish-scope]");
+      if (scopeButton) finish(scopeButton.dataset.publishScope);
+      if (event.target === modal || event.target.closest("[data-publish-cancel]")) finish("");
+    });
+
+    document.body.append(modal);
+    document.body.classList.add("modal-open");
+    document.addEventListener("keydown", handleKeydown);
+    modal.querySelector("[data-publish-scope='both']").focus({ preventScroll: true });
+  });
+}
+
+function portfolioForPublishScope(scope) {
+  if (scope === "content") {
+    return portfolioSnapshot({
+      experiences: publishedExperiences,
+      projects: publishedProjects,
+      portfolioProjects: publishedPortfolioProjects,
+      featuredProducts: publishedFeaturedProducts,
+      siteContent: state.siteContent
+    });
+  }
+  if (scope === "portfolio") {
+    return portfolioSnapshot({
+      experiences,
+      projects: state.projects,
+      portfolioProjects: state.portfolioProjects,
+      featuredProducts: state.featuredProducts,
+      siteContent: publishedSiteContent
+    });
+  }
+  return portfolioSnapshot();
+}
+
+function publishScopeLabel(scope) {
+  if (scope === "content") return "Text & Appearance";
+  if (scope === "portfolio") return "Experience, Work & Portfolio";
+  return "everything";
+}
+
+function updatePublishedPortfolio(published) {
+  publishedExperiences = cloneItems(published.experiences);
+  publishedProjects = cloneItems(published.projects);
+  publishedPortfolioProjects = cloneItems(published.portfolioProjects);
+  publishedFeaturedProducts = cloneItems(published.featuredProducts);
+  publishedSiteContent = normalizeSiteContent(published.siteContent);
+}
+
+function syncDraftAfterPublish(scope, published) {
+  updatePublishedPortfolio(published);
+
+  if (scope === "content") {
+    saveDraftPortfolio({
+      experiences,
+      projects: state.projects,
+      portfolioProjects: state.portfolioProjects,
+      featuredProducts: state.featuredProducts,
+      siteContent: publishedSiteContent
+    });
+  } else if (scope === "portfolio") {
+    saveDraftPortfolio({
+      experiences: publishedExperiences,
+      projects: publishedProjects,
+      portfolioProjects: publishedPortfolioProjects,
+      featuredProducts: publishedFeaturedProducts,
+      siteContent: state.siteContent
+    });
+  } else {
+    experiences = cloneItems(published.experiences);
+    state.projects = cloneItems(published.projects);
+    state.portfolioProjects = cloneItems(published.portfolioProjects);
+    state.featuredProducts = cloneItems(published.featuredProducts);
+    state.siteContent = normalizeSiteContent(published.siteContent);
+    localStorage.removeItem(DRAFT_STORE_KEY);
+    applySiteContent();
+  }
+
+  if (!portfolioContentDirty() && !siteContentDirty()) {
+    localStorage.removeItem(DRAFT_STORE_KEY);
+  }
 }
 
 function renderDraftPreviewRibbon() {
@@ -2164,8 +2475,13 @@ function setupDetailMediaUploads() {
       const index = Number(event.target.dataset.detailIndex);
       const file = event.target.files?.[0];
       mediaField("mediaFileName", groupId, index).textContent = file ? file.name : "Choose an image";
-      state.detailMediaImages[mediaImageKey(groupId, index)] = file ? await readFileAsDataUrl(file) : "";
-      renderPreview();
+      if (file) showLoadingBanner("Preparing campaign asset...");
+      try {
+        state.detailMediaImages[mediaImageKey(groupId, index)] = file ? await readFileAsDataUrl(file) : "";
+        renderPreview();
+      } finally {
+        if (file) hideLoadingBanner();
+      }
     });
   });
 }
@@ -2211,12 +2527,14 @@ function clearProjectImage() {
 
 function adminExperienceRow(experience) {
   const count = projectsForExperience(experience.id).length;
+  const isDirty = experienceDirty(experience);
   return `
-    <div class="admin-experience-row" data-experience-id="${escapeHtml(experience.id)}">
+    <div class="admin-experience-row ${isDirty ? "draft-dirty" : ""}" data-experience-id="${escapeHtml(experience.id)}">
       <span style="--experience-accent: ${experience.accent}"></span>
       <div>
         <strong>${escapeHtml(experience.company)}</strong>
         <small>${escapeHtml(experience.title)} · ${count} project${count === 1 ? "" : "s"}</small>
+        ${isDirty ? renderDirtyBadge() : ""}
       </div>
       <div class="row-actions">
         <button class="icon-button" type="button" data-experience-action="edit" aria-label="Edit ${escapeHtml(experience.company)}">✎</button>
@@ -2255,6 +2573,7 @@ async function handleExperienceSave(event) {
   renderAdminExperienceList();
   renderAdminList();
   renderPreview();
+  renderAdminMode();
   showToast("Experience saved as draft.");
 }
 
@@ -2279,6 +2598,7 @@ async function handleAdminExperienceAction(event) {
     renderAdminExperienceList();
     renderAdminList();
     renderPreview();
+    renderAdminMode();
     showToast("Experience removed from drafts.");
     return;
   }
@@ -2298,6 +2618,7 @@ async function handleAdminExperienceAction(event) {
 function setupAdminModes() {
   document.querySelectorAll("[data-admin-mode]").forEach((button) => {
     button.classList.toggle("active", button.dataset.adminMode === state.adminMode);
+    button.classList.toggle("has-unpublished", button.dataset.adminMode === "portfolio" ? portfolioContentDirty() : siteContentDirty());
     button.addEventListener("click", () => {
       state.adminMode = button.dataset.adminMode;
       renderAdminMode();
@@ -2309,6 +2630,7 @@ function setupAdminModes() {
 function renderAdminMode() {
   document.querySelectorAll("[data-admin-mode]").forEach((button) => {
     button.classList.toggle("active", button.dataset.adminMode === state.adminMode);
+    button.classList.toggle("has-unpublished", button.dataset.adminMode === "portfolio" ? portfolioContentDirty() : siteContentDirty());
   });
   document.querySelectorAll("[data-admin-panel]").forEach((panel) => {
     panel.hidden = panel.dataset.adminPanel !== state.adminMode;
@@ -2330,7 +2652,7 @@ function renderContentTabs() {
   if (!tabs) return;
   tabs.innerHTML = CONTENT_PAGES
     .map((page) => `
-      <button class="filter-chip ${page.id === state.contentPage ? "active" : ""}" type="button" data-content-page="${page.id}">
+      <button class="filter-chip ${page.id === state.contentPage ? "active" : ""} ${contentPageDirty(page.id) ? "has-unpublished" : ""}" type="button" data-content-page="${page.id}">
         ${escapeHtml(page.label)}
       </button>
     `)
@@ -2345,15 +2667,19 @@ function renderContentFieldList() {
       const value = contentFieldValue(field);
       const isColor = field.type === "color";
       const style = state.siteContent.appearance?.textStyles?.[field.key]?.color || "";
+      const isDirty = contentFieldDirty(field);
+      const isPreviewing = state.previewContentField === field.key;
       return `
-        <article class="content-field-row" data-content-field="${escapeHtml(field.key)}">
+        <article class="content-field-row ${isDirty ? "draft-dirty" : ""} ${isPreviewing ? "is-preview-selected" : ""}" data-content-field="${escapeHtml(field.key)}">
           <div>
             <strong>${escapeHtml(field.label)}</strong>
             <small>${escapeHtml(isColor ? value : String(value).slice(0, 140) || "Empty")}</small>
+            ${isDirty ? renderDirtyBadge() : ""}
           </div>
           <div class="content-field-actions">
             ${style ? `<span class="content-color-dot" style="--dot-color: ${escapeHtml(style)}"></span>` : ""}
             ${isColor ? `<span class="content-color-dot" style="--dot-color: ${escapeHtml(value)}"></span>` : ""}
+            <button class="icon-button" type="button" data-preview-content="${escapeHtml(field.key)}" aria-label="Preview ${escapeHtml(field.label)}">◉</button>
             <button class="icon-button" type="button" data-edit-content="${escapeHtml(field.key)}" aria-label="Edit ${escapeHtml(field.label)}">✎</button>
             <button class="icon-button delete" type="button" data-reset-content="${escapeHtml(field.key)}" aria-label="Reset ${escapeHtml(field.label)}">↺</button>
           </div>
@@ -2363,27 +2689,46 @@ function renderContentFieldList() {
     .join("");
 }
 
+function previewAttributes(key, className = "") {
+  const classes = [className, state.previewContentField === key ? "preview-focus is-preview-pulsing" : ""]
+    .filter(Boolean)
+    .join(" ");
+  return ` data-preview-key="${escapeHtml(key)}"${classes ? ` class="${escapeHtml(classes)}"` : ""}`;
+}
+
 function pagePreviewMarkup(pageId) {
   const content = state.siteContent;
   if (pageId === "about") {
     return `
       <div class="mini-page-preview">
-        <p class="eyebrow"${textStyle("about.eyebrow")}>${escapeHtml(content.about.eyebrow)}</p>
-        <h3${textStyle("about.headline")}>${escapeHtml(content.about.headline)}</h3>
-        ${content.about.body.map((item, index) => `<p${textStyle(`about.body.${index}`)}>${escapeHtml(item)}</p>`).join("")}
+        <p${previewAttributes("about.eyebrow", "eyebrow")}${textStyle("about.eyebrow")}>${escapeHtml(content.about.eyebrow)}</p>
+        <h3${previewAttributes("about.headline")}${textStyle("about.headline")}>${escapeHtml(content.about.headline)}</h3>
+        ${content.about.body.map((item, index) => `<p${previewAttributes(`about.body.${index}`)}${textStyle(`about.body.${index}`)}>${escapeHtml(item)}</p>`).join("")}
+        <div class="mini-timeline-preview">
+          ${content.about.timeline.map((item, index) => `
+            <span>
+              <em${previewAttributes(`about.timeline.${index}.dates`)}>${escapeHtml(item.dates)}</em>
+              <strong${previewAttributes(`about.timeline.${index}.title`)}${textStyle(`about.timeline.${index}.title`)}>${escapeHtml(item.title)}</strong>
+              <small${previewAttributes(`about.timeline.${index}.text`)}${textStyle(`about.timeline.${index}.text`)}>${escapeHtml(item.text)}</small>
+            </span>
+          `).join("")}
+        </div>
+        <small${previewAttributes("about.sketchAlt")}>Sketch alt: ${escapeHtml(content.about.sketchAlt)}</small>
       </div>
     `;
   }
   if (pageId === "contact") {
     return `
       <div class="mini-page-preview">
-        <p class="eyebrow"${textStyle("contact.eyebrow")}>${escapeHtml(content.contact.eyebrow)}</p>
-        <h3${textStyle("contact.headline")}>${escapeHtml(content.contact.headline)}</h3>
+        <p${previewAttributes("contact.eyebrow", "eyebrow")}${textStyle("contact.eyebrow")}>${escapeHtml(content.contact.eyebrow)}</p>
+        <h3${previewAttributes("contact.headline")}${textStyle("contact.headline")}>${escapeHtml(content.contact.headline)}</h3>
         <div class="mini-contact-preview">
           ${content.contact.cards.map((card, index) => `
             <span>
-              <strong${textStyle(`contact.cards.${index}.label`)}>${escapeHtml(card.label)}</strong>
-              <small${textStyle(`contact.cards.${index}.value`)}>${escapeHtml(card.value)}</small>
+              <b${previewAttributes(`contact.cards.${index}.icon`)}${textStyle(`contact.cards.${index}.icon`)}>${escapeHtml(card.icon)}</b>
+              <strong${previewAttributes(`contact.cards.${index}.label`)}${textStyle(`contact.cards.${index}.label`)}>${escapeHtml(card.label)}</strong>
+              <small${previewAttributes(`contact.cards.${index}.value`)}${textStyle(`contact.cards.${index}.value`)}>${escapeHtml(card.value)}</small>
+              <em${previewAttributes(`contact.cards.${index}.href`)}>${escapeHtml(card.href)}</em>
             </span>
           `).join("")}
         </div>
@@ -2394,10 +2739,14 @@ function pagePreviewMarkup(pageId) {
     return `
       <div class="mini-page-preview">
         <p class="eyebrow">Header</p>
-        <h3${textStyle("global.brandName")}>${escapeHtml(content.global.brandName)}</h3>
-        <p${textStyle("global.brandSubtitle")}>${escapeHtml(content.global.brandSubtitle)}</p>
+        <h3${previewAttributes("global.brandName")}${textStyle("global.brandName")}>${escapeHtml(content.global.brandName)}</h3>
+        <p${previewAttributes("global.brandSubtitle")}${textStyle("global.brandSubtitle")}>${escapeHtml(content.global.brandSubtitle)}</p>
+        <strong${previewAttributes("global.brandSymbol")}>${escapeHtml(content.global.brandSymbol)}</strong>
+        <small${previewAttributes("global.skipLink")}>${escapeHtml(content.global.skipLink)}</small>
+        <small${previewAttributes("global.metaTitle")}>Title: ${escapeHtml(content.global.metaTitle)}</small>
+        <small${previewAttributes("global.metaDescription")}>Meta: ${escapeHtml(content.global.metaDescription)}</small>
         <div class="mini-nav-preview">
-          ${Object.values(content.global.nav).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+          ${Object.entries(content.global.nav).map(([key, item]) => `<span${previewAttributes(`global.nav.${key}`)}>${escapeHtml(item)}</span>`).join("")}
         </div>
       </div>
     `;
@@ -2405,35 +2754,67 @@ function pagePreviewMarkup(pageId) {
   if (pageId === "work") {
     return `
       <div class="mini-page-preview">
-        <p class="eyebrow"${textStyle("work.eyebrow")}>${escapeHtml(content.work.eyebrow)}</p>
-        <h3${textStyle("work.headline")}>${escapeHtml(content.work.headline)}</h3>
+        <p${previewAttributes("work.eyebrow", "eyebrow")}${textStyle("work.eyebrow")}>${escapeHtml(content.work.eyebrow)}</p>
+        <h3${previewAttributes("work.headline")}${textStyle("work.headline")}>${escapeHtml(content.work.headline)}</h3>
+        <small${previewAttributes("work.searchPlaceholder")}>Search: ${escapeHtml(content.work.searchPlaceholder)}</small>
       </div>
     `;
   }
   if (pageId === "portfolio") {
     return `
       <div class="mini-page-preview">
-        <p class="eyebrow"${textStyle("portfolio.eyebrow")}>${escapeHtml(content.portfolio.eyebrow)}</p>
-        <h3${textStyle("portfolio.headline")}>${escapeHtml(content.portfolio.headline)}</h3>
+        <p${previewAttributes("portfolio.eyebrow", "eyebrow")}${textStyle("portfolio.eyebrow")}>${escapeHtml(content.portfolio.eyebrow)}</p>
+        <h3${previewAttributes("portfolio.headline")}${textStyle("portfolio.headline")}>${escapeHtml(content.portfolio.headline)}</h3>
+        <small${previewAttributes("portfolio.searchPlaceholder")}>Search: ${escapeHtml(content.portfolio.searchPlaceholder)}</small>
       </div>
     `;
   }
   if (pageId === "appearance") {
     return `
       <div class="mini-page-preview swatch-preview">
-        <span style="--swatch: ${escapeHtml(content.appearance.pageBackground)}">Background</span>
-        <span style="--swatch: ${escapeHtml(content.appearance.inkColor)}">Text</span>
-        <span style="--swatch: ${escapeHtml(content.appearance.accentColor)}">Accent</span>
-        <span style="--swatch: ${escapeHtml(content.appearance.typewriterColor)}">Type</span>
+        <span${previewAttributes("appearance.pageBackground")} style="--swatch: ${escapeHtml(content.appearance.pageBackground)}">Background</span>
+        <span${previewAttributes("appearance.inkColor")} style="--swatch: ${escapeHtml(content.appearance.inkColor)}">Text</span>
+        <span${previewAttributes("appearance.accentColor")} style="--swatch: ${escapeHtml(content.appearance.accentColor)}">Accent</span>
+        <span${previewAttributes("appearance.typewriterColor")} style="--swatch: ${escapeHtml(content.appearance.typewriterColor)}">Type</span>
+        <span${previewAttributes("appearance.buttonColor")} style="--swatch: ${escapeHtml(content.appearance.buttonColor)}">Button</span>
       </div>
     `;
   }
   return `
     <div class="mini-page-preview">
-      <p class="eyebrow"${textStyle("home.eyebrow")}>${escapeHtml(content.home.eyebrow)}</p>
-      <h3${textStyle("home.headline")}>${escapeHtml(content.home.headline)}</h3>
-      <strong${textStyle("home.typewriterPrefix")}>${escapeHtml(content.home.typewriterPrefix)} ${escapeHtml(content.home.typewriterWords[0] || "")}</strong>
-      <p${textStyle("home.summary")}>${escapeHtml(content.home.summary)}</p>
+      <p${previewAttributes("home.eyebrow", "eyebrow")}${textStyle("home.eyebrow")}>${escapeHtml(content.home.eyebrow)}</p>
+      <h3${previewAttributes("home.headline")}${textStyle("home.headline")}>${escapeHtml(content.home.headline)}</h3>
+      <strong${previewAttributes("home.typewriterPrefix")}${textStyle("home.typewriterPrefix")}>${escapeHtml(content.home.typewriterPrefix)} ${escapeHtml(content.home.typewriterWords[0] || "")}</strong>
+      <small${previewAttributes("home.typewriterWords")}>${escapeHtml(content.home.typewriterWords.join(" / "))}</small>
+      <p${previewAttributes("home.summary")}${textStyle("home.summary")}>${escapeHtml(content.home.summary)}</p>
+      <div class="mini-actions-preview">
+        <span${previewAttributes("home.primaryAction")}>${escapeHtml(content.home.primaryAction)}</span>
+        <span${previewAttributes("home.secondaryAction")}>${escapeHtml(content.home.secondaryAction)}</span>
+      </div>
+      <div class="mini-scan-preview">
+        <strong${previewAttributes("home.quickScanEyebrow")}>${escapeHtml(content.home.quickScanEyebrow)}</strong>
+        ${content.home.quickScan.map((item, index) => `
+          <span>
+            <b${previewAttributes(`home.quickScan.${index}.label`)}${textStyle(`home.quickScan.${index}.label`)}>${escapeHtml(item.label)}</b>
+            <small${previewAttributes(`home.quickScan.${index}.text`)}${textStyle(`home.quickScan.${index}.text`)}>${escapeHtml(item.text)}</small>
+          </span>
+        `).join("")}
+      </div>
+      <div class="mini-section-preview">
+        <span>
+          <b${previewAttributes("home.featuredEyebrow")}>${escapeHtml(content.home.featuredEyebrow)}</b>
+          <small${previewAttributes("home.featuredHeadline")}>${escapeHtml(content.home.featuredHeadline)}</small>
+          <em${previewAttributes("home.featuredFilters")}>${escapeHtml(featuredFilters().join(" · "))}</em>
+        </span>
+        <span>
+          <b${previewAttributes("home.workEyebrow")}>${escapeHtml(content.home.workEyebrow)}</b>
+          <small${previewAttributes("home.workHeadline")}>${escapeHtml(content.home.workHeadline)}</small>
+        </span>
+        <span>
+          <b${previewAttributes("home.portfolioEyebrow")}>${escapeHtml(content.home.portfolioEyebrow)}</b>
+          <small${previewAttributes("home.portfolioHeadline")}>${escapeHtml(content.home.portfolioHeadline)}</small>
+        </span>
+      </div>
     </div>
   `;
 }
@@ -2442,7 +2823,8 @@ function renderContentPreview() {
   const target = document.getElementById("site-content-preview");
   if (!target) return;
   const page = CONTENT_PAGES.find((item) => item.id === state.contentPage);
-  document.getElementById("content-preview-page").textContent = page?.label || "Home";
+  const field = contentFieldByKey(state.previewContentField);
+  document.getElementById("content-preview-page").textContent = field ? `${page?.label || "Home"} · ${field.label}` : page?.label || "Home";
   target.innerHTML = pagePreviewMarkup(state.contentPage);
 }
 
@@ -2458,6 +2840,9 @@ function setupContentEditor() {
     const button = event.target.closest("[data-content-page]");
     if (!button) return;
     state.contentPage = button.dataset.contentPage;
+    if (contentFieldByKey(state.previewContentField)?.page !== state.contentPage) {
+      state.previewContentField = "";
+    }
     renderContentEditor();
   });
   document.getElementById("content-field-list").addEventListener("click", handleContentFieldAction);
@@ -2541,7 +2926,9 @@ function showContentEditDialog(field) {
     }
 
     applySiteContent();
+    renderCategoryOptions(document.getElementById("category")?.value || "");
     renderContentEditor();
+    renderAdminMode();
     if (routeParts().name === "/") setupHome();
     if (routeParts().name === "/about") setupAbout();
     if (routeParts().name === "/contact") setupContact();
@@ -2558,7 +2945,9 @@ function showContentEditDialog(field) {
     if (event.target.closest("[data-content-reset]")) {
       resetContentField(field);
       applySiteContent();
+      renderCategoryOptions(document.getElementById("category")?.value || "");
       renderContentEditor();
+      renderAdminMode();
       close();
     }
   });
@@ -2572,16 +2961,27 @@ function showContentEditDialog(field) {
 async function handleContentFieldAction(event) {
   const editButton = event.target.closest("[data-edit-content]");
   const resetButton = event.target.closest("[data-reset-content]");
-  const key = editButton?.dataset.editContent || resetButton?.dataset.resetContent;
+  const previewButton = event.target.closest("[data-preview-content]");
+  const key = editButton?.dataset.editContent || resetButton?.dataset.resetContent || previewButton?.dataset.previewContent;
   if (!key) return;
   const field = contentFieldByKey(key);
   if (!field) return;
+
+  if (previewButton) {
+    state.contentPage = field.page;
+    state.previewContentField = field.key;
+    renderContentEditor();
+    showToast(`Previewing ${field.label}.`);
+    return;
+  }
 
   if (resetButton) {
     if (!(await confirmAction(`Reset "${field.label}" to default?`, "Reset"))) return;
     resetContentField(field);
     applySiteContent();
+    renderCategoryOptions(document.getElementById("category")?.value || "");
     renderContentEditor();
+    renderAdminMode();
     showToast("Text reset to default.");
     return;
   }
@@ -2592,7 +2992,9 @@ async function handleContentFieldAction(event) {
 async function saveSiteContentDraft() {
   if (!(await confirmAction("Save these text and appearance changes as a draft?", "Save Text"))) return;
   saveDraftPortfolio(portfolioSnapshot({ siteContent: state.siteContent }));
+  renderCategoryOptions(document.getElementById("category")?.value || "");
   renderContentEditor();
+  renderAdminMode();
   showToast("Text changes saved as draft.");
 }
 
@@ -2601,7 +3003,9 @@ async function resetSiteContent() {
   state.siteContent = cloneItems(defaultSiteContent);
   saveDraftPortfolio(portfolioSnapshot({ siteContent: state.siteContent }));
   applySiteContent();
+  renderCategoryOptions();
   renderContentEditor();
+  renderAdminMode();
   showToast("Text and appearance reset.");
 }
 
@@ -2626,6 +3030,7 @@ function setupAdmin() {
   const form = document.getElementById("project-form");
   const imageInput = document.getElementById("image");
 
+  renderCategoryOptions();
   renderExperienceSelect();
   renderMediaBuilder();
   renderPreview();
@@ -2645,9 +3050,14 @@ function setupAdmin() {
   imageInput.addEventListener("change", async (event) => {
     const file = event.target.files?.[0];
     document.getElementById("image-file-name").textContent = file ? file.name : "Choose an image";
-    state.previewImage = file ? await readFileAsDataUrl(file) : "";
-    state.projectImageRemoved = false;
-    renderPreview();
+    if (file) showLoadingBanner("Preparing image preview...");
+    try {
+      state.previewImage = file ? await readFileAsDataUrl(file) : "";
+      state.projectImageRemoved = false;
+      renderPreview();
+    } finally {
+      if (file) hideLoadingBanner();
+    }
   });
 
   document.getElementById("clear-project-image").addEventListener("click", clearProjectImage);
@@ -2720,7 +3130,7 @@ function formProject() {
     experienceId: placement === "work" ? document.getElementById("experience").value : "",
     title: document.getElementById("title").value.trim() || "Untitled project",
     category: document.getElementById("category").value,
-    mediaType: document.getElementById("mediaType").value,
+    mediaType: normalizeMediaType(document.getElementById("mediaType").value),
     role: document.getElementById("role").value.trim(),
     year: document.getElementById("year").value.trim(),
     tools: document.getElementById("tools").value.trim(),
@@ -2810,6 +3220,7 @@ async function handleProjectSave(event) {
   clearForm();
   renderAdminList();
   renderAdminExperienceList();
+  renderAdminMode();
   showToast("Project saved as draft.");
 }
 
@@ -2818,6 +3229,7 @@ function clearForm() {
   document.getElementById("project-id").value = "";
   document.getElementById("project-collection").value = "";
   document.getElementById("projectPlacement").value = "portfolio";
+  renderCategoryOptions();
   document.getElementById("accent").value = "#0a6f6b";
   document.getElementById("imageFit").value = "cover";
   document.getElementById("imagePosition").value = "center center";
@@ -2840,18 +3252,21 @@ function renderAdminList() {
   const portfolioRows = state.portfolioProjects.length
     ? state.portfolioProjects.map((project) => adminRow(project, "portfolio")).join("")
     : `<div class="empty-state"><strong>No portfolio projects yet.</strong></div>`;
+  const featuredDirty = projectCollectionDirty("featured");
+  const workDirty = projectCollectionDirty("work") || !deepEqual(experiences, publishedExperiences);
+  const portfolioDirty = projectCollectionDirty("portfolio");
 
   list.innerHTML = `
-    <section class="admin-project-group">
-      <h3>Featured Products</h3>
+    <section class="admin-project-group ${featuredDirty ? "has-unpublished" : ""}">
+      <h3>Featured Products ${featuredDirty ? renderDirtyBadge() : ""}</h3>
       <div class="admin-project-list-inner">${featuredRows}</div>
     </section>
-    <section class="admin-project-group">
-      <h3>Work Experience Projects</h3>
+    <section class="admin-project-group ${workDirty ? "has-unpublished" : ""}">
+      <h3>Work Experience Projects ${workDirty ? renderDirtyBadge() : ""}</h3>
       <div class="admin-project-list-inner">${workRows}</div>
     </section>
-    <section class="admin-project-group">
-      <h3>Portfolio Page Projects</h3>
+    <section class="admin-project-group ${portfolioDirty ? "has-unpublished" : ""}">
+      <h3>Portfolio Page Projects ${portfolioDirty ? renderDirtyBadge() : ""}</h3>
       <div class="admin-project-list-inner">${portfolioRows}</div>
     </section>
   `;
@@ -2882,6 +3297,7 @@ async function handleAdminListAction(event) {
     }
     renderAdminList();
     renderAdminExperienceList();
+    renderAdminMode();
     showToast("Project removed from drafts.");
     return;
   }
@@ -2891,8 +3307,9 @@ async function handleAdminListAction(event) {
   document.getElementById("projectPlacement").value = collection;
   document.getElementById("experience").value = project.experienceId || "";
   document.getElementById("title").value = project.title;
+  renderCategoryOptions(project.category);
   document.getElementById("category").value = project.category;
-  document.getElementById("mediaType").value = project.mediaType || "Image";
+  document.getElementById("mediaType").value = normalizeMediaType(project.mediaType);
   document.getElementById("role").value = project.role;
   document.getElementById("year").value = project.year;
   document.getElementById("tools").value = project.tools;
@@ -2913,19 +3330,27 @@ async function handleAdminListAction(event) {
 }
 
 function previewDraft() {
+  const button = document.getElementById("preview-site");
+  setButtonLoading(button, true, "Opening preview");
+  showLoadingBanner("Opening draft preview...");
   saveDraftPortfolio(portfolioSnapshot());
   sessionStorage.setItem(PREVIEW_SESSION_KEY, "true");
   showToast("Draft preview is on.");
   window.location.hash = "#/";
+  window.setTimeout(() => {
+    setButtonLoading(button, false);
+    hideLoadingBanner();
+  }, 500);
 }
 
 async function publishDraft() {
-  if (!(await confirmAction("Publish these drafts to GitHub and trigger Vercel deploy?", "Publish"))) return;
+  const scope = await choosePublishScope();
+  if (!scope) return;
 
   const button = document.getElementById("publish-site");
-  const originalText = button.innerHTML;
-  button.disabled = true;
-  button.innerHTML = `<span aria-hidden="true">…</span> Publishing`;
+  const portfolio = portfolioForPublishScope(scope);
+  setButtonLoading(button, true, "Publishing");
+  showLoadingBanner(`Publishing ${publishScopeLabel(scope)}...`);
 
   try {
     const response = await fetch("/api/publish", {
@@ -2933,7 +3358,7 @@ async function publishDraft() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         password: state.adminPassword || sessionStorage.getItem(ADMIN_PASSWORD_KEY) || "",
-        portfolio: portfolioSnapshot()
+        portfolio
       })
     });
 
@@ -2942,25 +3367,19 @@ async function publishDraft() {
       throw new Error(result.error || "Publish endpoint is not configured yet.");
     }
 
-    const published = normalizePortfolioData(result.portfolio || portfolioSnapshot());
-    publishedExperiences = cloneItems(published.experiences);
-    publishedProjects = cloneItems(published.projects);
-    publishedPortfolioProjects = cloneItems(published.portfolioProjects);
-    publishedFeaturedProducts = cloneItems(published.featuredProducts);
-    publishedSiteContent = normalizeSiteContent(published.siteContent);
-    experiences = cloneItems(published.experiences);
-    state.projects = cloneItems(published.projects);
-    state.portfolioProjects = cloneItems(published.portfolioProjects);
-    state.featuredProducts = cloneItems(published.featuredProducts);
-    state.siteContent = normalizeSiteContent(published.siteContent);
-    applySiteContent();
-    localStorage.removeItem(DRAFT_STORE_KEY);
-    showToast(result.assetCount ? `Published. ${result.assetCount} image asset(s) moved to GitHub.` : "Published to GitHub. Vercel should deploy next.");
+    const published = normalizePortfolioData(result.portfolio || portfolio);
+    syncDraftAfterPublish(scope, published);
+    renderExperienceSelect();
+    renderAdminExperienceList();
+    renderAdminList();
+    renderContentEditor();
+    renderAdminMode();
+    showToast(result.assetCount ? `Published ${publishScopeLabel(scope)}. ${result.assetCount} image asset(s) moved to GitHub.` : `Published ${publishScopeLabel(scope)}. Vercel should deploy next.`);
   } catch (error) {
     showToast(error.message || "Publish failed.");
   } finally {
-    button.disabled = false;
-    button.innerHTML = originalText;
+    setButtonLoading(button, false);
+    hideLoadingBanner();
   }
 }
 
@@ -2977,6 +3396,7 @@ async function resetProjects() {
   renderAdminExperienceList();
   clearForm();
   renderAdminList();
+  renderAdminMode();
   showToast("Drafts reset to published version.");
 }
 
@@ -2989,6 +3409,15 @@ function exportProjects() {
   anchor.click();
   URL.revokeObjectURL(url);
 }
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#/"]');
+  if (!link) return;
+  const nextHash = link.getAttribute("href");
+  if (nextHash !== window.location.hash) return;
+  event.preventDefault();
+  renderRoute();
+});
 
 window.addEventListener("hashchange", renderRoute);
 renderRoute();

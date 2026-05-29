@@ -738,6 +738,10 @@ h3 {
   padding-top: clamp(20px, 4vw, 42px);
 }
 
+.featured-filter-group {
+  margin: -4px 0 22px;
+}
+
 .section-heading {
   margin-bottom: 24px;
 }
@@ -1724,6 +1728,73 @@ h3 {
   font-weight: 900;
 }
 
+.loading-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 75;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(420px, calc(100vw - 36px));
+  padding: 12px 16px;
+  color: var(--ink);
+  background: #ffe5f1;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(255, 79, 163, 0.2), 7px 7px 0 rgba(22, 18, 15, 0.16);
+  font-weight: 900;
+  transform: translateX(-50%);
+}
+
+.loading-banner[hidden] {
+  display: none;
+}
+
+.loading-blossom {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  border: 3px solid var(--pink);
+  border-top-color: var(--yellow);
+  border-right-color: var(--teal);
+  border-radius: 50%;
+  animation: blossom-spin 760ms linear infinite;
+}
+
+.loading-blossom::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+
+.loading-blossom.mini {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+}
+
+.loading-blossom.mini::after {
+  inset: 4px;
+  border-width: 1px;
+}
+
+.button.is-loading {
+  pointer-events: none;
+  opacity: 0.86;
+}
+
+@keyframes blossom-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .confirm-dialog {
   position: fixed;
   inset: 0;
@@ -1755,6 +1826,41 @@ h3 {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.publish-choice-panel {
+  width: min(760px, 100%);
+}
+
+.publish-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0 18px;
+}
+
+.publish-choice {
+  display: grid;
+  gap: 8px;
+  min-height: 160px;
+  padding: 16px;
+  text-align: left;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 rgba(22, 18, 15, 0.14);
+  cursor: pointer;
+}
+
+.publish-choice strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.publish-choice span {
+  color: var(--muted);
+  line-height: 1.4;
 }
 
 .preview-ribbon {
@@ -1822,6 +1928,57 @@ h3 {
   border-radius: var(--radius);
   box-shadow: 5px 5px 0 rgba(22, 18, 15, 0.12);
   cursor: pointer;
+}
+
+.admin-mode-card.has-unpublished,
+.publish-choice.has-unpublished,
+.admin-project-group.has-unpublished,
+.admin-row.draft-dirty,
+.admin-experience-row.draft-dirty,
+.content-field-row.draft-dirty,
+.filter-chip.has-unpublished {
+  border-color: #ff335f;
+  box-shadow:
+    0 0 0 2px rgba(255, 51, 95, 0.32),
+    0 0 22px rgba(255, 51, 95, 0.38),
+    6px 6px 0 rgba(255, 51, 95, 0.2);
+  animation: draft-glow 1.55s ease-in-out infinite alternate;
+}
+
+.admin-mode-card.active.has-unpublished {
+  box-shadow:
+    0 0 0 2px rgba(255, 51, 95, 0.5),
+    0 0 26px rgba(255, 51, 95, 0.55),
+    6px 6px 0 var(--yellow);
+}
+
+.draft-badge {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 7px;
+  padding: 4px 7px;
+  color: #9f1239;
+  background: #ffe4ec;
+  border: 1px solid rgba(159, 18, 57, 0.35);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+@keyframes draft-glow {
+  from {
+    box-shadow:
+      0 0 0 2px rgba(255, 51, 95, 0.26),
+      0 0 14px rgba(255, 51, 95, 0.28),
+      5px 5px 0 rgba(255, 51, 95, 0.16);
+  }
+  to {
+    box-shadow:
+      0 0 0 3px rgba(255, 51, 95, 0.44),
+      0 0 30px rgba(255, 51, 95, 0.5),
+      8px 8px 0 rgba(255, 51, 95, 0.24);
+  }
 }
 
 .admin-mode-card.active {
@@ -1916,6 +2073,10 @@ h3 {
   border-radius: var(--radius);
 }
 
+.content-field-row.is-preview-selected {
+  border-color: var(--blue);
+}
+
 .content-field-row strong,
 .content-field-row small {
   display: block;
@@ -1952,6 +2113,30 @@ h3 {
   gap: 12px;
 }
 
+.mini-page-preview [data-preview-key] {
+  border-radius: 6px;
+}
+
+.mini-page-preview .preview-focus {
+  outline: 2px solid #ff335f;
+  outline-offset: 4px;
+  box-shadow: 0 0 20px rgba(255, 51, 95, 0.4);
+}
+
+.mini-page-preview .is-preview-pulsing {
+  animation: preview-pulse 900ms ease-in-out 2;
+}
+
+@keyframes preview-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.02);
+  }
+}
+
 .mini-page-preview h3 {
   margin-bottom: 0;
   font-family: Georgia, "Times New Roman", serif;
@@ -1971,13 +2156,19 @@ h3 {
 }
 
 .mini-contact-preview,
-.mini-nav-preview {
+.mini-nav-preview,
+.mini-scan-preview,
+.mini-section-preview,
+.mini-timeline-preview {
   display: grid;
   gap: 8px;
 }
 
 .mini-contact-preview span,
 .mini-nav-preview span,
+.mini-scan-preview span,
+.mini-section-preview span,
+.mini-timeline-preview span,
 .swatch-preview span {
   padding: 10px;
   background: var(--paper);
@@ -1986,8 +2177,51 @@ h3 {
 }
 
 .mini-contact-preview strong,
-.mini-contact-preview small {
+.mini-contact-preview small,
+.mini-contact-preview em,
+.mini-scan-preview b,
+.mini-scan-preview small,
+.mini-section-preview b,
+.mini-section-preview small,
+.mini-section-preview em,
+.mini-timeline-preview strong,
+.mini-timeline-preview em,
+.mini-timeline-preview small {
   display: block;
+}
+
+.mini-contact-preview b {
+  display: inline-grid;
+  min-width: 30px;
+  min-height: 30px;
+  margin-bottom: 6px;
+  place-items: center;
+  color: #fff;
+  background: var(--ink);
+  border-radius: 6px;
+}
+
+.mini-contact-preview em,
+.mini-section-preview em,
+.mini-timeline-preview em,
+.mini-timeline-preview small {
+  color: var(--muted);
+  font-style: normal;
+  line-height: 1.4;
+}
+
+.mini-actions-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mini-actions-preview span {
+  padding: 8px 10px;
+  color: #fff;
+  background: var(--button-color);
+  border-radius: 999px;
+  font-weight: 900;
 }
 
 .swatch-preview span::before {
@@ -2479,6 +2713,7 @@ textarea:focus {
   .home-story,
   .admin-layout,
   .content-editor-layout,
+  .publish-choice-grid,
   .about-layout,
   .experience-hero,
   .campaign-info-grid,
@@ -2507,6 +2742,7 @@ textarea:focus {
   .experience-grid,
   .featured-product-grid,
   .admin-mode-grid,
+  .publish-choice-grid,
   .campaign-media-grid,
   .stats-grid,
   .software-grid,
