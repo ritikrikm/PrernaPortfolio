@@ -56,9 +56,7 @@ module.exports = async function handler(req, res) {
       },
       token: {
         exists: true,
-        startsWith: GITHUB_TOKEN.slice(0, 4),
-        endsWith: GITHUB_TOKEN.slice(-4),
-        length: GITHUB_TOKEN.length
+        hasLeadingOrTrailingSpace: GITHUB_TOKEN !== GITHUB_TOKEN.trim()
       },
       checks: {
         repo: repoCheck,

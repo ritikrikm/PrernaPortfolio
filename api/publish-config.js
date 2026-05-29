@@ -18,14 +18,10 @@ module.exports = function handler(req, res) {
   res.status(200).json({
     adminPassword: {
       exists: Boolean(ADMIN_PASSWORD),
-      length: ADMIN_PASSWORD ? ADMIN_PASSWORD.length : 0,
-      matchesExpectedLocalPassword: ADMIN_PASSWORD === "prerna-admin"
+      hasLeadingOrTrailingSpace: ADMIN_PASSWORD ? ADMIN_PASSWORD !== ADMIN_PASSWORD.trim() : false
     },
     githubToken: {
       exists: Boolean(GITHUB_TOKEN),
-      length: GITHUB_TOKEN ? GITHUB_TOKEN.length : 0,
-      startsWith: GITHUB_TOKEN ? GITHUB_TOKEN.slice(0, 4) : "",
-      endsWith: GITHUB_TOKEN ? GITHUB_TOKEN.slice(-4) : "",
       hasLeadingOrTrailingSpace: GITHUB_TOKEN ? GITHUB_TOKEN !== GITHUB_TOKEN.trim() : false
     },
     githubOwner: valueStatus(GITHUB_OWNER),

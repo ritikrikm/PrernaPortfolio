@@ -57,12 +57,28 @@
         </aside>
       </section>
 
+      <section class="content-band featured-products-band">
+        <div class="section-heading">
+          <p class="eyebrow">Featured products</p>
+          <h2>Small, polished product pieces recruiters can scan first.</h2>
+        </div>
+        <div id="home-featured-grid" class="featured-product-grid"></div>
+      </section>
+
       <section class="content-band">
         <div class="section-heading">
           <p class="eyebrow">Portfolio path</p>
           <h2>Start with work experience, then open the projects inside each role.</h2>
         </div>
         <div id="home-experience-grid" class="experience-grid"></div>
+      </section>
+
+      <section class="content-band home-portfolio-band">
+        <div class="section-heading">
+          <p class="eyebrow">Portfolio cards</p>
+          <h2>Selected work across branding, social media, motion, and illustration.</h2>
+        </div>
+        <section id="home-portfolio-grid" class="project-grid" aria-live="polite"></section>
       </section>
     </template>
 
@@ -128,7 +144,7 @@
         <div class="dashboard-hero">
           <div>
             <p class="eyebrow">Studio uploader</p>
-            <h1>Manage experience cards and portfolio projects.</h1>
+            <h1>Manage experience cards, featured products, and portfolio projects.</h1>
           </div>
           <div class="admin-actions">
             <button class="button ghost" id="preview-site" type="button"><span aria-hidden="true">◉</span> Test Preview</button>
@@ -195,6 +211,7 @@
               <label>
                 Where should this show?
                 <select id="projectPlacement" name="projectPlacement" required>
+                  <option value="featured">Featured product</option>
                   <option value="portfolio">Portfolio page</option>
                   <option value="work">Inside work experience</option>
                 </select>
@@ -302,7 +319,7 @@
 
           <aside class="preview-panel" aria-label="Live card preview">
             <div class="board-topline">
-              <strong>Portfolio Card Preview</strong>
+              <strong>Card Preview</strong>
               <small>Saved locally</small>
             </div>
             <div id="admin-preview"></div>

@@ -733,6 +733,10 @@ h3 {
   padding-top: 30px;
 }
 
+.featured-products-band {
+  padding-top: clamp(20px, 4vw, 42px);
+}
+
 .section-heading {
   margin-bottom: 24px;
 }
@@ -802,6 +806,74 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 26px;
+}
+
+.featured-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.featured-product-card {
+  display: grid;
+  overflow: hidden;
+  min-height: 500px;
+  grid-template-rows: minmax(240px, 1fr) auto;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 8px 8px 0 rgba(22, 18, 15, 0.14);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.featured-product-card:hover,
+.featured-product-card:focus-visible {
+  transform: translate(-2px, -2px) rotate(-0.4deg);
+  box-shadow: 11px 11px 0 rgba(22, 18, 15, 0.18);
+  outline: 0;
+}
+
+.featured-product-card:nth-child(2n) {
+  margin-top: 34px;
+}
+
+.featured-product-thumb {
+  min-height: 260px;
+  overflow: hidden;
+  border-bottom: 2px solid var(--ink);
+}
+
+.featured-product-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+  transform-origin: center;
+}
+
+.featured-product-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+}
+
+.featured-product-body h3 {
+  margin-bottom: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.65rem;
+}
+
+.featured-product-body p {
+  color: #4b4039;
+  line-height: 1.5;
+}
+
+.featured-product-body .open-work {
+  width: fit-content;
+  margin-top: auto;
 }
 
 .experience-card {
@@ -1787,7 +1859,9 @@ h3 {
 
 .media-group-heading {
   display: grid;
-  gap: 4px;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.55fr) minmax(220px, 0.8fr);
+  gap: 12px;
+  align-items: end;
   padding: 12px 14px;
   background: var(--ink);
   color: #fff;
@@ -1795,10 +1869,30 @@ h3 {
   border-radius: var(--radius);
 }
 
+.media-group-heading strong {
+  display: block;
+}
+
 .media-group-heading span {
   color: rgba(255, 255, 255, 0.75);
   font-size: 0.84rem;
   line-height: 1.45;
+}
+
+.media-group-heading label {
+  color: #fff;
+  font-size: 0.76rem;
+}
+
+.media-group-heading input {
+  min-height: 40px;
+  border-color: transparent;
+}
+
+.add-media-button {
+  width: fit-content;
+  background: var(--yellow);
+  border-color: var(--ink);
 }
 
 .media-fieldset {
@@ -1973,6 +2067,10 @@ textarea:focus {
 }
 
 .preview-panel .project-card {
+  min-height: auto;
+}
+
+.preview-panel .featured-product-card {
   min-height: auto;
 }
 
@@ -2219,6 +2317,7 @@ textarea:focus {
   .project-grid,
   .focus-grid,
   .experience-grid,
+  .featured-product-grid,
   .campaign-media-grid,
   .stats-grid,
   .software-grid,
@@ -2279,12 +2378,14 @@ textarea:focus {
   .project-grid,
   .focus-grid,
   .experience-grid,
+  .featured-product-grid,
   .campaign-media-grid,
   .stats-grid,
   .software-grid,
   .contact-grid,
   .admin-experience-list,
   .media-fieldset,
+  .media-group-heading,
   .form-grid {
     grid-template-columns: 1fr;
   }
@@ -2304,7 +2405,8 @@ textarea:focus {
   }
 
   .experience-card,
-  .project-card {
+  .project-card,
+  .featured-product-card {
     min-height: auto;
   }
 
@@ -2313,6 +2415,10 @@ textarea:focus {
   }
 
   .project-card:nth-child(3n) {
+    margin-top: 0;
+  }
+
+  .featured-product-card:nth-child(2n) {
     margin-top: 0;
   }
 

@@ -4,7 +4,8 @@ const ADMIN_SESSION_KEY = "prerna-portfolio-admin-unlocked";
 const ADMIN_PASSWORD_KEY = "prerna-portfolio-admin-password";
 const PREVIEW_SESSION_KEY = "prerna-portfolio-preview-drafts";
 const LOCAL_ADMIN_PASSWORD = "prerna-admin";
-const MEDIA_ITEMS_PER_GROUP = 4;
+const MAX_UPLOAD_DIMENSION = 2200;
+const IMAGE_EXPORT_QUALITY = 0.86;
 const PORTFOLIO_FILTERS = ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration"];
 const MEDIA_GROUPS = [
   {
@@ -269,10 +270,60 @@ const samplePortfolioProjects = [
 
 let publishedProjects = sampleProjects.map((project) => ({ ...project }));
 let publishedPortfolioProjects = samplePortfolioProjects.map((project) => ({ ...project }));
+const sampleFeaturedProducts = [
+  {
+    id: "featured-custom-illustrations",
+    placement: "featured",
+    title: "Custom Illustration Products",
+    category: "Illustration",
+    mediaType: "Image",
+    role: "Illustrator + Product Designer",
+    year: "2018-2024",
+    tools: "Procreate, Photoshop, Illustrator",
+    summary: "Personalized illustration-led product work for cards, stationery, calendars, and handmade gifts.",
+    impact: "Built from The Creative Bud's client-led product practice",
+    link: "",
+    accent: "#ff4fa3",
+    image: ""
+  },
+  {
+    id: "featured-social-campaigns",
+    placement: "featured",
+    title: "Social Campaign Visuals",
+    category: "Social Media",
+    mediaType: "Image",
+    role: "Graphic Designer",
+    year: "2023-2024",
+    tools: "Photoshop, Illustrator, Premiere Pro",
+    summary: "Designed carousel-ready visuals, layouts, and digital campaign pieces for platform-first storytelling.",
+    impact: "Quick proof of layout, hierarchy, and campaign polish",
+    link: "",
+    accent: "#ff6542",
+    image: ""
+  },
+  {
+    id: "featured-motion-thumbnails",
+    placement: "featured",
+    title: "Motion + Video Thumbnails",
+    category: "Motion Graphics",
+    mediaType: "Mixed Media",
+    role: "Motion Designer",
+    year: "2024",
+    tools: "After Effects, Premiere Pro, Photoshop",
+    summary: "Thumbnail and motion-forward visual experiments for video, reels, and animated brand moments.",
+    impact: "Shows multimedia thinking before opening full case studies",
+    link: "",
+    accent: "#3557ff",
+    image: ""
+  }
+];
+
+let publishedFeaturedProducts = sampleFeaturedProducts.map((project) => ({ ...project }));
 
 const state = {
   projects: [],
   portfolioProjects: [],
+  featuredProducts: [],
   filter: "All",
   portfolioFilter: "All",
   query: "",
@@ -280,6 +331,8 @@ const state = {
   previewImage: "",
   projectImageRemoved: false,
   detailMediaImages: {},
+  mediaBuilderGroups: null,
+  mediaBuilderMeta: null,
   dataLoaded: false,
   adminPassword: sessionStorage.getItem(ADMIN_PASSWORD_KEY) || "",
   adminData: null
@@ -313,7 +366,8 @@ function portfolioSnapshot(source = {}) {
   return {
     experiences: cloneItems(source.experiences || experiences),
     projects: cloneItems(source.projects || state.projects),
-    portfolioProjects: cloneItems(source.portfolioProjects || state.portfolioProjects)
+    portfolioProjects: cloneItems(source.portfolioProjects || state.portfolioProjects),
+    featuredProducts: cloneItems(source.featuredProducts || state.featuredProducts)
   };
 }
 
@@ -327,7 +381,10 @@ function normalizePortfolioData(data) {
       : cloneItems(sampleProjects),
     portfolioProjects: Array.isArray(data?.portfolioProjects)
       ? cloneItems(data.portfolioProjects)
-      : cloneItems(samplePortfolioProjects)
+      : cloneItems(samplePortfolioProjects),
+    featuredProducts: Array.isArray(data?.featuredProducts)
+      ? cloneItems(data.featuredProducts)
+      : cloneItems(sampleFeaturedProducts)
   };
 }
 
@@ -341,11 +398,13 @@ async function loadPublishedPortfolio() {
       publishedExperiences = data.experiences;
       publishedProjects = data.projects;
       publishedPortfolioProjects = data.portfolioProjects;
+      publishedFeaturedProducts = data.featuredProducts;
     }
   } catch {
     publishedExperiences = cloneItems(defaultExperiences);
     publishedProjects = cloneItems(sampleProjects);
     publishedPortfolioProjects = cloneItems(samplePortfolioProjects);
+    publishedFeaturedProducts = cloneItems(sampleFeaturedProducts);
   }
 
   state.dataLoaded = true;
@@ -355,6 +414,7 @@ function usePublishedPortfolio() {
   experiences = cloneItems(publishedExperiences);
   state.projects = cloneItems(publishedProjects);
   state.portfolioProjects = cloneItems(publishedPortfolioProjects);
+  state.featuredProducts = cloneItems(publishedFeaturedProducts);
 }
 
 function loadDraftPortfolio() {
@@ -363,7 +423,8 @@ function loadDraftPortfolio() {
     return portfolioSnapshot({
       experiences: publishedExperiences,
       projects: publishedProjects,
-      portfolioProjects: publishedPortfolioProjects
+      portfolioProjects: publishedPortfolioProjects,
+      featuredProducts: publishedFeaturedProducts
     });
   }
 
@@ -373,7 +434,8 @@ function loadDraftPortfolio() {
     return portfolioSnapshot({
       experiences: publishedExperiences,
       projects: publishedProjects,
-      portfolioProjects: publishedPortfolioProjects
+      portfolioProjects: publishedPortfolioProjects,
+      featuredProducts: publishedFeaturedProducts
     });
   }
 }
@@ -385,6 +447,7 @@ function saveDraftPortfolio(data) {
   experiences = cloneItems(nextData.experiences);
   state.projects = cloneItems(nextData.projects);
   state.portfolioProjects = cloneItems(nextData.portfolioProjects);
+  state.featuredProducts = cloneItems(nextData.featuredProducts);
 }
 
 function loadProjects() {
@@ -392,11 +455,15 @@ function loadProjects() {
 }
 
 function saveProjects(projects) {
-  saveDraftPortfolio({ experiences, projects, portfolioProjects: state.portfolioProjects });
+  saveDraftPortfolio({ experiences, projects, portfolioProjects: state.portfolioProjects, featuredProducts: state.featuredProducts });
 }
 
 function savePortfolioProjects(portfolioProjects) {
-  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects });
+  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects, featuredProducts: state.featuredProducts });
+}
+
+function saveFeaturedProducts(featuredProducts) {
+  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects: state.portfolioProjects, featuredProducts });
 }
 
 function routeParts() {
@@ -615,6 +682,34 @@ function projectCard(project, collection = "portfolio") {
   `;
 }
 
+function primaryMediaItem(project) {
+  return projectMediaGroups(project)
+    .flatMap((group) => group.items)
+    .find((item) => item.src || item.url || item.videoUrl) || null;
+}
+
+function featuredProductCard(product) {
+  const primaryItem = primaryMediaItem(product);
+  const imageSrc = product.image || primaryItem?.src || primaryItem?.url || "";
+  const image = imageSrc
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} product image" style="${imageStyle(product)}">`
+    : coverArt(product, "large");
+  const previewLabel = product.mediaType === "Video" ? "Play" : "Preview";
+
+  return `
+    <article class="featured-product-card" data-featured-id="${escapeHtml(product.id)}" role="button" tabindex="0" aria-label="Open ${escapeHtml(product.title)} preview">
+      <div class="featured-product-thumb" style="background: ${projectGradient(product)}">${image}</div>
+      <div class="featured-product-body">
+        <span class="pill">${escapeHtml(product.category || "Featured")}</span>
+        <h3>${escapeHtml(product.title)}</h3>
+        <p>${escapeHtml(product.summary || "Featured creative product")}</p>
+        <div class="tool-row">${toolIcons(product.tools)}</div>
+        <button class="open-work" type="button">${escapeHtml(previewLabel)}</button>
+      </div>
+    </article>
+  `;
+}
+
 function experienceCard(experience) {
   const count = projectsForExperience(experience.id).length;
   return `
@@ -640,7 +735,11 @@ function experienceCard(experience) {
 function adminRow(project, collection = "work") {
   const experience = experiences.find((item) => item.id === project.experienceId);
   const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}">` : "";
-  const source = collection === "portfolio" ? "Portfolio page" : experience ? experience.company : "Work experience";
+  const source = collection === "featured"
+    ? "Featured product"
+    : collection === "portfolio"
+      ? "Portfolio page"
+      : experience ? experience.company : "Work experience";
 
   return `
     <div class="admin-row" data-id="${project.id}" data-collection="${collection}">
@@ -670,6 +769,7 @@ async function renderRoute() {
       experiences = cloneItems(draft.experiences);
       state.projects = cloneItems(draft.projects);
       state.portfolioProjects = cloneItems(draft.portfolioProjects);
+      state.featuredProducts = cloneItems(draft.featuredProducts);
     } else {
       usePublishedPortfolio();
     }
@@ -694,7 +794,57 @@ async function renderRoute() {
 
 function setupHome() {
   runTypewriter();
+  const featuredGrid = document.getElementById("home-featured-grid");
+  const portfolioGrid = document.getElementById("home-portfolio-grid");
+  const featuredBand = document.querySelector(".featured-products-band");
+
+  if (state.featuredProducts.length) {
+    featuredBand.hidden = false;
+    featuredGrid.innerHTML = state.featuredProducts.map(featuredProductCard).join("");
+    featuredGrid.addEventListener("click", handleFeaturedProductOpen);
+    featuredGrid.addEventListener("keydown", handleFeaturedProductKeydown);
+  } else {
+    featuredBand.hidden = true;
+    featuredGrid.innerHTML = "";
+  }
+
   document.getElementById("home-experience-grid").innerHTML = experiences.map(experienceCard).join("");
+  portfolioGrid.innerHTML = state.portfolioProjects.length
+    ? state.portfolioProjects.slice(0, 4).map((project) => projectCard(project, "portfolio")).join("")
+    : `<div class="empty-state"><strong>Portfolio projects will appear here after the admin adds them.</strong></div>`;
+
+  portfolioGrid.addEventListener("click", handleProjectGridClick);
+}
+
+function featuredProductPreviewItem(product) {
+  const primaryItem = primaryMediaItem(product) || {};
+  return {
+    type: product.mediaType === "Video" || primaryItem.type === "Video" ? "Video" : "Image",
+    src: product.image || primaryItem.src || primaryItem.url || "",
+    videoUrl: product.mediaType === "Video" || primaryItem.type === "Video" ? product.link || primaryItem.videoUrl || "" : "",
+    title: primaryItem.title || product.title,
+    description: primaryItem.description || product.summary || product.impact || product.category || "Featured product"
+  };
+}
+
+function openFeaturedProduct(productId) {
+  const product = state.featuredProducts.find((item) => item.id === productId);
+  if (!product) return;
+  showMediaModal(featuredProductPreviewItem(product), product);
+}
+
+function handleFeaturedProductOpen(event) {
+  const card = event.target.closest("[data-featured-id]");
+  if (!card) return;
+  openFeaturedProduct(card.dataset.featuredId);
+}
+
+function handleFeaturedProductKeydown(event) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const card = event.target.closest("[data-featured-id]");
+  if (!card) return;
+  event.preventDefault();
+  openFeaturedProduct(card.dataset.featuredId);
 }
 
 function runTypewriter() {
@@ -856,10 +1006,12 @@ function fallbackMediaItem(project) {
 
 function projectMediaGroups(project) {
   const savedGroups = project.mediaGroups || {};
+  const savedMeta = project.mediaGroupMeta || {};
   const hasSavedGroups = MEDIA_GROUPS.some((group) => Array.isArray(savedGroups[group.id]));
   const legacyItems = Array.isArray(project.mediaItems) ? project.mediaItems.filter(hasMediaContent) : [];
 
   return MEDIA_GROUPS.map((group, index) => {
+    const meta = savedMeta[group.id] || {};
     const groupItems = Array.isArray(savedGroups[group.id]) ? savedGroups[group.id].filter(hasMediaContent) : [];
     const items = groupItems.length
       ? groupItems
@@ -869,6 +1021,8 @@ function projectMediaGroups(project) {
 
     return {
       ...group,
+      label: meta.label || group.label,
+      helper: meta.helper || group.helper,
       items
     };
   }).map((group, index) => {
@@ -1340,101 +1494,199 @@ function mediaInputId(field, groupId, index) {
   return `${field}-${groupId}-${index}`;
 }
 
+function mediaGroupMetaId(field, groupId) {
+  return `${field}-${groupId}`;
+}
+
 function mediaField(field, groupId, index) {
   return document.getElementById(mediaInputId(field, groupId, index));
+}
+
+function mediaMetaField(field, groupId) {
+  return document.getElementById(mediaGroupMetaId(field, groupId));
 }
 
 function mediaImageKey(groupId, index) {
   return `${groupId}-${index}`;
 }
 
-function mediaFieldset(group, index) {
+function emptyMediaItem() {
+  return { type: "Image", title: "", src: "", videoUrl: "", description: "" };
+}
+
+function defaultMediaBuilderGroups() {
+  return MEDIA_GROUPS.reduce((groups, group) => {
+    groups[group.id] = [emptyMediaItem()];
+    return groups;
+  }, {});
+}
+
+function defaultMediaGroupMeta() {
+  return MEDIA_GROUPS.reduce((meta, group) => {
+    meta[group.id] = { label: group.label, helper: group.helper };
+    return meta;
+  }, {});
+}
+
+function normalizeMediaBuilderGroups(mediaGroups = {}) {
+  const groups = Array.isArray(mediaGroups)
+    ? { finalOutput: mediaGroups }
+    : mediaGroups;
+
+  return MEDIA_GROUPS.reduce((nextGroups, group) => {
+    const items = Array.isArray(groups?.[group.id])
+      ? groups[group.id].map((item) => ({
+          type: item.type || "Image",
+          title: item.title || "",
+          src: item.src || item.url || "",
+          videoUrl: item.videoUrl || "",
+          description: item.description || ""
+        }))
+      : [];
+    nextGroups[group.id] = items.length ? items : [emptyMediaItem()];
+    return nextGroups;
+  }, {});
+}
+
+function normalizeMediaGroupMeta(mediaGroupMeta = {}) {
+  return MEDIA_GROUPS.reduce((meta, group) => {
+    const saved = mediaGroupMeta?.[group.id] || {};
+    meta[group.id] = {
+      label: saved.label || group.label,
+      helper: saved.helper || group.helper
+    };
+    return meta;
+  }, {});
+}
+
+function formMediaGroupMeta() {
+  return MEDIA_GROUPS.reduce((meta, group) => {
+    meta[group.id] = {
+      label: mediaMetaField("mediaGroupLabel", group.id)?.value.trim() || group.label,
+      helper: mediaMetaField("mediaGroupHelper", group.id)?.value.trim() || group.helper
+    };
+    return meta;
+  }, {});
+}
+
+function mediaFieldset(group, index, item = emptyMediaItem()) {
   const assetNumber = index + 1;
+  const src = item.src || item.url || "";
+  const embeddedImage = String(src).startsWith("data:image/");
+  if (embeddedImage) {
+    state.detailMediaImages[mediaImageKey(group.id, index)] = src;
+  }
+
   return `
     <article class="media-fieldset" data-media-group="${group.id}" data-media-index="${index}">
       <div class="media-fieldset-head">
         <strong>${escapeHtml(group.label)} ${assetNumber}</strong>
         <div class="media-fieldset-actions">
           <select id="${mediaInputId("mediaType", group.id, index)}">
-            <option>Image</option>
-            <option>Video</option>
+            <option${(item.type || "Image") === "Image" ? " selected" : ""}>Image</option>
+            <option${item.type === "Video" ? " selected" : ""}>Video</option>
           </select>
+          <button class="mini-button danger" type="button" data-remove-media="${group.id}" data-remove-media-index="${index}">Remove slot</button>
           <button class="mini-button danger" type="button" data-clear-media="${group.id}" data-clear-media-index="${index}">Clear asset</button>
         </div>
       </div>
       <label>
         Asset title
-        <input id="${mediaInputId("mediaTitle", group.id, index)}" type="text" placeholder="${group.id === "initialSketch" ? "Rough layout sketch" : "Final carousel design"}">
+        <input id="${mediaInputId("mediaTitle", group.id, index)}" type="text" value="${escapeHtml(item.title || "")}" placeholder="${group.id === "initialSketch" ? "Rough layout sketch" : "Final carousel design"}">
       </label>
       <label>
         Image URL / thumbnail URL
-        <input id="${mediaInputId("mediaUrl", group.id, index)}" type="text" placeholder="https:// or uploaded image">
+        <input id="${mediaInputId("mediaUrl", group.id, index)}" type="text" value="${embeddedImage ? "" : escapeHtml(src)}" placeholder="https:// or uploaded image">
       </label>
       <label>
         Video link
-        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" placeholder="https://youtube.com/...">
+        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" value="${escapeHtml(item.videoUrl || "")}" placeholder="https://youtube.com/...">
       </label>
       <label class="upload-box">
         <span>Upload image / thumbnail</span>
         <input id="${mediaInputId("mediaFile", group.id, index)}" type="file" accept="image/*" data-detail-group="${group.id}" data-detail-index="${index}">
-        <strong id="${mediaInputId("mediaFileName", group.id, index)}">Choose an image</strong>
+        <strong id="${mediaInputId("mediaFileName", group.id, index)}">${src ? "Existing image selected" : "Choose an image"}</strong>
         <button class="mini-button" type="button" data-clear-media-image="${group.id}" data-clear-media-image-index="${index}">Remove image</button>
       </label>
       <label class="wide">
         Asset text
-        <textarea id="${mediaInputId("mediaDescription", group.id, index)}" rows="3" placeholder="Optional text below this photo/video card."></textarea>
+        <textarea id="${mediaInputId("mediaDescription", group.id, index)}" rows="3" placeholder="Optional text below this photo/video card.">${escapeHtml(item.description || "")}</textarea>
       </label>
     </article>
   `;
 }
 
-function renderMediaBuilder() {
+function renderMediaBuilder(mediaGroups = state.mediaBuilderGroups, mediaGroupMeta = state.mediaBuilderMeta) {
   const builder = document.getElementById("media-builder-fields");
   if (!builder) return;
+  state.detailMediaImages = {};
+  state.mediaBuilderGroups = normalizeMediaBuilderGroups(mediaGroups || defaultMediaBuilderGroups());
+  state.mediaBuilderMeta = normalizeMediaGroupMeta(mediaGroupMeta || defaultMediaGroupMeta());
+
   builder.innerHTML = MEDIA_GROUPS
-    .map((group) => `
+    .map((group) => {
+      const meta = state.mediaBuilderMeta[group.id];
+      const groupWithMeta = { ...group, label: meta.label, helper: meta.helper };
+      return `
       <section class="media-group-builder">
         <div class="media-group-heading">
-          <strong>${escapeHtml(group.label)}</strong>
-          <span>${escapeHtml(group.helper)}</span>
+          <div>
+            <strong>${escapeHtml(group.label)}</strong>
+            <span>${escapeHtml(group.helper)}</span>
+          </div>
+          <label>
+            Section title
+            <input id="${mediaGroupMetaId("mediaGroupLabel", group.id)}" type="text" value="${escapeHtml(meta.label)}" placeholder="${escapeHtml(group.label)}">
+          </label>
+          <label>
+            Admin note
+            <input id="${mediaGroupMetaId("mediaGroupHelper", group.id)}" type="text" value="${escapeHtml(meta.helper)}" placeholder="${escapeHtml(group.helper)}">
+          </label>
         </div>
-        ${Array.from({ length: MEDIA_ITEMS_PER_GROUP }, (_, index) => mediaFieldset(group, index)).join("")}
+        ${state.mediaBuilderGroups[group.id].map((item, index) => mediaFieldset(groupWithMeta, index, item)).join("")}
+        <button class="mini-button add-media-button" type="button" data-add-media="${group.id}">+ Add asset</button>
       </section>
-    `)
+    `;
+    })
     .join("");
+
+  setupDetailMediaUploads();
 }
 
-function formMediaGroups() {
+function currentMediaGroupsFromFields(includeEmpty = false) {
   return MEDIA_GROUPS.reduce((groups, group) => {
-    groups[group.id] = Array.from({ length: MEDIA_ITEMS_PER_GROUP }, (_, index) => {
+    const fieldsets = Array.from(document.querySelectorAll(`[data-media-group="${group.id}"]`));
+    groups[group.id] = fieldsets.map((fieldset) => {
+      const index = Number(fieldset.dataset.mediaIndex);
       const type = mediaField("mediaType", group.id, index).value;
       const title = mediaField("mediaTitle", group.id, index).value.trim();
       const url = mediaField("mediaUrl", group.id, index).value.trim();
       const videoUrl = mediaField("mediaVideoUrl", group.id, index).value.trim();
       const description = mediaField("mediaDescription", group.id, index).value.trim();
       const src = state.detailMediaImages[mediaImageKey(group.id, index)] || url;
+      const item = { type, title, src, videoUrl, description };
 
-      if (!title && !src && !videoUrl && !description) return null;
-
-      return { type, title, src, videoUrl, description };
+      if (!includeEmpty && !hasMediaContent(item)) return null;
+      return item;
     }).filter(Boolean);
     return groups;
   }, {});
 }
 
+function formMediaGroups() {
+  return currentMediaGroupsFromFields(false);
+}
+
+function syncMediaBuilderState() {
+  state.mediaBuilderGroups = currentMediaGroupsFromFields(true);
+  state.mediaBuilderMeta = formMediaGroupMeta();
+}
+
 function clearMediaFields() {
   state.detailMediaImages = {};
-  MEDIA_GROUPS.forEach((group) => {
-    for (let index = 0; index < MEDIA_ITEMS_PER_GROUP; index += 1) {
-      mediaField("mediaType", group.id, index).value = "Image";
-      mediaField("mediaTitle", group.id, index).value = "";
-      mediaField("mediaUrl", group.id, index).value = "";
-      mediaField("mediaVideoUrl", group.id, index).value = "";
-      mediaField("mediaDescription", group.id, index).value = "";
-      mediaField("mediaFile", group.id, index).value = "";
-      mediaField("mediaFileName", group.id, index).textContent = "Choose an image";
-    }
-  });
+  state.mediaBuilderGroups = defaultMediaBuilderGroups();
+  state.mediaBuilderMeta = defaultMediaGroupMeta();
+  renderMediaBuilder();
 }
 
 function clearDetailMediaImage(groupId, index) {
@@ -1454,28 +1706,30 @@ function clearDetailMediaItem(groupId, index) {
   renderPreview();
 }
 
-function fillMediaFields(mediaGroups = {}) {
-  clearMediaFields();
-  const groups = Array.isArray(mediaGroups)
-    ? { finalOutput: mediaGroups }
-    : mediaGroups;
+function removeDetailMediaItem(groupId, index) {
+  syncMediaBuilderState();
+  const items = state.mediaBuilderGroups[groupId] || [];
+  items.splice(index, 1);
+  state.mediaBuilderGroups[groupId] = items.length ? items : [emptyMediaItem()];
+  renderMediaBuilder();
+  renderPreview();
+}
 
-  MEDIA_GROUPS.forEach((group) => {
-    const items = Array.isArray(groups[group.id]) ? groups[group.id] : [];
-    items.slice(0, MEDIA_ITEMS_PER_GROUP).forEach((item, index) => {
-      mediaField("mediaType", group.id, index).value = item.type || "Image";
-      mediaField("mediaTitle", group.id, index).value = item.title || "";
-      mediaField("mediaVideoUrl", group.id, index).value = item.videoUrl || "";
-      mediaField("mediaDescription", group.id, index).value = item.description || "";
+function addDetailMediaItem(groupId) {
+  syncMediaBuilderState();
+  state.mediaBuilderGroups[groupId] = [
+    ...(state.mediaBuilderGroups[groupId] || []),
+    emptyMediaItem()
+  ];
+  renderMediaBuilder();
+  renderPreview();
+}
 
-      if (item.src?.startsWith("data:image/")) {
-        state.detailMediaImages[mediaImageKey(group.id, index)] = item.src;
-        mediaField("mediaFileName", group.id, index).textContent = "Existing image selected";
-      } else {
-        mediaField("mediaUrl", group.id, index).value = item.src || item.url || "";
-      }
-    });
-  });
+function fillMediaFields(mediaGroups = {}, mediaGroupMeta = {}) {
+  state.detailMediaImages = {};
+  state.mediaBuilderGroups = normalizeMediaBuilderGroups(mediaGroups);
+  state.mediaBuilderMeta = normalizeMediaGroupMeta(mediaGroupMeta);
+  renderMediaBuilder();
 }
 
 function setupDetailMediaUploads() {
@@ -1505,6 +1759,18 @@ function setupDetailMediaControls() {
     const assetButton = event.target.closest("[data-clear-media]");
     if (assetButton) {
       clearDetailMediaItem(assetButton.dataset.clearMedia, Number(assetButton.dataset.clearMediaIndex));
+      return;
+    }
+
+    const removeButton = event.target.closest("[data-remove-media]");
+    if (removeButton) {
+      removeDetailMediaItem(removeButton.dataset.removeMedia, Number(removeButton.dataset.removeMediaIndex));
+      return;
+    }
+
+    const addButton = event.target.closest("[data-add-media]");
+    if (addButton) {
+      addDetailMediaItem(addButton.dataset.addMedia);
     }
   });
 }
@@ -1555,7 +1821,8 @@ async function handleExperienceSave(event) {
   saveDraftPortfolio({
     experiences: nextExperiences,
     projects: state.projects,
-    portfolioProjects: state.portfolioProjects
+    portfolioProjects: state.portfolioProjects,
+    featuredProducts: state.featuredProducts
   });
   clearExperienceForm();
   renderExperienceSelect();
@@ -1578,7 +1845,8 @@ async function handleAdminExperienceAction(event) {
     saveDraftPortfolio({
       experiences: experiences.filter((item) => item.id !== experience.id),
       projects: state.projects.filter((project) => project.experienceId !== experience.id),
-      portfolioProjects: state.portfolioProjects
+      portfolioProjects: state.portfolioProjects,
+      featuredProducts: state.featuredProducts
     });
     renderExperienceSelect();
     renderAdminExperienceList();
@@ -1610,9 +1878,12 @@ function setupAdmin() {
   experiences = cloneItems(draft.experiences);
   state.projects = cloneItems(draft.projects);
   state.portfolioProjects = cloneItems(draft.portfolioProjects);
+  state.featuredProducts = cloneItems(draft.featuredProducts);
   state.previewImage = "";
   state.projectImageRemoved = false;
   state.detailMediaImages = {};
+  state.mediaBuilderGroups = defaultMediaBuilderGroups();
+  state.mediaBuilderMeta = defaultMediaGroupMeta();
   const form = document.getElementById("project-form");
   const imageInput = document.getElementById("image");
 
@@ -1625,7 +1896,6 @@ function setupAdmin() {
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
   document.getElementById("clear-experience-form").addEventListener("click", clearExperienceForm);
   document.getElementById("admin-experience-list").addEventListener("click", handleAdminExperienceAction);
-  setupDetailMediaUploads();
   setupDetailMediaControls();
   form.addEventListener("input", renderPreview);
   form.addEventListener("change", renderPreview);
@@ -1648,13 +1918,57 @@ function setupAdmin() {
   document.getElementById("admin-project-list").addEventListener("click", handleAdminListAction);
 }
 
-function readFileAsDataUrl(file) {
+function readRawFileAsDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+function compressedImageBlob(file) {
+  if (!file.type?.startsWith("image/")) return Promise.resolve(null);
+
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const scale = Math.min(1, MAX_UPLOAD_DIMENSION / Math.max(image.width, image.height));
+      const width = Math.max(1, Math.round(image.width * scale));
+      const height = Math.max(1, Math.round(image.height * scale));
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext("2d");
+      context.drawImage(image, 0, 0, width, height);
+      canvas.toBlob((blob) => {
+        resolve(blob || null);
+      }, "image/webp", IMAGE_EXPORT_QUALITY);
+    };
+
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Could not read image."));
+    };
+
+    image.src = objectUrl;
+  });
+}
+
+async function readFileAsDataUrl(file) {
+  if (!file) return "";
+  try {
+    const blob = await compressedImageBlob(file);
+    if (blob && blob.size && (file.size > 450000 || blob.size < file.size * 1.02)) {
+      return readRawFileAsDataUrl(blob);
+    }
+  } catch {
+    // Fall back to the original file so an upload failure does not block the draft.
+  }
+  return readRawFileAsDataUrl(file);
 }
 
 function formProject() {
@@ -1677,6 +1991,7 @@ function formProject() {
     imageFit: document.getElementById("imageFit").value,
     imagePosition: document.getElementById("imagePosition").value,
     imageZoom: document.getElementById("imageZoom").value,
+    mediaGroupMeta: formMediaGroupMeta(),
     mediaGroups: formMediaGroups(),
     image: state.previewImage
   };
@@ -1686,7 +2001,9 @@ function renderPreview() {
   const preview = document.getElementById("admin-preview");
   if (!preview) return;
   const project = formProject();
-  preview.innerHTML = projectCard(project, project.placement === "work" ? "work" : "portfolio");
+  preview.innerHTML = project.placement === "featured"
+    ? featuredProductCard(project)
+    : projectCard(project, project.placement === "work" ? "work" : "portfolio");
 }
 
 async function handleProjectSave(event) {
@@ -1694,11 +2011,18 @@ async function handleProjectSave(event) {
   const nextProject = formProject();
   const oldCollection = document.getElementById("project-collection").value
     || (state.projects.some((project) => project.id === nextProject.id) ? "work" : "")
-    || (state.portfolioProjects.some((project) => project.id === nextProject.id) ? "portfolio" : "");
-  const nextCollection = nextProject.placement === "work" ? "work" : "portfolio";
+    || (state.portfolioProjects.some((project) => project.id === nextProject.id) ? "portfolio" : "")
+    || (state.featuredProducts.some((project) => project.id === nextProject.id) ? "featured" : "");
+  const nextCollection = nextProject.placement === "work"
+    ? "work"
+    : nextProject.placement === "featured"
+      ? "featured"
+      : "portfolio";
   const existingProject = oldCollection === "portfolio"
     ? state.portfolioProjects.find((project) => project.id === nextProject.id)
-    : state.projects.find((project) => project.id === nextProject.id);
+    : oldCollection === "featured"
+      ? state.featuredProducts.find((project) => project.id === nextProject.id)
+      : state.projects.find((project) => project.id === nextProject.id);
   if (existingProject && !nextProject.image && !state.projectImageRemoved) {
     nextProject.image = existingProject.image;
   }
@@ -1711,6 +2035,9 @@ async function handleProjectSave(event) {
   let nextPortfolioProjects = oldCollection === "portfolio"
     ? state.portfolioProjects.filter((project) => project.id !== nextProject.id)
     : [...state.portfolioProjects];
+  let nextFeaturedProducts = oldCollection === "featured"
+    ? state.featuredProducts.filter((project) => project.id !== nextProject.id)
+    : [...state.featuredProducts];
 
   if (nextCollection === "work") {
     if (!nextProject.experienceId) {
@@ -1718,14 +2045,23 @@ async function handleProjectSave(event) {
       return;
     }
     nextProjects = [nextProject, ...nextProjects];
+  } else if (nextCollection === "featured") {
+    nextProject.experienceId = "";
+    nextFeaturedProducts = [nextProject, ...nextFeaturedProducts];
   } else {
+    nextProject.experienceId = "";
     nextPortfolioProjects = [nextProject, ...nextPortfolioProjects];
   }
 
   try {
-    saveDraftPortfolio({ experiences, projects: nextProjects, portfolioProjects: nextPortfolioProjects });
+    saveDraftPortfolio({
+      experiences,
+      projects: nextProjects,
+      portfolioProjects: nextPortfolioProjects,
+      featuredProducts: nextFeaturedProducts
+    });
   } catch {
-    alert("The image is too large for browser storage. Try a smaller web image.");
+    alert("The image is still too large for browser storage. Try a smaller web image, then publish so the asset can move into GitHub.");
     return;
   }
 
@@ -1753,6 +2089,9 @@ function clearForm() {
 
 function renderAdminList() {
   const list = document.getElementById("admin-project-list");
+  const featuredRows = state.featuredProducts.length
+    ? state.featuredProducts.map((project) => adminRow(project, "featured")).join("")
+    : `<div class="empty-state"><strong>No featured products yet.</strong></div>`;
   const workRows = state.projects.length
     ? state.projects.map((project) => adminRow(project, "work")).join("")
     : `<div class="empty-state"><strong>No work experience projects yet.</strong></div>`;
@@ -1761,6 +2100,10 @@ function renderAdminList() {
     : `<div class="empty-state"><strong>No portfolio projects yet.</strong></div>`;
 
   list.innerHTML = `
+    <section class="admin-project-group">
+      <h3>Featured Products</h3>
+      <div class="admin-project-list-inner">${featuredRows}</div>
+    </section>
     <section class="admin-project-group">
       <h3>Work Experience Projects</h3>
       <div class="admin-project-list-inner">${workRows}</div>
@@ -1778,13 +2121,19 @@ async function handleAdminListAction(event) {
 
   const row = button.closest("[data-id]");
   const collection = row.dataset.collection || "work";
-  const source = collection === "portfolio" ? state.portfolioProjects : state.projects;
+  const source = collection === "featured"
+    ? state.featuredProducts
+    : collection === "portfolio"
+      ? state.portfolioProjects
+      : state.projects;
   const project = source.find((item) => item.id === row.dataset.id);
   if (!project) return;
 
   if (button.dataset.action === "delete") {
     if (!(await confirmAction("Delete this draft project?", "Delete"))) return;
-    if (collection === "portfolio") {
+    if (collection === "featured") {
+      saveFeaturedProducts(state.featuredProducts.filter((item) => item.id !== project.id));
+    } else if (collection === "portfolio") {
       savePortfolioProjects(state.portfolioProjects.filter((item) => item.id !== project.id));
     } else {
       saveProjects(state.projects.filter((item) => item.id !== project.id));
@@ -1816,7 +2165,7 @@ async function handleAdminListAction(event) {
   document.getElementById("image-file-name").textContent = project.image ? "Existing image selected" : "Choose an image";
   state.previewImage = project.image || "";
   state.projectImageRemoved = false;
-  fillMediaFields(project.mediaGroups || project.mediaItems || []);
+  fillMediaFields(project.mediaGroups || project.mediaItems || [], project.mediaGroupMeta || {});
   renderPreview();
   document.getElementById("title").focus();
 }
@@ -1825,7 +2174,7 @@ function previewDraft() {
   saveDraftPortfolio(portfolioSnapshot());
   sessionStorage.setItem(PREVIEW_SESSION_KEY, "true");
   showToast("Draft preview is on.");
-  window.location.hash = "#/portfolio";
+  window.location.hash = "#/";
 }
 
 async function publishDraft() {
@@ -1851,11 +2200,17 @@ async function publishDraft() {
       throw new Error(result.error || "Publish endpoint is not configured yet.");
     }
 
-    publishedExperiences = cloneItems(experiences);
-    publishedProjects = cloneItems(state.projects);
-    publishedPortfolioProjects = cloneItems(state.portfolioProjects);
+    const published = normalizePortfolioData(result.portfolio || portfolioSnapshot());
+    publishedExperiences = cloneItems(published.experiences);
+    publishedProjects = cloneItems(published.projects);
+    publishedPortfolioProjects = cloneItems(published.portfolioProjects);
+    publishedFeaturedProducts = cloneItems(published.featuredProducts);
+    experiences = cloneItems(published.experiences);
+    state.projects = cloneItems(published.projects);
+    state.portfolioProjects = cloneItems(published.portfolioProjects);
+    state.featuredProducts = cloneItems(published.featuredProducts);
     localStorage.removeItem(DRAFT_STORE_KEY);
-    showToast("Published to GitHub. Vercel should deploy next.");
+    showToast(result.assetCount ? `Published. ${result.assetCount} image asset(s) moved to GitHub.` : "Published to GitHub. Vercel should deploy next.");
   } catch (error) {
     showToast(error.message || "Publish failed.");
   } finally {
@@ -1869,7 +2224,8 @@ async function resetProjects() {
   saveDraftPortfolio({
     experiences: publishedExperiences,
     projects: publishedProjects,
-    portfolioProjects: publishedPortfolioProjects
+    portfolioProjects: publishedPortfolioProjects,
+    featuredProducts: publishedFeaturedProducts
   });
   renderExperienceSelect();
   renderAdminExperienceList();

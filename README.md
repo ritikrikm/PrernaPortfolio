@@ -4,7 +4,7 @@ Static portfolio site with a private admin studio at `#/studio`.
 
 ## Publish Setup
 
-The Publish button uses Vercel serverless functions in `api/` to update `data/portfolio.json` on GitHub. Add these variables in Vercel under Project Settings -> Environment Variables:
+The Publish button uses Vercel serverless functions in `api/` to update `data/portfolio.json` on GitHub. Uploaded images are moved into `assets/uploads/` during publish, then the JSON stores those file paths instead of large base64 strings. Add these variables in Vercel under Project Settings -> Environment Variables:
 
 ```txt
 ADMIN_PASSWORD=prerna-admin
