@@ -67,6 +67,227 @@ const typewriterWords = [
   "a Creative Maker"
 ];
 
+const defaultSiteContent = {
+  global: {
+    metaTitle: "Prerna Sharma | Graphic Designer Portfolio",
+    metaDescription: "Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
+    skipLink: "Skip to portfolio",
+    brandSymbol: "PS",
+    brandName: "Prerna Sharma",
+    brandSubtitle: "Graphic Designer + Motion Artist",
+    nav: {
+      home: "Home",
+      work: "Work",
+      portfolio: "Portfolio",
+      about: "About",
+      contact: "Contact"
+    }
+  },
+  home: {
+    eyebrow: "Graphic design portfolio",
+    headline: "Design work that moves from brief to brand, campaign, and motion.",
+    typewriterPrefix: "I am",
+    typewriterWords: [
+      "a Graphic Designer",
+      "a Motion Designer",
+      "a Brand Illustrator",
+      "a Visual Storyteller",
+      "a Creative Maker"
+    ],
+    summary: "A recruiter-friendly portfolio for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
+    primaryAction: "View Experience",
+    secondaryAction: "Contact",
+    quickScanEyebrow: "Quick scan",
+    quickScan: [
+      {
+        label: "Best fit",
+        text: "Graphic Designer, Multimedia Designer, Motion Designer"
+      },
+      {
+        label: "Experience",
+        text: "2 years professional + 6 years creative business"
+      },
+      {
+        label: "Strength",
+        text: "Campaign visuals, brand consistency, social content, motion"
+      },
+      {
+        label: "Tools",
+        text: "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
+      }
+    ],
+    featuredEyebrow: "Featured products",
+    featuredHeadline: "Small, polished product pieces recruiters can scan first.",
+    workEyebrow: "Portfolio path",
+    workHeadline: "Start with work experience, then open the projects inside each role.",
+    portfolioEyebrow: "Portfolio cards",
+    portfolioHeadline: "Selected work across branding, social media, motion, and illustration."
+  },
+  work: {
+    eyebrow: "Work experience",
+    headline: "Choose an experience to see the work created inside it.",
+    searchPlaceholder: "Search project, tool, outcome"
+  },
+  portfolio: {
+    eyebrow: "Portfolio",
+    headline: "Browse selected campaigns, visuals, motion pieces, and illustration work.",
+    searchPlaceholder: "Search portfolio, tool, outcome"
+  },
+  about: {
+    eyebrow: "About the designer",
+    headline: "Graphic designer with campaign discipline and a handmade visual voice.",
+    body: [
+      "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her portfolio connects practical production skills with expressive, human visual details.",
+      "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
+    ],
+    sketchAlt: "Sketch-style illustration of a designer creating at a desk",
+    timeline: [
+      {
+        dates: "2023-2024",
+        title: "Executive - Design, MSL Global",
+        text: "Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production."
+      },
+      {
+        dates: "2023",
+        title: "Communications Designer, Cultre Boat",
+        text: "Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands."
+      },
+      {
+        dates: "2018-2024",
+        title: "Founder / Creative Entrepreneur, The Creative Bud",
+        text: "Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling."
+      }
+    ]
+  },
+  contact: {
+    eyebrow: "Contact",
+    headline: "Open to graphic design, brand, motion, and multimedia roles.",
+    cards: [
+      {
+        icon: "✉",
+        label: "Email",
+        value: "visualartist.prerna@gmail.com",
+        href: "mailto:visualartist.prerna@gmail.com"
+      },
+      {
+        icon: "☎",
+        label: "Phone",
+        value: "(416) 825-6120",
+        href: "tel:+14168256120"
+      },
+      {
+        icon: "in",
+        label: "LinkedIn",
+        value: "Add her real LinkedIn URL here",
+        href: "https://www.linkedin.com/"
+      },
+      {
+        icon: "Be",
+        label: "Behance",
+        value: "behance.net/gallery/177375659/PORTFOLIO",
+        href: "https://www.behance.net/gallery/177375659/PORTFOLIO"
+      }
+    ]
+  },
+  appearance: {
+    pageBackground: "#fff8ef",
+    inkColor: "#16120f",
+    accentColor: "#087f6f",
+    typewriterColor: "#ff6542",
+    buttonColor: "#087f6f",
+    textStyles: {}
+  }
+};
+
+const CONTENT_PAGES = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+  { id: "global", label: "Header" },
+  { id: "work", label: "Work" },
+  { id: "portfolio", label: "Portfolio" },
+  { id: "appearance", label: "Appearance" }
+];
+
+const CONTENT_FIELDS = [
+  { page: "global", key: "global.brandName", label: "Brand name", path: "global.brandName" },
+  { page: "global", key: "global.brandSubtitle", label: "Brand subtitle", path: "global.brandSubtitle" },
+  { page: "global", key: "global.brandSymbol", label: "Brand symbol", path: "global.brandSymbol" },
+  { page: "global", key: "global.skipLink", label: "Skip link", path: "global.skipLink" },
+  { page: "global", key: "global.metaTitle", label: "Browser title", path: "global.metaTitle" },
+  { page: "global", key: "global.metaDescription", label: "Meta description", path: "global.metaDescription", type: "textarea" },
+  { page: "global", key: "global.nav.home", label: "Nav: Home", path: "global.nav.home" },
+  { page: "global", key: "global.nav.work", label: "Nav: Work", path: "global.nav.work" },
+  { page: "global", key: "global.nav.portfolio", label: "Nav: Portfolio", path: "global.nav.portfolio" },
+  { page: "global", key: "global.nav.about", label: "Nav: About", path: "global.nav.about" },
+  { page: "global", key: "global.nav.contact", label: "Nav: Contact", path: "global.nav.contact" },
+  { page: "home", key: "home.eyebrow", label: "Hero eyebrow", path: "home.eyebrow" },
+  { page: "home", key: "home.headline", label: "Hero headline", path: "home.headline", type: "textarea" },
+  { page: "home", key: "home.typewriterPrefix", label: "Typewriter prefix", path: "home.typewriterPrefix" },
+  { page: "home", key: "home.typewriterWords", label: "Typewriter words", path: "home.typewriterWords", type: "list", helper: "One phrase per line." },
+  { page: "home", key: "home.summary", label: "Hero summary", path: "home.summary", type: "textarea" },
+  { page: "home", key: "home.primaryAction", label: "Primary button", path: "home.primaryAction" },
+  { page: "home", key: "home.secondaryAction", label: "Secondary button", path: "home.secondaryAction" },
+  { page: "home", key: "home.quickScanEyebrow", label: "Quick scan eyebrow", path: "home.quickScanEyebrow" },
+  { page: "home", key: "home.quickScan.0.label", label: "Quick scan 1 label", path: "home.quickScan.0.label" },
+  { page: "home", key: "home.quickScan.0.text", label: "Quick scan 1 text", path: "home.quickScan.0.text", type: "textarea" },
+  { page: "home", key: "home.quickScan.1.label", label: "Quick scan 2 label", path: "home.quickScan.1.label" },
+  { page: "home", key: "home.quickScan.1.text", label: "Quick scan 2 text", path: "home.quickScan.1.text", type: "textarea" },
+  { page: "home", key: "home.quickScan.2.label", label: "Quick scan 3 label", path: "home.quickScan.2.label" },
+  { page: "home", key: "home.quickScan.2.text", label: "Quick scan 3 text", path: "home.quickScan.2.text", type: "textarea" },
+  { page: "home", key: "home.quickScan.3.label", label: "Quick scan 4 label", path: "home.quickScan.3.label" },
+  { page: "home", key: "home.quickScan.3.text", label: "Quick scan 4 text", path: "home.quickScan.3.text", type: "textarea" },
+  { page: "home", key: "home.featuredEyebrow", label: "Featured products eyebrow", path: "home.featuredEyebrow" },
+  { page: "home", key: "home.featuredHeadline", label: "Featured products headline", path: "home.featuredHeadline", type: "textarea" },
+  { page: "home", key: "home.workEyebrow", label: "Work section eyebrow", path: "home.workEyebrow" },
+  { page: "home", key: "home.workHeadline", label: "Work section headline", path: "home.workHeadline", type: "textarea" },
+  { page: "home", key: "home.portfolioEyebrow", label: "Portfolio section eyebrow", path: "home.portfolioEyebrow" },
+  { page: "home", key: "home.portfolioHeadline", label: "Portfolio section headline", path: "home.portfolioHeadline", type: "textarea" },
+  { page: "work", key: "work.eyebrow", label: "Work page eyebrow", path: "work.eyebrow" },
+  { page: "work", key: "work.headline", label: "Work page headline", path: "work.headline", type: "textarea" },
+  { page: "work", key: "work.searchPlaceholder", label: "Work search placeholder", path: "work.searchPlaceholder" },
+  { page: "portfolio", key: "portfolio.eyebrow", label: "Portfolio page eyebrow", path: "portfolio.eyebrow" },
+  { page: "portfolio", key: "portfolio.headline", label: "Portfolio page headline", path: "portfolio.headline", type: "textarea" },
+  { page: "portfolio", key: "portfolio.searchPlaceholder", label: "Portfolio search placeholder", path: "portfolio.searchPlaceholder" },
+  { page: "about", key: "about.eyebrow", label: "About eyebrow", path: "about.eyebrow" },
+  { page: "about", key: "about.headline", label: "About headline", path: "about.headline", type: "textarea" },
+  { page: "about", key: "about.body.0", label: "About paragraph 1", path: "about.body.0", type: "textarea" },
+  { page: "about", key: "about.body.1", label: "About paragraph 2", path: "about.body.1", type: "textarea" },
+  { page: "about", key: "about.sketchAlt", label: "Sketch image alt text", path: "about.sketchAlt", type: "textarea" },
+  { page: "about", key: "about.timeline.0.dates", label: "Timeline 1 dates", path: "about.timeline.0.dates" },
+  { page: "about", key: "about.timeline.0.title", label: "Timeline 1 title", path: "about.timeline.0.title" },
+  { page: "about", key: "about.timeline.0.text", label: "Timeline 1 text", path: "about.timeline.0.text", type: "textarea" },
+  { page: "about", key: "about.timeline.1.dates", label: "Timeline 2 dates", path: "about.timeline.1.dates" },
+  { page: "about", key: "about.timeline.1.title", label: "Timeline 2 title", path: "about.timeline.1.title" },
+  { page: "about", key: "about.timeline.1.text", label: "Timeline 2 text", path: "about.timeline.1.text", type: "textarea" },
+  { page: "about", key: "about.timeline.2.dates", label: "Timeline 3 dates", path: "about.timeline.2.dates" },
+  { page: "about", key: "about.timeline.2.title", label: "Timeline 3 title", path: "about.timeline.2.title" },
+  { page: "about", key: "about.timeline.2.text", label: "Timeline 3 text", path: "about.timeline.2.text", type: "textarea" },
+  { page: "contact", key: "contact.eyebrow", label: "Contact eyebrow", path: "contact.eyebrow" },
+  { page: "contact", key: "contact.headline", label: "Contact headline", path: "contact.headline", type: "textarea" },
+  { page: "contact", key: "contact.cards.0.icon", label: "Email icon", path: "contact.cards.0.icon" },
+  { page: "contact", key: "contact.cards.0.label", label: "Email label", path: "contact.cards.0.label" },
+  { page: "contact", key: "contact.cards.0.value", label: "Email text", path: "contact.cards.0.value" },
+  { page: "contact", key: "contact.cards.0.href", label: "Email link", path: "contact.cards.0.href" },
+  { page: "contact", key: "contact.cards.1.icon", label: "Phone icon", path: "contact.cards.1.icon" },
+  { page: "contact", key: "contact.cards.1.label", label: "Phone label", path: "contact.cards.1.label" },
+  { page: "contact", key: "contact.cards.1.value", label: "Phone text", path: "contact.cards.1.value" },
+  { page: "contact", key: "contact.cards.1.href", label: "Phone link", path: "contact.cards.1.href" },
+  { page: "contact", key: "contact.cards.2.icon", label: "LinkedIn icon", path: "contact.cards.2.icon" },
+  { page: "contact", key: "contact.cards.2.label", label: "LinkedIn label", path: "contact.cards.2.label" },
+  { page: "contact", key: "contact.cards.2.value", label: "LinkedIn text", path: "contact.cards.2.value" },
+  { page: "contact", key: "contact.cards.2.href", label: "LinkedIn link", path: "contact.cards.2.href" },
+  { page: "contact", key: "contact.cards.3.icon", label: "Behance icon", path: "contact.cards.3.icon" },
+  { page: "contact", key: "contact.cards.3.label", label: "Behance label", path: "contact.cards.3.label" },
+  { page: "contact", key: "contact.cards.3.value", label: "Behance text", path: "contact.cards.3.value" },
+  { page: "contact", key: "contact.cards.3.href", label: "Behance link", path: "contact.cards.3.href" },
+  { page: "appearance", key: "appearance.pageBackground", label: "Page background", path: "appearance.pageBackground", type: "color" },
+  { page: "appearance", key: "appearance.inkColor", label: "Main text color", path: "appearance.inkColor", type: "color" },
+  { page: "appearance", key: "appearance.accentColor", label: "Accent color", path: "appearance.accentColor", type: "color" },
+  { page: "appearance", key: "appearance.typewriterColor", label: "Typewriter color", path: "appearance.typewriterColor", type: "color" },
+  { page: "appearance", key: "appearance.buttonColor", label: "Button color", path: "appearance.buttonColor", type: "color" }
+];
+
 const sampleProjects = [
   {
     id: crypto.randomUUID(),
@@ -319,11 +540,15 @@ const sampleFeaturedProducts = [
 ];
 
 let publishedFeaturedProducts = sampleFeaturedProducts.map((project) => ({ ...project }));
+let publishedSiteContent = cloneItems(defaultSiteContent);
 
 const state = {
   projects: [],
   portfolioProjects: [],
   featuredProducts: [],
+  siteContent: cloneItems(defaultSiteContent),
+  contentPage: "home",
+  adminMode: "portfolio",
   filter: "All",
   portfolioFilter: "All",
   query: "",
@@ -358,8 +583,113 @@ function safeUrl(value = "") {
   return "";
 }
 
+function safeHref(value = "") {
+  if (!value) return "#";
+  if (/^(mailto:|tel:|#\/)/.test(value)) return value;
+  return safeUrl(value) || "#";
+}
+
+function textStyle(key) {
+  const color = state.siteContent?.appearance?.textStyles?.[key]?.color;
+  return color ? ` style="color: ${escapeHtml(color)};"` : "";
+}
+
+function setText(selector, value, key = "") {
+  const element = document.querySelector(selector);
+  if (!element) return;
+  element.textContent = value || "";
+  if (key) {
+    element.dataset.contentKey = key;
+    const color = state.siteContent?.appearance?.textStyles?.[key]?.color || "";
+    if (color) element.style.color = color;
+    else element.style.removeProperty("color");
+  }
+}
+
+function applySiteContent() {
+  const content = state.siteContent || defaultSiteContent;
+  const root = document.documentElement;
+  const appearance = content.appearance || {};
+  root.style.setProperty("--page", appearance.pageBackground || defaultSiteContent.appearance.pageBackground);
+  root.style.setProperty("--ink", appearance.inkColor || defaultSiteContent.appearance.inkColor);
+  root.style.setProperty("--teal", appearance.accentColor || defaultSiteContent.appearance.accentColor);
+  root.style.setProperty("--teal-dark", appearance.accentColor || defaultSiteContent.appearance.accentColor);
+  root.style.setProperty("--coral", appearance.typewriterColor || defaultSiteContent.appearance.typewriterColor);
+  root.style.setProperty("--button-color", appearance.buttonColor || appearance.accentColor || defaultSiteContent.appearance.buttonColor);
+
+  document.title = content.global?.metaTitle || defaultSiteContent.global.metaTitle;
+  document.querySelector('meta[name="description"]')?.setAttribute("content", content.global?.metaDescription || defaultSiteContent.global.metaDescription);
+  setText(".skip-link", content.global?.skipLink || defaultSiteContent.global.skipLink, "global.skipLink");
+  setText(".brand-symbol", content.global?.brandSymbol || defaultSiteContent.global.brandSymbol, "global.brandSymbol");
+  setText(".brand-mark strong", content.global?.brandName || defaultSiteContent.global.brandName, "global.brandName");
+  setText(".brand-mark small", content.global?.brandSubtitle || defaultSiteContent.global.brandSubtitle, "global.brandSubtitle");
+
+  const nav = content.global?.nav || defaultSiteContent.global.nav;
+  [
+    ["/", nav.home, "global.nav.home"],
+    ["/work", nav.work, "global.nav.work"],
+    ["/portfolio", nav.portfolio, "global.nav.portfolio"],
+    ["/about", nav.about, "global.nav.about"],
+    ["/contact", nav.contact, "global.nav.contact"]
+  ].forEach(([route, label, key]) => setText(`.main-nav a[data-route="${route}"]`, label, key));
+}
+
 function cloneItems(items = []) {
   return JSON.parse(JSON.stringify(items));
+}
+
+function mergeDeep(defaultValue, savedValue) {
+  if (Array.isArray(defaultValue)) {
+    return Array.isArray(savedValue) ? cloneItems(savedValue) : cloneItems(defaultValue);
+  }
+  if (defaultValue && typeof defaultValue === "object") {
+    const nextValue = {};
+    Object.entries(defaultValue).forEach(([key, value]) => {
+      nextValue[key] = mergeDeep(value, savedValue?.[key]);
+    });
+    if (savedValue && typeof savedValue === "object" && !Array.isArray(savedValue)) {
+      Object.entries(savedValue).forEach(([key, value]) => {
+        if (!(key in nextValue)) nextValue[key] = cloneItems(value);
+      });
+    }
+    return nextValue;
+  }
+  return savedValue === undefined || savedValue === null ? defaultValue : savedValue;
+}
+
+function normalizeSiteContent(siteContent = {}) {
+  return mergeDeep(defaultSiteContent, siteContent);
+}
+
+function pathParts(path = "") {
+  return String(path).split(".").map((part) => (/^\d+$/.test(part) ? Number(part) : part));
+}
+
+function getPathValue(source, path) {
+  return pathParts(path).reduce((value, key) => value?.[key], source);
+}
+
+function setPathValue(source, path, nextValue) {
+  const parts = pathParts(path);
+  const last = parts.pop();
+  const target = parts.reduce((value, key, index) => {
+    if (value[key] === undefined) {
+      value[key] = typeof parts[index + 1] === "number" ? [] : {};
+    }
+    return value[key];
+  }, source);
+  target[last] = nextValue;
+}
+
+function removeTextStyle(key) {
+  if (state.siteContent.appearance?.textStyles?.[key]) {
+    delete state.siteContent.appearance.textStyles[key];
+  }
+}
+
+function resetContentField(field) {
+  setPathValue(state.siteContent, field.path, cloneItems(getPathValue(defaultSiteContent, field.path)));
+  removeTextStyle(field.key);
 }
 
 function portfolioSnapshot(source = {}) {
@@ -367,7 +697,8 @@ function portfolioSnapshot(source = {}) {
     experiences: cloneItems(source.experiences || experiences),
     projects: cloneItems(source.projects || state.projects),
     portfolioProjects: cloneItems(source.portfolioProjects || state.portfolioProjects),
-    featuredProducts: cloneItems(source.featuredProducts || state.featuredProducts)
+    featuredProducts: cloneItems(source.featuredProducts || state.featuredProducts),
+    siteContent: normalizeSiteContent(source.siteContent || state.siteContent)
   };
 }
 
@@ -384,7 +715,8 @@ function normalizePortfolioData(data) {
       : cloneItems(samplePortfolioProjects),
     featuredProducts: Array.isArray(data?.featuredProducts)
       ? cloneItems(data.featuredProducts)
-      : cloneItems(sampleFeaturedProducts)
+      : cloneItems(sampleFeaturedProducts),
+    siteContent: normalizeSiteContent(data?.siteContent)
   };
 }
 
@@ -399,12 +731,14 @@ async function loadPublishedPortfolio() {
       publishedProjects = data.projects;
       publishedPortfolioProjects = data.portfolioProjects;
       publishedFeaturedProducts = data.featuredProducts;
+      publishedSiteContent = data.siteContent;
     }
   } catch {
     publishedExperiences = cloneItems(defaultExperiences);
     publishedProjects = cloneItems(sampleProjects);
     publishedPortfolioProjects = cloneItems(samplePortfolioProjects);
     publishedFeaturedProducts = cloneItems(sampleFeaturedProducts);
+    publishedSiteContent = cloneItems(defaultSiteContent);
   }
 
   state.dataLoaded = true;
@@ -415,6 +749,8 @@ function usePublishedPortfolio() {
   state.projects = cloneItems(publishedProjects);
   state.portfolioProjects = cloneItems(publishedPortfolioProjects);
   state.featuredProducts = cloneItems(publishedFeaturedProducts);
+  state.siteContent = normalizeSiteContent(publishedSiteContent);
+  applySiteContent();
 }
 
 function loadDraftPortfolio() {
@@ -424,7 +760,8 @@ function loadDraftPortfolio() {
       experiences: publishedExperiences,
       projects: publishedProjects,
       portfolioProjects: publishedPortfolioProjects,
-      featuredProducts: publishedFeaturedProducts
+      featuredProducts: publishedFeaturedProducts,
+      siteContent: publishedSiteContent
     });
   }
 
@@ -435,7 +772,8 @@ function loadDraftPortfolio() {
       experiences: publishedExperiences,
       projects: publishedProjects,
       portfolioProjects: publishedPortfolioProjects,
-      featuredProducts: publishedFeaturedProducts
+      featuredProducts: publishedFeaturedProducts,
+      siteContent: publishedSiteContent
     });
   }
 }
@@ -448,6 +786,8 @@ function saveDraftPortfolio(data) {
   state.projects = cloneItems(nextData.projects);
   state.portfolioProjects = cloneItems(nextData.portfolioProjects);
   state.featuredProducts = cloneItems(nextData.featuredProducts);
+  state.siteContent = normalizeSiteContent(nextData.siteContent);
+  applySiteContent();
 }
 
 function loadProjects() {
@@ -455,15 +795,15 @@ function loadProjects() {
 }
 
 function saveProjects(projects) {
-  saveDraftPortfolio({ experiences, projects, portfolioProjects: state.portfolioProjects, featuredProducts: state.featuredProducts });
+  saveDraftPortfolio({ experiences, projects, portfolioProjects: state.portfolioProjects, featuredProducts: state.featuredProducts, siteContent: state.siteContent });
 }
 
 function savePortfolioProjects(portfolioProjects) {
-  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects, featuredProducts: state.featuredProducts });
+  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects, featuredProducts: state.featuredProducts, siteContent: state.siteContent });
 }
 
 function saveFeaturedProducts(featuredProducts) {
-  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects: state.portfolioProjects, featuredProducts });
+  saveDraftPortfolio({ experiences, projects: state.projects, portfolioProjects: state.portfolioProjects, featuredProducts, siteContent: state.siteContent });
 }
 
 function routeParts() {
@@ -770,6 +1110,8 @@ async function renderRoute() {
       state.projects = cloneItems(draft.projects);
       state.portfolioProjects = cloneItems(draft.portfolioProjects);
       state.featuredProducts = cloneItems(draft.featuredProducts);
+      state.siteContent = normalizeSiteContent(draft.siteContent);
+      applySiteContent();
     } else {
       usePublishedPortfolio();
     }
@@ -788,15 +1130,47 @@ async function renderRoute() {
   if (name === "/experience") setupExperienceDetail();
   if (name === "/work-project") setupProjectDetail("work");
   if (name === "/portfolio-project") setupProjectDetail("portfolio");
+  if (name === "/about") setupAbout();
+  if (name === "/contact") setupContact();
   if (name === "/admin" || name === "/studio") setupAdmin();
   app.focus({ preventScroll: true });
 }
 
 function setupHome() {
-  runTypewriter();
+  const home = state.siteContent.home;
   const featuredGrid = document.getElementById("home-featured-grid");
   const portfolioGrid = document.getElementById("home-portfolio-grid");
   const featuredBand = document.querySelector(".featured-products-band");
+  const typeLine = document.querySelector(".type-line");
+
+  setText(".home-intro .eyebrow", home.eyebrow, "home.eyebrow");
+  setText(".home-intro h1", home.headline, "home.headline");
+  typeLine.innerHTML = `${escapeHtml(home.typewriterPrefix)} <span id="typewriter" aria-live="polite"></span>`;
+  typeLine.dataset.contentKey = "home.typewriterPrefix";
+  if (state.siteContent.appearance?.textStyles?.["home.typewriterPrefix"]?.color) {
+    typeLine.style.color = state.siteContent.appearance.textStyles["home.typewriterPrefix"].color;
+  } else {
+    typeLine.style.removeProperty("color");
+  }
+  setText(".hero-summary", home.summary, "home.summary");
+  setText(".hero-actions .primary", `↗ ${home.primaryAction}`, "home.primaryAction");
+  setText(".hero-actions .ghost", `✉ ${home.secondaryAction}`, "home.secondaryAction");
+  setText(".recruiter-panel .eyebrow", home.quickScanEyebrow, "home.quickScanEyebrow");
+  document.querySelector(".scan-list").innerHTML = home.quickScan
+    .map((item, index) => `
+      <li>
+        <strong${textStyle(`home.quickScan.${index}.label`)}>${escapeHtml(item.label)}</strong>
+        <span${textStyle(`home.quickScan.${index}.text`)}>${escapeHtml(item.text)}</span>
+      </li>
+    `)
+    .join("");
+  setText(".featured-products-band .eyebrow", home.featuredEyebrow, "home.featuredEyebrow");
+  setText(".featured-products-band h2", home.featuredHeadline, "home.featuredHeadline");
+  setText(".content-band:not(.featured-products-band):not(.home-portfolio-band) .eyebrow", home.workEyebrow, "home.workEyebrow");
+  setText(".content-band:not(.featured-products-band):not(.home-portfolio-band) h2", home.workHeadline, "home.workHeadline");
+  setText(".home-portfolio-band .eyebrow", home.portfolioEyebrow, "home.portfolioEyebrow");
+  setText(".home-portfolio-band h2", home.portfolioHeadline, "home.portfolioHeadline");
+  runTypewriter();
 
   if (state.featuredProducts.length) {
     featuredBand.hidden = false;
@@ -854,9 +1228,12 @@ function runTypewriter() {
   let wordIndex = 0;
   let charIndex = 0;
   let deleting = false;
+  const words = Array.isArray(state.siteContent.home?.typewriterWords) && state.siteContent.home.typewriterWords.length
+    ? state.siteContent.home.typewriterWords
+    : typewriterWords;
 
   state.typewriterTimer = window.setInterval(() => {
-    const word = typewriterWords[wordIndex];
+    const word = words[wordIndex];
     target.textContent = word.slice(0, charIndex);
 
     if (!deleting && charIndex < word.length) {
@@ -873,11 +1250,13 @@ function runTypewriter() {
     }
 
     deleting = false;
-    wordIndex = (wordIndex + 1) % typewriterWords.length;
+    wordIndex = (wordIndex + 1) % words.length;
   }, 82);
 }
 
 function setupWork() {
+  setText(".dashboard-hero .eyebrow", state.siteContent.work.eyebrow, "work.eyebrow");
+  setText(".dashboard-hero h1", state.siteContent.work.headline, "work.headline");
   document.getElementById("experience-grid").innerHTML = experiences.map(experienceCard).join("");
 }
 
@@ -933,6 +1312,9 @@ function renderPortfolioProjects() {
 }
 
 function setupPortfolio() {
+  setText(".dashboard-hero .eyebrow", state.siteContent.portfolio.eyebrow, "portfolio.eyebrow");
+  setText(".dashboard-hero h1", state.siteContent.portfolio.headline, "portfolio.headline");
+  document.getElementById("portfolio-search").placeholder = state.siteContent.portfolio.searchPlaceholder;
   renderPortfolioFilters();
   renderPortfolioProjects();
 
@@ -942,6 +1324,48 @@ function setupPortfolio() {
   });
 
   document.getElementById("portfolio-grid").addEventListener("click", handleProjectGridClick);
+}
+
+function setupAbout() {
+  const about = state.siteContent.about;
+  const image = document.querySelector(".sketch-card img");
+  if (image) image.alt = about.sketchAlt || defaultSiteContent.about.sketchAlt;
+  setText(".about-copy .eyebrow", about.eyebrow, "about.eyebrow");
+  setText(".about-copy h1", about.headline, "about.headline");
+  const bodyWrap = document.querySelector(".about-copy");
+  bodyWrap.querySelectorAll("p:not(.eyebrow)").forEach((item) => item.remove());
+  about.body.forEach((paragraph, index) => {
+    const item = document.createElement("p");
+    item.textContent = paragraph;
+    item.dataset.contentKey = `about.body.${index}`;
+    const color = state.siteContent.appearance?.textStyles?.[`about.body.${index}`]?.color;
+    if (color) item.style.color = color;
+    bodyWrap.append(item);
+  });
+  document.querySelector(".timeline").innerHTML = about.timeline
+    .map((item, index) => `
+      <article>
+        <span${textStyle(`about.timeline.${index}.dates`)}>${escapeHtml(item.dates)}</span>
+        <strong${textStyle(`about.timeline.${index}.title`)}>${escapeHtml(item.title)}</strong>
+        <p${textStyle(`about.timeline.${index}.text`)}>${escapeHtml(item.text)}</p>
+      </article>
+    `)
+    .join("");
+}
+
+function setupContact() {
+  const contact = state.siteContent.contact;
+  setText(".contact-band .section-heading .eyebrow", contact.eyebrow, "contact.eyebrow");
+  setText(".contact-band .section-heading h1", contact.headline, "contact.headline");
+  document.querySelector(".contact-grid").innerHTML = contact.cards
+    .map((card, index) => `
+      <a class="contact-card" href="${escapeHtml(safeHref(card.href))}" ${safeHref(card.href).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>
+        <span${textStyle(`contact.cards.${index}.icon`)}>${escapeHtml(card.icon)}</span>
+        <strong${textStyle(`contact.cards.${index}.label`)}>${escapeHtml(card.label)}</strong>
+        <small${textStyle(`contact.cards.${index}.value`)}>${escapeHtml(card.value)}</small>
+      </a>
+    `)
+    .join("");
 }
 
 function setupExperienceDetail() {
@@ -968,6 +1392,7 @@ function setupExperienceDetail() {
   renderFilters(projects);
   renderProjects(projects);
 
+  document.getElementById("project-search").placeholder = state.siteContent.work.searchPlaceholder;
   document.getElementById("project-search").addEventListener("input", (event) => {
     state.query = event.target.value.trim().toLowerCase();
     renderProjects(projects);
@@ -1822,7 +2247,8 @@ async function handleExperienceSave(event) {
     experiences: nextExperiences,
     projects: state.projects,
     portfolioProjects: state.portfolioProjects,
-    featuredProducts: state.featuredProducts
+    featuredProducts: state.featuredProducts,
+    siteContent: state.siteContent
   });
   clearExperienceForm();
   renderExperienceSelect();
@@ -1846,7 +2272,8 @@ async function handleAdminExperienceAction(event) {
       experiences: experiences.filter((item) => item.id !== experience.id),
       projects: state.projects.filter((project) => project.experienceId !== experience.id),
       portfolioProjects: state.portfolioProjects,
-      featuredProducts: state.featuredProducts
+      featuredProducts: state.featuredProducts,
+      siteContent: state.siteContent
     });
     renderExperienceSelect();
     renderAdminExperienceList();
@@ -1868,6 +2295,316 @@ async function handleAdminExperienceAction(event) {
   document.getElementById("experienceCompany").focus();
 }
 
+function setupAdminModes() {
+  document.querySelectorAll("[data-admin-mode]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.adminMode === state.adminMode);
+    button.addEventListener("click", () => {
+      state.adminMode = button.dataset.adminMode;
+      renderAdminMode();
+    });
+  });
+  renderAdminMode();
+}
+
+function renderAdminMode() {
+  document.querySelectorAll("[data-admin-mode]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.adminMode === state.adminMode);
+  });
+  document.querySelectorAll("[data-admin-panel]").forEach((panel) => {
+    panel.hidden = panel.dataset.adminPanel !== state.adminMode;
+  });
+}
+
+function pageFields(pageId) {
+  return CONTENT_FIELDS.filter((field) => field.page === pageId);
+}
+
+function contentFieldValue(field) {
+  const value = getPathValue(state.siteContent, field.path);
+  if (Array.isArray(value)) return value.join("\n");
+  return value ?? "";
+}
+
+function renderContentTabs() {
+  const tabs = document.getElementById("content-page-tabs");
+  if (!tabs) return;
+  tabs.innerHTML = CONTENT_PAGES
+    .map((page) => `
+      <button class="filter-chip ${page.id === state.contentPage ? "active" : ""}" type="button" data-content-page="${page.id}">
+        ${escapeHtml(page.label)}
+      </button>
+    `)
+    .join("");
+}
+
+function renderContentFieldList() {
+  const list = document.getElementById("content-field-list");
+  if (!list) return;
+  list.innerHTML = pageFields(state.contentPage)
+    .map((field) => {
+      const value = contentFieldValue(field);
+      const isColor = field.type === "color";
+      const style = state.siteContent.appearance?.textStyles?.[field.key]?.color || "";
+      return `
+        <article class="content-field-row" data-content-field="${escapeHtml(field.key)}">
+          <div>
+            <strong>${escapeHtml(field.label)}</strong>
+            <small>${escapeHtml(isColor ? value : String(value).slice(0, 140) || "Empty")}</small>
+          </div>
+          <div class="content-field-actions">
+            ${style ? `<span class="content-color-dot" style="--dot-color: ${escapeHtml(style)}"></span>` : ""}
+            ${isColor ? `<span class="content-color-dot" style="--dot-color: ${escapeHtml(value)}"></span>` : ""}
+            <button class="icon-button" type="button" data-edit-content="${escapeHtml(field.key)}" aria-label="Edit ${escapeHtml(field.label)}">✎</button>
+            <button class="icon-button delete" type="button" data-reset-content="${escapeHtml(field.key)}" aria-label="Reset ${escapeHtml(field.label)}">↺</button>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function pagePreviewMarkup(pageId) {
+  const content = state.siteContent;
+  if (pageId === "about") {
+    return `
+      <div class="mini-page-preview">
+        <p class="eyebrow"${textStyle("about.eyebrow")}>${escapeHtml(content.about.eyebrow)}</p>
+        <h3${textStyle("about.headline")}>${escapeHtml(content.about.headline)}</h3>
+        ${content.about.body.map((item, index) => `<p${textStyle(`about.body.${index}`)}>${escapeHtml(item)}</p>`).join("")}
+      </div>
+    `;
+  }
+  if (pageId === "contact") {
+    return `
+      <div class="mini-page-preview">
+        <p class="eyebrow"${textStyle("contact.eyebrow")}>${escapeHtml(content.contact.eyebrow)}</p>
+        <h3${textStyle("contact.headline")}>${escapeHtml(content.contact.headline)}</h3>
+        <div class="mini-contact-preview">
+          ${content.contact.cards.map((card, index) => `
+            <span>
+              <strong${textStyle(`contact.cards.${index}.label`)}>${escapeHtml(card.label)}</strong>
+              <small${textStyle(`contact.cards.${index}.value`)}>${escapeHtml(card.value)}</small>
+            </span>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+  if (pageId === "global") {
+    return `
+      <div class="mini-page-preview">
+        <p class="eyebrow">Header</p>
+        <h3${textStyle("global.brandName")}>${escapeHtml(content.global.brandName)}</h3>
+        <p${textStyle("global.brandSubtitle")}>${escapeHtml(content.global.brandSubtitle)}</p>
+        <div class="mini-nav-preview">
+          ${Object.values(content.global.nav).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+        </div>
+      </div>
+    `;
+  }
+  if (pageId === "work") {
+    return `
+      <div class="mini-page-preview">
+        <p class="eyebrow"${textStyle("work.eyebrow")}>${escapeHtml(content.work.eyebrow)}</p>
+        <h3${textStyle("work.headline")}>${escapeHtml(content.work.headline)}</h3>
+      </div>
+    `;
+  }
+  if (pageId === "portfolio") {
+    return `
+      <div class="mini-page-preview">
+        <p class="eyebrow"${textStyle("portfolio.eyebrow")}>${escapeHtml(content.portfolio.eyebrow)}</p>
+        <h3${textStyle("portfolio.headline")}>${escapeHtml(content.portfolio.headline)}</h3>
+      </div>
+    `;
+  }
+  if (pageId === "appearance") {
+    return `
+      <div class="mini-page-preview swatch-preview">
+        <span style="--swatch: ${escapeHtml(content.appearance.pageBackground)}">Background</span>
+        <span style="--swatch: ${escapeHtml(content.appearance.inkColor)}">Text</span>
+        <span style="--swatch: ${escapeHtml(content.appearance.accentColor)}">Accent</span>
+        <span style="--swatch: ${escapeHtml(content.appearance.typewriterColor)}">Type</span>
+      </div>
+    `;
+  }
+  return `
+    <div class="mini-page-preview">
+      <p class="eyebrow"${textStyle("home.eyebrow")}>${escapeHtml(content.home.eyebrow)}</p>
+      <h3${textStyle("home.headline")}>${escapeHtml(content.home.headline)}</h3>
+      <strong${textStyle("home.typewriterPrefix")}>${escapeHtml(content.home.typewriterPrefix)} ${escapeHtml(content.home.typewriterWords[0] || "")}</strong>
+      <p${textStyle("home.summary")}>${escapeHtml(content.home.summary)}</p>
+    </div>
+  `;
+}
+
+function renderContentPreview() {
+  const target = document.getElementById("site-content-preview");
+  if (!target) return;
+  const page = CONTENT_PAGES.find((item) => item.id === state.contentPage);
+  document.getElementById("content-preview-page").textContent = page?.label || "Home";
+  target.innerHTML = pagePreviewMarkup(state.contentPage);
+}
+
+function renderContentEditor() {
+  renderContentTabs();
+  renderContentFieldList();
+  renderContentPreview();
+}
+
+function setupContentEditor() {
+  renderContentEditor();
+  document.getElementById("content-page-tabs").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-content-page]");
+    if (!button) return;
+    state.contentPage = button.dataset.contentPage;
+    renderContentEditor();
+  });
+  document.getElementById("content-field-list").addEventListener("click", handleContentFieldAction);
+  document.getElementById("save-site-content").addEventListener("click", saveSiteContentDraft);
+  document.getElementById("reset-site-content").addEventListener("click", resetSiteContent);
+}
+
+function contentFieldByKey(key) {
+  return CONTENT_FIELDS.find((field) => field.key === key);
+}
+
+function fieldInputMarkup(field) {
+  const value = contentFieldValue(field);
+  if (field.type === "textarea" || field.type === "list") {
+    return `<textarea id="content-edit-value" rows="6">${escapeHtml(value)}</textarea>`;
+  }
+  if (field.type === "color") {
+    return `<input id="content-edit-value" type="color" value="${escapeHtml(value || "#16120f")}">`;
+  }
+  return `<input id="content-edit-value" type="text" value="${escapeHtml(value)}">`;
+}
+
+function showContentEditDialog(field) {
+  document.querySelector(".content-edit-dialog")?.remove();
+  const currentColor = state.siteContent.appearance?.textStyles?.[field.key]?.color || "";
+  const modal = document.createElement("div");
+  modal.className = "confirm-dialog content-edit-dialog";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", `Edit ${field.label}`);
+  modal.innerHTML = `
+    <div class="confirm-panel content-edit-panel">
+      <p class="eyebrow">Edit text</p>
+      <h2>${escapeHtml(field.label)}</h2>
+      <label>
+        Text
+        ${fieldInputMarkup(field)}
+      </label>
+      ${field.type !== "color" ? `
+        <label>
+          Text color
+          <input id="content-edit-color" type="color" value="${escapeHtml(currentColor || state.siteContent.appearance.inkColor || "#16120f")}">
+        </label>
+        <label class="inline-check">
+          <input id="content-use-custom-color" type="checkbox" ${currentColor ? "checked" : ""}>
+          Use custom color for this text
+        </label>
+      ` : ""}
+      ${field.helper ? `<small>${escapeHtml(field.helper)}</small>` : ""}
+      <div class="confirm-actions">
+        <button class="button ghost" type="button" data-content-cancel>Cancel</button>
+        <button class="button ghost" type="button" data-content-reset>Reset Default</button>
+        <button class="button primary" type="button" data-content-save>Apply</button>
+      </div>
+    </div>
+  `;
+
+  const close = () => {
+    modal.remove();
+    document.body.classList.remove("modal-open");
+    document.removeEventListener("keydown", handleKeydown);
+  };
+
+  const applyValue = () => {
+    const input = modal.querySelector("#content-edit-value");
+    const rawValue = input.value;
+    const nextValue = field.type === "list"
+      ? rawValue.split("\n").map((item) => item.trim()).filter(Boolean)
+      : rawValue;
+    setPathValue(state.siteContent, field.path, nextValue);
+
+    if (field.type !== "color") {
+      const useCustomColor = modal.querySelector("#content-use-custom-color").checked;
+      if (useCustomColor) {
+        state.siteContent.appearance.textStyles[field.key] = {
+          color: modal.querySelector("#content-edit-color").value
+        };
+      } else {
+        removeTextStyle(field.key);
+      }
+    }
+
+    applySiteContent();
+    renderContentEditor();
+    if (routeParts().name === "/") setupHome();
+    if (routeParts().name === "/about") setupAbout();
+    if (routeParts().name === "/contact") setupContact();
+    close();
+  };
+
+  function handleKeydown(event) {
+    if (event.key === "Escape") close();
+  }
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal || event.target.closest("[data-content-cancel]")) close();
+    if (event.target.closest("[data-content-save]")) applyValue();
+    if (event.target.closest("[data-content-reset]")) {
+      resetContentField(field);
+      applySiteContent();
+      renderContentEditor();
+      close();
+    }
+  });
+
+  document.body.append(modal);
+  document.body.classList.add("modal-open");
+  document.addEventListener("keydown", handleKeydown);
+  modal.querySelector("#content-edit-value").focus({ preventScroll: true });
+}
+
+async function handleContentFieldAction(event) {
+  const editButton = event.target.closest("[data-edit-content]");
+  const resetButton = event.target.closest("[data-reset-content]");
+  const key = editButton?.dataset.editContent || resetButton?.dataset.resetContent;
+  if (!key) return;
+  const field = contentFieldByKey(key);
+  if (!field) return;
+
+  if (resetButton) {
+    if (!(await confirmAction(`Reset "${field.label}" to default?`, "Reset"))) return;
+    resetContentField(field);
+    applySiteContent();
+    renderContentEditor();
+    showToast("Text reset to default.");
+    return;
+  }
+
+  showContentEditDialog(field);
+}
+
+async function saveSiteContentDraft() {
+  if (!(await confirmAction("Save these text and appearance changes as a draft?", "Save Text"))) return;
+  saveDraftPortfolio(portfolioSnapshot({ siteContent: state.siteContent }));
+  renderContentEditor();
+  showToast("Text changes saved as draft.");
+}
+
+async function resetSiteContent() {
+  if (!(await confirmAction("Reset all text and appearance to the default copy?", "Reset Text"))) return;
+  state.siteContent = cloneItems(defaultSiteContent);
+  saveDraftPortfolio(portfolioSnapshot({ siteContent: state.siteContent }));
+  applySiteContent();
+  renderContentEditor();
+  showToast("Text and appearance reset.");
+}
+
 function setupAdmin() {
   if (!adminUnlocked()) {
     renderAdminLogin();
@@ -1879,6 +2616,8 @@ function setupAdmin() {
   state.projects = cloneItems(draft.projects);
   state.portfolioProjects = cloneItems(draft.portfolioProjects);
   state.featuredProducts = cloneItems(draft.featuredProducts);
+  state.siteContent = normalizeSiteContent(draft.siteContent);
+  applySiteContent();
   state.previewImage = "";
   state.projectImageRemoved = false;
   state.detailMediaImages = {};
@@ -1892,6 +2631,8 @@ function setupAdmin() {
   renderPreview();
   renderAdminList();
   renderAdminExperienceList();
+  setupAdminModes();
+  setupContentEditor();
 
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
   document.getElementById("clear-experience-form").addEventListener("click", clearExperienceForm);
@@ -2058,7 +2799,8 @@ async function handleProjectSave(event) {
       experiences,
       projects: nextProjects,
       portfolioProjects: nextPortfolioProjects,
-      featuredProducts: nextFeaturedProducts
+      featuredProducts: nextFeaturedProducts,
+      siteContent: state.siteContent
     });
   } catch {
     alert("The image is still too large for browser storage. Try a smaller web image, then publish so the asset can move into GitHub.");
@@ -2205,10 +2947,13 @@ async function publishDraft() {
     publishedProjects = cloneItems(published.projects);
     publishedPortfolioProjects = cloneItems(published.portfolioProjects);
     publishedFeaturedProducts = cloneItems(published.featuredProducts);
+    publishedSiteContent = normalizeSiteContent(published.siteContent);
     experiences = cloneItems(published.experiences);
     state.projects = cloneItems(published.projects);
     state.portfolioProjects = cloneItems(published.portfolioProjects);
     state.featuredProducts = cloneItems(published.featuredProducts);
+    state.siteContent = normalizeSiteContent(published.siteContent);
+    applySiteContent();
     localStorage.removeItem(DRAFT_STORE_KEY);
     showToast(result.assetCount ? `Published. ${result.assetCount} image asset(s) moved to GitHub.` : "Published to GitHub. Vercel should deploy next.");
   } catch (error) {
@@ -2225,7 +2970,8 @@ async function resetProjects() {
     experiences: publishedExperiences,
     projects: publishedProjects,
     portfolioProjects: publishedPortfolioProjects,
-    featuredProducts: publishedFeaturedProducts
+    featuredProducts: publishedFeaturedProducts,
+    siteContent: publishedSiteContent
   });
   renderExperienceSelect();
   renderAdminExperienceList();

@@ -154,6 +154,18 @@
           </div>
         </div>
 
+        <div class="admin-mode-grid" aria-label="Admin workspace">
+          <button class="admin-mode-card active" type="button" data-admin-mode="portfolio">
+            <strong>Experience, Work & Portfolio</strong>
+            <span>Add cards, projects, featured products, media, and case-study assets.</span>
+          </button>
+          <button class="admin-mode-card" type="button" data-admin-mode="content">
+            <strong>Text & Appearance</strong>
+            <span>Edit home, about, contact text, colors, labels, and page copy.</span>
+          </button>
+        </div>
+
+        <div class="admin-workspace-panel" data-admin-panel="portfolio">
         <section class="experience-form-wrap">
           <div class="section-heading compact">
             <p class="eyebrow">Experience cards</p>
@@ -333,6 +345,33 @@
           </div>
           <div id="admin-project-list" class="admin-project-list"></div>
         </section>
+        </div>
+
+        <div class="admin-workspace-panel" data-admin-panel="content" hidden>
+          <section class="content-editor-wrap">
+            <div class="section-heading compact">
+              <p class="eyebrow">Text & appearance</p>
+              <h2>Change public page wording and visual emphasis from one place.</h2>
+            </div>
+            <div class="content-editor-layout">
+              <div class="content-editor-board">
+                <div id="content-page-tabs" class="filter-group" aria-label="Content page tabs"></div>
+                <div id="content-field-list" class="content-field-list"></div>
+                <div class="form-actions">
+                  <button class="button primary" id="save-site-content" type="button"><span aria-hidden="true">✓</span> Save Text Draft</button>
+                  <button class="button ghost" id="reset-site-content" type="button"><span aria-hidden="true">↺</span> Reset Text</button>
+                </div>
+              </div>
+              <aside class="site-content-preview" aria-label="Text live preview">
+                <div class="board-topline">
+                  <strong>Live Page Preview</strong>
+                  <small id="content-preview-page">Home</small>
+                </div>
+                <div id="site-content-preview"></div>
+              </aside>
+            </div>
+          </section>
+        </div>
       </section>
     </template>
 
