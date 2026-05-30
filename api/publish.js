@@ -227,8 +227,7 @@ module.exports = async function handler(req, res) {
       ok: true,
       commitUrl: result.commit?.html_url || "",
       assetCount: assetStats.uploaded,
-      reusedAssetCount: assetStats.reused,
-      portfolio: preparedPortfolio
+      reusedAssetCount: assetStats.reused
     });
   } catch (error) {
     res.status(500).json({ error: error.message || "Publish failed." });

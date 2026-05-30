@@ -2058,6 +2058,81 @@ function portfolioForPublishScope(scope) {
   return portfolioSnapshot();
 }
 
+function dataImageExtension(mimeType = "") {
+  const mime = mimeType.toLowerCase();
+  if (mime === "image/jpeg" || mime === "image/jpg") return "jpg";
+  if (mime === "image/png") return "png";
+  if (mime === "image/webp") return "webp";
+  if (mime === "image/gif") return "gif";
+  if (mime === "image/svg+xml") return "svg";
+  return "bin";
+}
+
+function parseDataImageValue(value = "") {
+  const match = String(value).match(/^data:(image\/[a-z0-9.+-]+);base64,([a-z0-9+/=\s]+)$/i);
+  if (!match) return null;
+  return {
+    mimeType: match[1],
+    base64: match[2].replace(/\s/g, "")
+  };
+}
+
+function base64ToBytes(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+  return bytes;
+}
+
+function bufferToHex(buffer) {
+  return Array.from(new Uint8Array(buffer))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function publishedAssetPath(dataUrl, cache) {
+  if (cache.has(dataUrl)) return cache.get(dataUrl);
+
+  const parsed = parseDataImageValue(dataUrl);
+  if (!parsed || !window.crypto?.subtle) return dataUrl;
+
+  const digest = await window.crypto.subtle.digest("SHA-256", base64ToBytes(parsed.base64));
+  const assetPath = `assets/uploads/${bufferToHex(digest).slice(0, 20)}.${dataImageExtension(parsed.mimeType)}`;
+  cache.set(dataUrl, assetPath);
+  return assetPath;
+}
+
+async function replaceDataImagesWithAssetPaths(value, cache = new Map()) {
+  if (typeof value === "string") {
+    return value.startsWith("data:image/") ? publishedAssetPath(value, cache) : value;
+  }
+
+  if (Array.isArray(value)) {
+    const nextItems = [];
+    for (const item of value) {
+      nextItems.push(await replaceDataImagesWithAssetPaths(item, cache));
+    }
+    return nextItems;
+  }
+
+  if (value && typeof value === "object") {
+    const nextObject = {};
+    for (const [key, item] of Object.entries(value)) {
+      nextObject[key] = await replaceDataImagesWithAssetPaths(item, cache);
+    }
+    return nextObject;
+  }
+
+  return value;
+}
+
+async function publishedPortfolioFromResponse(result, portfolio) {
+  if (result.portfolio) return normalizePortfolioData(result.portfolio);
+  return normalizePortfolioData(await replaceDataImagesWithAssetPaths(portfolio));
+}
+
 function publishScopeLabel(scope) {
   if (scope === "content") return "Text & Appearance";
   if (scope === "portfolio") return "Experience, Work & Portfolio";
@@ -3343,6 +3418,41 @@ function previewDraft() {
   }, 500);
 }
 
+async function readPublishResult(response) {
+  const text = await response.text().catch(() => "");
+  if (!text) return {};
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { error: text.trim() };
+  }
+}
+
+function isResponseLimitError(error) {
+  return /quota|response.*(large|limit|exceed)|function_response_payload/i.test(error?.message || "");
+}
+
+async function finishPublishDraft(scope, portfolio, result = {}, message = "") {
+  const published = await publishedPortfolioFromResponse(result, portfolio);
+  syncDraftAfterPublish(scope, published);
+  renderExperienceSelect();
+  renderAdminExperienceList();
+  renderAdminList();
+  renderContentEditor();
+  renderAdminMode();
+
+  if (message) {
+    showToast(message);
+    return;
+  }
+
+  const assetText = result.assetCount
+    ? ` ${result.assetCount} image asset(s) moved to GitHub.`
+    : " Vercel should deploy next.";
+  showToast(`Published ${publishScopeLabel(scope)}.${assetText}`);
+}
+
 async function publishDraft() {
   const scope = await choosePublishScope();
   if (!scope) return;
@@ -3362,20 +3472,26 @@ async function publishDraft() {
       })
     });
 
-    const result = await response.json().catch(() => ({}));
+    const result = await readPublishResult(response);
     if (!response.ok) {
       throw new Error(result.error || "Publish endpoint is not configured yet.");
     }
 
-    const published = normalizePortfolioData(result.portfolio || portfolio);
-    syncDraftAfterPublish(scope, published);
-    renderExperienceSelect();
-    renderAdminExperienceList();
-    renderAdminList();
-    renderContentEditor();
-    renderAdminMode();
-    showToast(result.assetCount ? `Published ${publishScopeLabel(scope)}. ${result.assetCount} image asset(s) moved to GitHub.` : `Published ${publishScopeLabel(scope)}. Vercel should deploy next.`);
+    await finishPublishDraft(scope, portfolio, result);
   } catch (error) {
+    if (isResponseLimitError(error)) {
+      try {
+        await finishPublishDraft(
+          scope,
+          portfolio,
+          {},
+          "Publish likely reached GitHub. Draft glow cleared locally while Vercel finishes deploying."
+        );
+      } catch (syncError) {
+        showToast(syncError.message || "Published, but local draft sync failed.");
+      }
+      return;
+    }
     showToast(error.message || "Publish failed.");
   } finally {
     setButtonLoading(button, false);
