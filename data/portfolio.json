@@ -171,108 +171,7 @@
       "image": ""
     }
   ],
-  "portfolioProjects": [
-    {
-      "id": "ffcb9172-eb2b-4a5e-909f-3a00001cc6f5",
-      "placement": "portfolio",
-      "experienceId": "",
-      "title": "Title",
-      "category": "Illustration",
-      "mediaType": "Image",
-      "role": "Designer",
-      "year": "2026",
-      "tools": "Photoshop, Illustrator",
-      "summary": "Story Work Done",
-      "whatPrernaDid": "What I did",
-      "impact": "",
-      "link": "",
-      "accent": "#0a6f6b",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "mediaGroups": {
-        "initialSketch": [
-          {
-            "type": "Image",
-            "title": "Layout 1",
-            "src": "assets/uploads/bc131e38f01403bab57c.jpg",
-            "videoUrl": "",
-            "description": "Text"
-          }
-        ],
-        "finalOutput": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/1c2b1b4367a2330aa6c8.png",
-            "videoUrl": "https://www.youtube.com/watch?v=hjygIpwTNH4&pp=ugUHEgVlbi1JTg%3D%3D",
-            "description": "video"
-          }
-        ]
-      },
-      "image": ""
-    },
-    {
-      "id": "portfolio-brand-systems",
-      "experienceId": "",
-      "title": "Brand Identity Systems",
-      "category": "Branding",
-      "mediaType": "Case Study",
-      "role": "Graphic Designer",
-      "year": "2024",
-      "tools": "Illustrator, Photoshop, Figma",
-      "summary": "Selected identity, typography, layout, and visual system explorations created for brand-led campaigns and digital storytelling.",
-      "impact": "Shows brand thinking, visual consistency, and presentation-ready design craft",
-      "link": "",
-      "accent": "#a348ff",
-      "image": ""
-    },
-    {
-      "id": "portfolio-social-campaigns",
-      "experienceId": "",
-      "title": "Social Media Campaign Visuals",
-      "category": "Social Media",
-      "mediaType": "Image",
-      "role": "Social + Graphic Designer",
-      "year": "2023-2024",
-      "tools": "Photoshop, Illustrator, Premiere Pro",
-      "summary": "A portfolio set for social-first posts, campaign layouts, launch graphics, and platform-ready visual storytelling.",
-      "impact": "Highlights campaign thinking, content rhythm, and production polish",
-      "link": "",
-      "accent": "#ff6542",
-      "image": ""
-    },
-    {
-      "id": "portfolio-motion-edits",
-      "experienceId": "",
-      "title": "Motion Graphics and Video Edits",
-      "category": "Motion Graphics",
-      "mediaType": "Video",
-      "role": "Motion Designer",
-      "year": "2024",
-      "tools": "After Effects, Premiere Pro, Photoshop",
-      "summary": "Motion-led portfolio work covering animated brand elements, short-form edits, social videos, and visual transitions.",
-      "impact": "Shows pacing, motion taste, editing structure, and multimedia fluency",
-      "link": "",
-      "accent": "#3557ff",
-      "image": ""
-    },
-    {
-      "id": "portfolio-illustration-products",
-      "experienceId": "",
-      "title": "Illustration and Custom Product Art",
-      "category": "Illustration",
-      "mediaType": "Image",
-      "role": "Illustrator",
-      "year": "2018-2024",
-      "tools": "Procreate, Illustrator, Photoshop",
-      "summary": "Illustration-led visual work for custom products, handmade gifts, packaging, cards, calendars, and social selling.",
-      "impact": "Shows personal style, detail, product thinking, and client-led creative execution",
-      "link": "",
-      "accent": "#ff4fa3",
-      "image": ""
-    }
-  ],
+  "portfolioProjects": [],
   "featuredProducts": [
     {
       "id": "f2ae74fc-9ca0-481c-9d3b-87fe880864d9",
@@ -496,9 +395,9 @@
   },
   "resume": {
     "label": "Download Resume",
-    "file": "",
-    "fileName": "Prerna-Sharma-Resume.pdf",
+    "file": "assets/resume/prerna-sharma-resume.pdf",
+    "fileName": "PrernaSharma_DesignResume.pdf",
     "previewImage": "",
-    "updatedAt": ""
+    "updatedAt": "2026-05-30T18:44:56.780Z"
   }
 }
