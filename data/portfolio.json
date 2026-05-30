@@ -100,7 +100,7 @@
       "experienceId": "cultre-boat",
       "title": "Devan's Coffee Content Grid",
       "category": "Campaign Design",
-      "mediaType": "Multimedia",
+      "mediaType": "Mixed Media",
       "role": "Graphic + Content Designer",
       "year": "2023",
       "tools": "Photoshop, Illustrator, Premiere Pro",
@@ -160,7 +160,7 @@
       "experienceId": "freelance",
       "title": "Product Photography + Social Content",
       "category": "Graphic Design",
-      "mediaType": "Multimedia",
+      "mediaType": "Mixed Media",
       "role": "Creative Business Owner",
       "year": "2018-2024",
       "tools": "Photography, Photoshop, Illustrator, Instagram",
@@ -273,7 +273,87 @@
       "image": ""
     }
   ],
-  "featuredProducts": [],
+  "featuredProducts": [
+    {
+      "id": "f2ae74fc-9ca0-481c-9d3b-87fe880864d9",
+      "placement": "featured",
+      "experienceId": "",
+      "title": "title",
+      "category": "Branding",
+      "mediaType": "Video",
+      "role": "sdfsdf",
+      "year": "212",
+      "tools": "213",
+      "summary": "23123",
+      "whatPrernaDid": "23123",
+      "impact": "fsdf",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Initial Sketch",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [],
+        "finalOutput": []
+      },
+      "image": "assets/uploads/c1d444afe745084dd9e9.png"
+    },
+    {
+      "id": "featured-custom-illustrations",
+      "placement": "featured",
+      "title": "Custom Illustration Products",
+      "category": "Illustration",
+      "mediaType": "Image",
+      "role": "Illustrator + Product Designer",
+      "year": "2018-2024",
+      "tools": "Procreate, Photoshop, Illustrator",
+      "summary": "Personalized illustration-led product work for cards, stationery, calendars, and handmade gifts.",
+      "impact": "Built from The Creative Bud's client-led product practice",
+      "link": "",
+      "accent": "#ff4fa3",
+      "image": ""
+    },
+    {
+      "id": "featured-social-campaigns",
+      "placement": "featured",
+      "title": "Social Campaign Visuals",
+      "category": "Social Media",
+      "mediaType": "Image",
+      "role": "Graphic Designer",
+      "year": "2023-2024",
+      "tools": "Photoshop, Illustrator, Premiere Pro",
+      "summary": "Designed carousel-ready visuals, layouts, and digital campaign pieces for platform-first storytelling.",
+      "impact": "Quick proof of layout, hierarchy, and campaign polish",
+      "link": "",
+      "accent": "#ff6542",
+      "image": ""
+    },
+    {
+      "id": "featured-motion-thumbnails",
+      "placement": "featured",
+      "title": "Motion + Video Thumbnails",
+      "category": "Motion Graphics",
+      "mediaType": "Mixed Media",
+      "role": "Motion Designer",
+      "year": "2024",
+      "tools": "After Effects, Premiere Pro, Photoshop",
+      "summary": "Thumbnail and motion-forward visual experiments for video, reels, and animated brand moments.",
+      "impact": "Shows multimedia thinking before opening full case studies",
+      "link": "",
+      "accent": "#3557ff",
+      "image": ""
+    }
+  ],
   "siteContent": {
     "global": {
       "metaTitle": "Prerna Sharma | Graphic Designer Portfolio",
@@ -299,8 +379,7 @@
         "a Motion Designer",
         "a Brand Illustrator",
         "a Visual Storyteller",
-        "a Creative Maker",
-        "a Chutiya"
+        "a Creative Maker"
       ],
       "summary": "A recruiter-friendly portfolio for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
       "primaryAction": "View Experience",
