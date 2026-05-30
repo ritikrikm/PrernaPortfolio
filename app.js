@@ -2997,8 +2997,10 @@ function renderResumeAdmin() {
   const form = document.getElementById("resume-form");
   if (!form) return;
 
+  const labelInput = document.getElementById("resume-label");
+  const labelIsFocused = document.activeElement === labelInput;
   const resume = formResume();
-  document.getElementById("resume-label").value = resume.label;
+  if (!labelIsFocused) labelInput.value = resume.label;
   document.getElementById("resume-file-name").textContent = resume.file
     ? state.resumeFileNameDraft || resume.fileName || "Existing resume selected"
     : "Choose a PDF";
@@ -3053,6 +3055,7 @@ async function resetResumeDraft() {
   if (!(await confirmAction("Reset resume draft back to the currently published resume?", "Reset Resume"))) return;
   resetResumeDraftInputs();
   state.resume = normalizeResume(publishedResume);
+  document.getElementById("resume-label").value = state.resume.label || defaultResume.label;
   saveDraftPortfolio(portfolioSnapshot({ resume: state.resume }));
   renderResumeAdmin();
   renderAdminMode();
@@ -3394,10 +3397,13 @@ function showContentEditDialog(field) {
     setPathValue(state.siteContent, field.path, nextValue);
 
     if (field.type !== "color") {
-      const useCustomColor = modal.querySelector("#content-use-custom-color").checked;
+      const colorInput = modal.querySelector("#content-edit-color");
+      const defaultColor = currentColor || state.siteContent.appearance.inkColor || "#16120f";
+      const colorChanged = colorInput.value.toLowerCase() !== defaultColor.toLowerCase();
+      const useCustomColor = modal.querySelector("#content-use-custom-color").checked || colorChanged;
       if (useCustomColor) {
         state.siteContent.appearance.textStyles[field.key] = {
-          color: modal.querySelector("#content-edit-color").value
+          color: colorInput.value
         };
       } else {
         removeTextStyle(field.key);
@@ -3417,6 +3423,10 @@ function showContentEditDialog(field) {
   function handleKeydown(event) {
     if (event.key === "Escape") close();
   }
+
+  modal.querySelector("#content-edit-color")?.addEventListener("input", () => {
+    modal.querySelector("#content-use-custom-color").checked = true;
+  });
 
   modal.addEventListener("click", (event) => {
     if (event.target === modal || event.target.closest("[data-content-cancel]")) close();
