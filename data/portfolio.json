@@ -1,144 +1,4 @@
 {
-  "siteContent": {
-    "global": {
-      "metaTitle": "Prerna Sharma | Graphic Designer Portfolio",
-      "metaDescription": "Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
-      "skipLink": "Skip to portfolio",
-      "brandSymbol": "PS",
-      "brandName": "Prerna Sharma",
-      "brandSubtitle": "Graphic Designer + Motion Artist",
-      "nav": {
-        "home": "Home",
-        "work": "Work",
-        "portfolio": "Portfolio",
-        "about": "About",
-        "contact": "Contact"
-      }
-    },
-    "home": {
-      "eyebrow": "Graphic design portfolio",
-      "headline": "Design work that moves from brief to brand, campaign, and motion.",
-      "typewriterPrefix": "I am",
-      "typewriterWords": [
-        "a Graphic Designer",
-        "a Motion Designer",
-        "a Brand Illustrator",
-        "a Visual Storyteller",
-        "a Creative Maker"
-      ],
-      "summary": "A recruiter-friendly portfolio for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
-      "primaryAction": "View Experience",
-      "secondaryAction": "Contact",
-      "quickScanEyebrow": "Quick scan",
-      "quickScan": [
-        {
-          "label": "Best fit",
-          "text": "Graphic Designer, Multimedia Designer, Motion Designer"
-        },
-        {
-          "label": "Experience",
-          "text": "2 years professional + 6 years creative business"
-        },
-        {
-          "label": "Strength",
-          "text": "Campaign visuals, brand consistency, social content, motion"
-        },
-        {
-          "label": "Tools",
-          "text": "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
-        }
-      ],
-      "featuredEyebrow": "Featured products",
-      "featuredHeadline": "Small, polished product pieces recruiters can scan first.",
-      "featuredFilters": [
-        "All",
-        "Branding",
-        "Social Media",
-        "Video Editing",
-        "Motion Graphics",
-        "Illustration",
-        "Multimedia"
-      ],
-      "workEyebrow": "Portfolio path",
-      "workHeadline": "Start with work experience, then open the projects inside each role.",
-      "portfolioEyebrow": "Portfolio cards",
-      "portfolioHeadline": "Selected work across branding, social media, motion, and illustration."
-    },
-    "work": {
-      "eyebrow": "Work experience",
-      "headline": "Choose an experience to see the work created inside it.",
-      "searchPlaceholder": "Search project, tool, outcome"
-    },
-    "portfolio": {
-      "eyebrow": "Portfolio",
-      "headline": "Browse selected campaigns, visuals, motion pieces, and illustration work.",
-      "searchPlaceholder": "Search portfolio, tool, outcome"
-    },
-    "about": {
-      "eyebrow": "About the designer",
-      "headline": "Graphic designer with campaign discipline and a handmade visual voice.",
-      "body": [
-        "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her portfolio connects practical production skills with expressive, human visual details.",
-        "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
-      ],
-      "sketchAlt": "Sketch-style illustration of a designer creating at a desk",
-      "timeline": [
-        {
-          "dates": "2023-2024",
-          "title": "Executive - Design, MSL Global",
-          "text": "Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production."
-        },
-        {
-          "dates": "2023",
-          "title": "Communications Designer, Cultre Boat",
-          "text": "Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands."
-        },
-        {
-          "dates": "2018-2024",
-          "title": "Founder / Creative Entrepreneur, The Creative Bud",
-          "text": "Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling."
-        }
-      ]
-    },
-    "contact": {
-      "eyebrow": "Contact",
-      "headline": "Open to graphic design, brand, motion, and multimedia roles.",
-      "cards": [
-        {
-          "icon": "✉",
-          "label": "Email",
-          "value": "visualartist.prerna@gmail.com",
-          "href": "mailto:visualartist.prerna@gmail.com"
-        },
-        {
-          "icon": "☎",
-          "label": "Phone",
-          "value": "(416) 825-6120",
-          "href": "tel:+14168256120"
-        },
-        {
-          "icon": "in",
-          "label": "LinkedIn",
-          "value": "Add her real LinkedIn URL here",
-          "href": "https://www.linkedin.com/"
-        },
-        {
-          "icon": "Be",
-          "label": "Behance",
-          "value": "behance.net/gallery/177375659/PORTFOLIO",
-          "href": "https://www.behance.net/gallery/177375659/PORTFOLIO"
-        }
-      ]
-    },
-    "appearance": {
-      "pageBackground": "#fff8ef",
-      "inkColor": "#16120f",
-      "accentColor": "#087f6f",
-      "typewriterColor": "#ff6542",
-      "buttonColor": "#087f6f",
-      "textStyles": {}
-    }
-  },
   "experiences": [
     {
       "id": "msl",
@@ -413,5 +273,146 @@
       "image": ""
     }
   ],
-  "featuredProducts": []
+  "featuredProducts": [],
+  "siteContent": {
+    "global": {
+      "metaTitle": "Prerna Sharma | Graphic Designer Portfolio",
+      "metaDescription": "Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
+      "skipLink": "Skip to portfolio",
+      "brandSymbol": "PS",
+      "brandName": "Prerna Sharma",
+      "brandSubtitle": "Graphic Designer + Motion Artist",
+      "nav": {
+        "home": "Home",
+        "work": "Work",
+        "portfolio": "Portfolio",
+        "about": "About",
+        "contact": "Contact"
+      }
+    },
+    "home": {
+      "eyebrow": "Graphic design portfolio",
+      "headline": "Design work that moves from brief to brand, campaign, and motion.",
+      "typewriterPrefix": "I am",
+      "typewriterWords": [
+        "a Graphic Designer",
+        "a Motion Designer",
+        "a Brand Illustrator",
+        "a Visual Storyteller",
+        "a Creative Maker",
+        "a Chutiya"
+      ],
+      "summary": "A recruiter-friendly portfolio for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
+      "primaryAction": "View Experience",
+      "secondaryAction": "Contact",
+      "quickScanEyebrow": "Quick scan",
+      "quickScan": [
+        {
+          "label": "Best fit",
+          "text": "Graphic Designer, Multimedia Designer, Motion Designer"
+        },
+        {
+          "label": "Experience",
+          "text": "2 years professional + 6 years creative business"
+        },
+        {
+          "label": "Strength",
+          "text": "Campaign visuals, brand consistency, social content, motion"
+        },
+        {
+          "label": "Tools",
+          "text": "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
+        }
+      ],
+      "featuredEyebrow": "Featured products",
+      "featuredHeadline": "Small, polished product pieces recruiters can scan first.",
+      "featuredFilters": [
+        "All",
+        "Branding",
+        "Social Media",
+        "Video Editing",
+        "Motion Graphics",
+        "Illustration",
+        "Multimedia"
+      ],
+      "workEyebrow": "Portfolio path",
+      "workHeadline": "Start with work experience, then open the projects inside each role.",
+      "portfolioEyebrow": "Portfolio cards",
+      "portfolioHeadline": "Selected work across branding, social media, motion, and illustration."
+    },
+    "work": {
+      "eyebrow": "Work experience",
+      "headline": "Choose an experience to see the work created inside it.",
+      "searchPlaceholder": "Search project, tool, outcome"
+    },
+    "portfolio": {
+      "eyebrow": "Portfolio",
+      "headline": "Browse selected campaigns, visuals, motion pieces, and illustration work.",
+      "searchPlaceholder": "Search portfolio, tool, outcome"
+    },
+    "about": {
+      "eyebrow": "About the designer",
+      "headline": "Graphic designer with campaign discipline and a handmade visual voice.",
+      "body": [
+        "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her portfolio connects practical production skills with expressive, human visual details.",
+        "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
+      ],
+      "sketchAlt": "Sketch-style illustration of a designer creating at a desk",
+      "timeline": [
+        {
+          "dates": "2023-2024",
+          "title": "Executive - Design, MSL Global",
+          "text": "Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production."
+        },
+        {
+          "dates": "2023",
+          "title": "Communications Designer, Cultre Boat",
+          "text": "Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands."
+        },
+        {
+          "dates": "2018-2024",
+          "title": "Founder / Creative Entrepreneur, The Creative Bud",
+          "text": "Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "headline": "Open to graphic design, brand, motion, and multimedia roles.",
+      "cards": [
+        {
+          "icon": "✉",
+          "label": "Email",
+          "value": "visualartist.prerna@gmail.com",
+          "href": "mailto:visualartist.prerna@gmail.com"
+        },
+        {
+          "icon": "☎",
+          "label": "Phone",
+          "value": "(416) 825-6120",
+          "href": "tel:+14168256120"
+        },
+        {
+          "icon": "in",
+          "label": "LinkedIn",
+          "value": "Add her real LinkedIn URL here",
+          "href": "https://www.linkedin.com/"
+        },
+        {
+          "icon": "Be",
+          "label": "Behance",
+          "value": "behance.net/gallery/177375659/PORTFOLIO",
+          "href": "https://www.behance.net/gallery/177375659/PORTFOLIO"
+        }
+      ]
+    },
+    "appearance": {
+      "pageBackground": "#fff8ef",
+      "inkColor": "#16120f",
+      "accentColor": "#087f6f",
+      "typewriterColor": "#ff6542",
+      "buttonColor": "#087f6f",
+      "textStyles": {}
+    }
+  }
 }
