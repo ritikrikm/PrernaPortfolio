@@ -8,6 +8,10 @@ const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
 const PORTFOLIO_FILTERS = ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration"];
 const DEFAULT_PROJECT_CATEGORIES = ["Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Campaign Design", "Graphic Design", "Multimedia"];
+const HOME_SECTION_NAV = {
+  work: { selector: "#home-work-section", route: "/work" },
+  portfolio: { selector: "#home-portfolio-section", route: "/portfolio" }
+};
 const MEDIA_GROUPS = [
   {
     id: "initialSketch",
@@ -566,7 +570,11 @@ const state = {
   loadingCount: 0,
   dataLoaded: false,
   adminPassword: sessionStorage.getItem(ADMIN_PASSWORD_KEY) || "",
-  adminData: null
+  adminData: null,
+  pendingHomeSection: "",
+  homeSectionScrollHandler: null,
+  homeSectionResizeHandler: null,
+  homeNavFrame: 0
 };
 
 function escapeHtml(value = "") {
@@ -897,8 +905,35 @@ function currentTemplate() {
   return templates[name] || "home-template";
 }
 
+function headerScrollOffset() {
+  return (document.querySelector(".site-header")?.offsetHeight || 0) + 18;
+}
+
+function activeHomeRouteFromScroll() {
+  const workSection = document.querySelector(HOME_SECTION_NAV.work.selector);
+  const portfolioSection = document.querySelector(HOME_SECTION_NAV.portfolio.selector);
+  if (!workSection || !portfolioSection) return "/";
+
+  const checkpoint = headerScrollOffset() + Math.min(window.innerHeight * 0.28, 220);
+  if (portfolioSection.getBoundingClientRect().top <= checkpoint) return HOME_SECTION_NAV.portfolio.route;
+  if (workSection.getBoundingClientRect().top <= checkpoint) return HOME_SECTION_NAV.work.route;
+  return "/";
+}
+
+function updateHomeSectionNav() {
+  const activeRoute = activeHomeRouteFromScroll();
+  document.querySelectorAll(".main-nav a").forEach((link) => {
+    link.classList.toggle("active", link.dataset.route === activeRoute);
+  });
+}
+
 function setActiveNav() {
   const { name } = routeParts();
+  if (name === "/") {
+    updateHomeSectionNav();
+    return;
+  }
+
   const activeRoute = name === "/experience" || name === "/work-project"
     ? "/work"
     : name === "/portfolio-project"
@@ -907,6 +942,65 @@ function setActiveNav() {
   document.querySelectorAll(".main-nav a").forEach((link) => {
     link.classList.toggle("active", link.dataset.route === activeRoute);
   });
+}
+
+function cleanupHomeSectionTracking() {
+  if (state.homeSectionScrollHandler) {
+    window.removeEventListener("scroll", state.homeSectionScrollHandler);
+    state.homeSectionScrollHandler = null;
+  }
+  if (state.homeSectionResizeHandler) {
+    window.removeEventListener("resize", state.homeSectionResizeHandler);
+    state.homeSectionResizeHandler = null;
+  }
+  if (state.homeNavFrame) {
+    window.cancelAnimationFrame(state.homeNavFrame);
+    state.homeNavFrame = 0;
+  }
+}
+
+function setupHomeSectionTracking() {
+  cleanupHomeSectionTracking();
+  state.homeSectionScrollHandler = () => {
+    if (state.homeNavFrame) return;
+    state.homeNavFrame = window.requestAnimationFrame(() => {
+      state.homeNavFrame = 0;
+      updateHomeSectionNav();
+    });
+  };
+  state.homeSectionResizeHandler = state.homeSectionScrollHandler;
+  window.addEventListener("scroll", state.homeSectionScrollHandler, { passive: true });
+  window.addEventListener("resize", state.homeSectionResizeHandler);
+  updateHomeSectionNav();
+}
+
+function scrollToHomeSection(section, behavior = "smooth") {
+  const target = document.querySelector(HOME_SECTION_NAV[section]?.selector);
+  if (!target) return false;
+
+  const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerScrollOffset());
+  window.scrollTo({ top, left: 0, behavior });
+  window.requestAnimationFrame(updateHomeSectionNav);
+  window.setTimeout(updateHomeSectionNav, 350);
+  return true;
+}
+
+function settleHomeSectionScroll(section) {
+  scrollToHomeSection(section, "auto");
+  [180, 600, 1200].forEach((delay) => {
+    window.setTimeout(() => scrollToHomeSection(section, "auto"), delay);
+  });
+}
+
+function goToHomeSection(section) {
+  if (!HOME_SECTION_NAV[section]) return;
+  state.pendingHomeSection = section;
+  if (routeParts().name === "/") {
+    scrollToHomeSection(section);
+    state.pendingHomeSection = "";
+    return;
+  }
+  window.location.hash = "#/";
 }
 
 function experienceById(id) {
@@ -1197,6 +1291,7 @@ function adminRow(project, collection = "work") {
 
 async function renderRoute() {
   window.clearInterval(state.typewriterTimer);
+  cleanupHomeSectionTracking();
   state.filter = "All";
   state.portfolioFilter = "All";
   state.query = "";
@@ -1233,7 +1328,16 @@ async function renderRoute() {
   if (name === "/contact") setupContact();
   if (name === "/admin" || name === "/studio") setupAdmin();
   app.focus({ preventScroll: true });
-  window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+  window.requestAnimationFrame(() => {
+    if (name === "/" && state.pendingHomeSection) {
+      const targetSection = state.pendingHomeSection;
+      state.pendingHomeSection = "";
+      settleHomeSectionScroll(targetSection);
+      return;
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    setActiveNav();
+  });
 }
 
 function setupHome() {
@@ -1292,6 +1396,7 @@ function setupHome() {
     : `<div class="empty-state"><strong>Portfolio projects will appear here after the admin adds them.</strong></div>`;
 
   portfolioGrid.addEventListener("click", handleProjectGridClick);
+  setupHomeSectionTracking();
 }
 
 function featuredFilters() {
@@ -3529,6 +3634,12 @@ function exportProjects() {
 document.addEventListener("click", (event) => {
   const link = event.target.closest('a[href^="#/"]');
   if (!link) return;
+  const homeSection = link.dataset.homeSection;
+  if (homeSection && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+    event.preventDefault();
+    goToHomeSection(homeSection);
+    return;
+  }
   const nextHash = link.getAttribute("href");
   if (nextHash !== window.location.hash) return;
   event.preventDefault();

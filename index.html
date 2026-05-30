@@ -21,8 +21,8 @@
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#/" data-route="/">Home</a>
-        <a href="#/work" data-route="/work">Work</a>
-        <a href="#/portfolio" data-route="/portfolio">Portfolio</a>
+        <a href="#/work" data-route="/work" data-home-section="work">Work</a>
+        <a href="#/portfolio" data-route="/portfolio" data-home-section="portfolio">Portfolio</a>
         <a href="#/about" data-route="/about">About</a>
         <a href="#/contact" data-route="/contact">Contact</a>
       </nav>
@@ -41,7 +41,7 @@
             brand systems, social campaigns, motion graphics, illustration, and digital storytelling.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="#/work"><span aria-hidden="true">↗</span> View Experience</a>
+            <a class="button primary" href="#/work" data-home-section="work"><span aria-hidden="true">↗</span> View Experience</a>
             <a class="button ghost" href="#/contact"><span aria-hidden="true">✉</span> Contact</a>
           </div>
         </div>
@@ -66,7 +66,7 @@
         <div id="home-featured-grid" class="featured-product-grid"></div>
       </section>
 
-      <section class="content-band">
+      <section id="home-work-section" class="content-band">
         <div class="section-heading">
           <p class="eyebrow">Portfolio path</p>
           <h2>Start with work experience, then open the projects inside each role.</h2>
@@ -74,7 +74,7 @@
         <div id="home-experience-grid" class="experience-grid"></div>
       </section>
 
-      <section class="content-band home-portfolio-band">
+      <section id="home-portfolio-section" class="content-band home-portfolio-band">
         <div class="section-heading">
           <p class="eyebrow">Portfolio cards</p>
           <h2>Selected work across branding, social media, motion, and illustration.</h2>
