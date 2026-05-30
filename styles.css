@@ -414,6 +414,7 @@ h3 {
 .project-form,
 .admin-list-wrap,
 .experience-form-wrap,
+.resume-admin-wrap,
 .admin-login-panel {
   background: var(--paper);
   border: 2px solid var(--ink);
@@ -805,6 +806,66 @@ h3 {
 .contact-card small {
   color: var(--muted);
   line-height: 1.55;
+}
+
+.resume-callout {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 22px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.resume-callout[hidden] {
+  display: none;
+}
+
+.resume-callout-preview,
+.resume-preview-frame {
+  overflow: hidden;
+  min-height: 240px;
+  background: #f9fafb;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.resume-callout-preview img,
+.resume-preview-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.resume-placeholder {
+  min-height: 240px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 20px;
+  color: var(--ink);
+  text-align: center;
+}
+
+.resume-placeholder span {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  color: #fff;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font-weight: 900;
 }
 
 .experience-grid {
@@ -1911,9 +1972,16 @@ h3 {
   gap: 18px;
 }
 
+.resume-admin-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  align-items: start;
+  gap: 18px;
+}
+
 .admin-mode-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 22px;
 }
@@ -1935,6 +2003,7 @@ h3 {
 .admin-project-group.has-unpublished,
 .admin-row.draft-dirty,
 .admin-experience-row.draft-dirty,
+.resume-admin-preview-card.draft-dirty,
 .content-field-row.draft-dirty,
 .filter-chip.has-unpublished {
   border-color: #ff335f;
@@ -2007,6 +2076,7 @@ h3 {
 .admin-list-wrap,
 .experience-form-wrap,
 .content-editor-wrap,
+.resume-admin-wrap,
 .admin-login-panel {
   padding: 20px;
 }
@@ -2483,6 +2553,32 @@ textarea:focus {
   top: calc(var(--header-height) + 18px);
 }
 
+.resume-preview-panel {
+  position: sticky;
+  top: calc(var(--header-height) + 18px);
+  padding: 18px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 rgba(22, 18, 15, 0.12);
+}
+
+.resume-admin-preview-card {
+  display: grid;
+  gap: 14px;
+  padding: 12px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.resume-admin-preview-card small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
 .preview-panel .project-card {
   min-height: auto;
 }
@@ -2712,6 +2808,8 @@ textarea:focus {
   .hero-band,
   .home-story,
   .admin-layout,
+  .resume-admin-layout,
+  .resume-callout,
   .content-editor-layout,
   .publish-choice-grid,
   .about-layout,
@@ -2729,7 +2827,8 @@ textarea:focus {
     min-height: auto;
   }
 
-  .preview-panel {
+  .preview-panel,
+  .resume-preview-panel {
     position: static;
   }
 
@@ -2809,6 +2908,7 @@ textarea:focus {
   .stats-grid,
   .software-grid,
   .contact-grid,
+  .resume-callout,
   .admin-experience-list,
   .media-fieldset,
   .media-group-heading,

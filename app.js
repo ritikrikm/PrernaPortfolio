@@ -12,6 +12,8 @@ const HOME_SECTION_NAV = {
   work: { selector: "#home-work-section", route: "/work" },
   portfolio: { selector: "#home-portfolio-section", route: "/portfolio" }
 };
+const RESUME_FILE_PATH = "assets/resume/prerna-sharma-resume.pdf";
+const RESUME_PREVIEW_PATH = "assets/resume/prerna-sharma-resume-preview.webp";
 const MEDIA_GROUPS = [
   {
     id: "initialSketch",
@@ -548,12 +550,21 @@ const sampleFeaturedProducts = [
 
 let publishedFeaturedProducts = sampleFeaturedProducts.map((project) => ({ ...project }));
 let publishedSiteContent = cloneItems(defaultSiteContent);
+const defaultResume = {
+  label: "Download Resume",
+  file: "",
+  fileName: "Prerna-Sharma-Resume.pdf",
+  previewImage: "",
+  updatedAt: ""
+};
+let publishedResume = cloneItems(defaultResume);
 
 const state = {
   projects: [],
   portfolioProjects: [],
   featuredProducts: [],
   siteContent: cloneItems(defaultSiteContent),
+  resume: cloneItems(defaultResume),
   contentPage: "home",
   previewContentField: "",
   adminMode: "portfolio",
@@ -574,7 +585,12 @@ const state = {
   pendingHomeSection: "",
   homeSectionScrollHandler: null,
   homeSectionResizeHandler: null,
-  homeNavFrame: 0
+  homeNavFrame: 0,
+  resumeFileDraft: "",
+  resumeFileNameDraft: "",
+  resumePreviewDraft: "",
+  resumeFileRemoved: false,
+  resumePreviewRemoved: false
 };
 
 function escapeHtml(value = "") {
@@ -603,6 +619,27 @@ function safeHref(value = "") {
   return safeUrl(value) || "#";
 }
 
+function safeAssetHref(value = "") {
+  if (!value) return "";
+  if (/^assets\/[a-z0-9/_\-.]+$/i.test(value)) return value;
+  if (/^data:application\/pdf;base64,/i.test(value)) return value;
+  return safeUrl(value);
+}
+
+function normalizeResume(data = {}) {
+  return {
+    label: String(data?.label || defaultResume.label).trim() || defaultResume.label,
+    file: String(data?.file || ""),
+    fileName: String(data?.fileName || defaultResume.fileName).trim() || defaultResume.fileName,
+    previewImage: String(data?.previewImage || ""),
+    updatedAt: String(data?.updatedAt || "")
+  };
+}
+
+function resumeDirty() {
+  return !deepEqual(normalizeResume(state.resume), normalizeResume(publishedResume));
+}
+
 function textStyle(key) {
   const color = state.siteContent?.appearance?.textStyles?.[key]?.color;
   return color ? ` style="color: ${escapeHtml(color)};"` : "";
@@ -618,6 +655,26 @@ function setText(selector, value, key = "") {
     if (color) element.style.color = color;
     else element.style.removeProperty("color");
   }
+}
+
+function updateResumeLinks() {
+  const resume = normalizeResume(state.resume);
+  const href = safeAssetHref(resume.file);
+  document.querySelectorAll("[data-resume-download]").forEach((link) => {
+    const label = resume.label || defaultResume.label;
+    link.hidden = !href;
+    link.href = href || "#";
+    link.innerHTML = `<span aria-hidden="true">⇩</span> ${escapeHtml(label)}`;
+    if (href) {
+      link.setAttribute("download", resume.fileName || defaultResume.fileName);
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noreferrer");
+    } else {
+      link.removeAttribute("download");
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    }
+  });
 }
 
 function applySiteContent() {
@@ -646,6 +703,7 @@ function applySiteContent() {
     ["/about", nav.about, "global.nav.about"],
     ["/contact", nav.contact, "global.nav.contact"]
   ].forEach(([route, label, key]) => setText(`.main-nav a[data-route="${route}"]`, label, key));
+  updateResumeLinks();
 }
 
 function cloneItems(items = []) {
@@ -774,7 +832,8 @@ function portfolioSnapshot(source = {}) {
     projects: cloneItems(source.projects || state.projects),
     portfolioProjects: cloneItems(source.portfolioProjects || state.portfolioProjects),
     featuredProducts: cloneItems(source.featuredProducts || state.featuredProducts),
-    siteContent: normalizeSiteContent(source.siteContent || state.siteContent)
+    siteContent: normalizeSiteContent(source.siteContent || state.siteContent),
+    resume: normalizeResume(source.resume || state.resume)
   };
 }
 
@@ -792,7 +851,8 @@ function normalizePortfolioData(data) {
     featuredProducts: Array.isArray(data?.featuredProducts)
       ? cloneItems(data.featuredProducts)
       : cloneItems(sampleFeaturedProducts),
-    siteContent: normalizeSiteContent(data?.siteContent)
+    siteContent: normalizeSiteContent(data?.siteContent),
+    resume: normalizeResume(data?.resume || state?.resume || defaultResume)
   };
 }
 
@@ -808,6 +868,7 @@ async function loadPublishedPortfolio() {
       publishedPortfolioProjects = data.portfolioProjects;
       publishedFeaturedProducts = data.featuredProducts;
       publishedSiteContent = data.siteContent;
+      publishedResume = data.resume;
     }
   } catch {
     publishedExperiences = cloneItems(defaultExperiences);
@@ -815,6 +876,7 @@ async function loadPublishedPortfolio() {
     publishedPortfolioProjects = cloneItems(samplePortfolioProjects);
     publishedFeaturedProducts = cloneItems(sampleFeaturedProducts);
     publishedSiteContent = cloneItems(defaultSiteContent);
+    publishedResume = cloneItems(defaultResume);
   }
 
   state.dataLoaded = true;
@@ -826,6 +888,7 @@ function usePublishedPortfolio() {
   state.portfolioProjects = cloneItems(publishedPortfolioProjects);
   state.featuredProducts = cloneItems(publishedFeaturedProducts);
   state.siteContent = normalizeSiteContent(publishedSiteContent);
+  state.resume = normalizeResume(publishedResume);
   applySiteContent();
 }
 
@@ -837,7 +900,8 @@ function loadDraftPortfolio() {
       projects: publishedProjects,
       portfolioProjects: publishedPortfolioProjects,
       featuredProducts: publishedFeaturedProducts,
-      siteContent: publishedSiteContent
+      siteContent: publishedSiteContent,
+      resume: publishedResume
     });
   }
 
@@ -849,7 +913,8 @@ function loadDraftPortfolio() {
       projects: publishedProjects,
       portfolioProjects: publishedPortfolioProjects,
       featuredProducts: publishedFeaturedProducts,
-      siteContent: publishedSiteContent
+      siteContent: publishedSiteContent,
+      resume: publishedResume
     });
   }
 }
@@ -863,6 +928,7 @@ function saveDraftPortfolio(data) {
   state.portfolioProjects = cloneItems(nextData.portfolioProjects);
   state.featuredProducts = cloneItems(nextData.featuredProducts);
   state.siteContent = normalizeSiteContent(nextData.siteContent);
+  state.resume = normalizeResume(nextData.resume);
   applySiteContent();
 }
 
@@ -1327,6 +1393,7 @@ async function renderRoute() {
   if (name === "/about") setupAbout();
   if (name === "/contact") setupContact();
   if (name === "/admin" || name === "/studio") setupAdmin();
+  updateResumeLinks();
   app.focus({ preventScroll: true });
   window.requestAnimationFrame(() => {
     if (name === "/" && state.pendingHomeSection) {
@@ -1615,6 +1682,30 @@ function setupContact() {
       </a>
     `)
     .join("");
+  renderResumeCallout();
+}
+
+function resumePreviewMarkup(resume = state.resume) {
+  const normalized = normalizeResume(resume);
+  if (normalized.previewImage) {
+    return `<img src="${escapeHtml(normalized.previewImage)}" alt="Resume first page preview">`;
+  }
+  return `
+    <div class="resume-placeholder">
+      <span>PDF</span>
+      <strong>${escapeHtml(normalized.fileName || defaultResume.fileName)}</strong>
+    </div>
+  `;
+}
+
+function renderResumeCallout() {
+  const callout = document.getElementById("resume-callout");
+  if (!callout) return;
+  const resume = normalizeResume(state.resume);
+  const href = safeAssetHref(resume.file);
+  callout.hidden = !href;
+  document.getElementById("resume-callout-preview").innerHTML = resumePreviewMarkup(resume);
+  updateResumeLinks();
 }
 
 function setupExperienceDetail() {
@@ -2106,8 +2197,12 @@ function choosePublishScope() {
             <strong>Text & Appearance</strong>
             <span>Publish Home, About, Contact, Header, filters, and color changes.</span>
           </button>
-          <button class="publish-choice ${(portfolioContentDirty() || siteContentDirty()) ? "has-unpublished" : ""}" type="button" data-publish-scope="both">
-            <strong>Publish Both</strong>
+          <button class="publish-choice ${resumeDirty() ? "has-unpublished" : ""}" type="button" data-publish-scope="resume">
+            <strong>Resume</strong>
+            <span>Publish the latest resume PDF and preview image.</span>
+          </button>
+          <button class="publish-choice ${(portfolioContentDirty() || siteContentDirty() || resumeDirty()) ? "has-unpublished" : ""}" type="button" data-publish-scope="both">
+            <strong>Publish Everything</strong>
             <span>Push every saved draft in one GitHub update.</span>
           </button>
         </div>
@@ -2148,7 +2243,8 @@ function portfolioForPublishScope(scope) {
       projects: publishedProjects,
       portfolioProjects: publishedPortfolioProjects,
       featuredProducts: publishedFeaturedProducts,
-      siteContent: state.siteContent
+      siteContent: state.siteContent,
+      resume: publishedResume
     });
   }
   if (scope === "portfolio") {
@@ -2157,7 +2253,18 @@ function portfolioForPublishScope(scope) {
       projects: state.projects,
       portfolioProjects: state.portfolioProjects,
       featuredProducts: state.featuredProducts,
-      siteContent: publishedSiteContent
+      siteContent: publishedSiteContent,
+      resume: publishedResume
+    });
+  }
+  if (scope === "resume") {
+    return portfolioSnapshot({
+      experiences: publishedExperiences,
+      projects: publishedProjects,
+      portfolioProjects: publishedPortfolioProjects,
+      featuredProducts: publishedFeaturedProducts,
+      siteContent: publishedSiteContent,
+      resume: state.resume
     });
   }
   return portfolioSnapshot();
@@ -2175,6 +2282,15 @@ function dataImageExtension(mimeType = "") {
 
 function parseDataImageValue(value = "") {
   const match = String(value).match(/^data:(image\/[a-z0-9.+-]+);base64,([a-z0-9+/=\s]+)$/i);
+  if (!match) return null;
+  return {
+    mimeType: match[1],
+    base64: match[2].replace(/\s/g, "")
+  };
+}
+
+function parseDataFileValue(value = "") {
+  const match = String(value).match(/^data:([a-z0-9.+/-]+);base64,([a-z0-9+/=\s]+)$/i);
   if (!match) return null;
   return {
     mimeType: match[1],
@@ -2209,6 +2325,23 @@ async function publishedAssetPath(dataUrl, cache) {
   return assetPath;
 }
 
+function publishedResumeAssetPath(value, type = "file") {
+  const parsed = parseDataFileValue(value);
+  if (!parsed) return value;
+  if (type === "file" && parsed.mimeType.toLowerCase() === "application/pdf") return RESUME_FILE_PATH;
+  if (type === "preview" && parsed.mimeType.toLowerCase().startsWith("image/")) return RESUME_PREVIEW_PATH;
+  return value;
+}
+
+function replaceResumeDraftAssets(portfolio) {
+  const nextPortfolio = cloneItems(portfolio);
+  const resume = normalizeResume(nextPortfolio.resume);
+  resume.file = publishedResumeAssetPath(resume.file, "file");
+  resume.previewImage = publishedResumeAssetPath(resume.previewImage, "preview");
+  nextPortfolio.resume = resume;
+  return nextPortfolio;
+}
+
 async function replaceDataImagesWithAssetPaths(value, cache = new Map()) {
   if (typeof value === "string") {
     return value.startsWith("data:image/") ? publishedAssetPath(value, cache) : value;
@@ -2235,12 +2368,13 @@ async function replaceDataImagesWithAssetPaths(value, cache = new Map()) {
 
 async function publishedPortfolioFromResponse(result, portfolio) {
   if (result.portfolio) return normalizePortfolioData(result.portfolio);
-  return normalizePortfolioData(await replaceDataImagesWithAssetPaths(portfolio));
+  return normalizePortfolioData(await replaceDataImagesWithAssetPaths(replaceResumeDraftAssets(portfolio)));
 }
 
 function publishScopeLabel(scope) {
   if (scope === "content") return "Text & Appearance";
   if (scope === "portfolio") return "Experience, Work & Portfolio";
+  if (scope === "resume") return "Resume";
   return "everything";
 }
 
@@ -2250,6 +2384,7 @@ function updatePublishedPortfolio(published) {
   publishedPortfolioProjects = cloneItems(published.portfolioProjects);
   publishedFeaturedProducts = cloneItems(published.featuredProducts);
   publishedSiteContent = normalizeSiteContent(published.siteContent);
+  publishedResume = normalizeResume(published.resume);
 }
 
 function syncDraftAfterPublish(scope, published) {
@@ -2261,7 +2396,8 @@ function syncDraftAfterPublish(scope, published) {
       projects: state.projects,
       portfolioProjects: state.portfolioProjects,
       featuredProducts: state.featuredProducts,
-      siteContent: publishedSiteContent
+      siteContent: publishedSiteContent,
+      resume: state.resume
     });
   } else if (scope === "portfolio") {
     saveDraftPortfolio({
@@ -2269,7 +2405,17 @@ function syncDraftAfterPublish(scope, published) {
       projects: publishedProjects,
       portfolioProjects: publishedPortfolioProjects,
       featuredProducts: publishedFeaturedProducts,
-      siteContent: state.siteContent
+      siteContent: state.siteContent,
+      resume: state.resume
+    });
+  } else if (scope === "resume") {
+    saveDraftPortfolio({
+      experiences,
+      projects: state.projects,
+      portfolioProjects: state.portfolioProjects,
+      featuredProducts: state.featuredProducts,
+      siteContent: state.siteContent,
+      resume: publishedResume
     });
   } else {
     experiences = cloneItems(published.experiences);
@@ -2277,11 +2423,12 @@ function syncDraftAfterPublish(scope, published) {
     state.portfolioProjects = cloneItems(published.portfolioProjects);
     state.featuredProducts = cloneItems(published.featuredProducts);
     state.siteContent = normalizeSiteContent(published.siteContent);
+    state.resume = normalizeResume(published.resume);
     localStorage.removeItem(DRAFT_STORE_KEY);
     applySiteContent();
   }
 
-  if (!portfolioContentDirty() && !siteContentDirty()) {
+  if (!portfolioContentDirty() && !siteContentDirty() && !resumeDirty()) {
     localStorage.removeItem(DRAFT_STORE_KEY);
   }
 }
@@ -2798,7 +2945,7 @@ async function handleAdminExperienceAction(event) {
 function setupAdminModes() {
   document.querySelectorAll("[data-admin-mode]").forEach((button) => {
     button.classList.toggle("active", button.dataset.adminMode === state.adminMode);
-    button.classList.toggle("has-unpublished", button.dataset.adminMode === "portfolio" ? portfolioContentDirty() : siteContentDirty());
+    button.classList.toggle("has-unpublished", adminModeDirty(button.dataset.adminMode));
     button.addEventListener("click", () => {
       state.adminMode = button.dataset.adminMode;
       renderAdminMode();
@@ -2810,10 +2957,162 @@ function setupAdminModes() {
 function renderAdminMode() {
   document.querySelectorAll("[data-admin-mode]").forEach((button) => {
     button.classList.toggle("active", button.dataset.adminMode === state.adminMode);
-    button.classList.toggle("has-unpublished", button.dataset.adminMode === "portfolio" ? portfolioContentDirty() : siteContentDirty());
+    button.classList.toggle("has-unpublished", adminModeDirty(button.dataset.adminMode));
   });
   document.querySelectorAll("[data-admin-panel]").forEach((panel) => {
     panel.hidden = panel.dataset.adminPanel !== state.adminMode;
+  });
+}
+
+function adminModeDirty(mode) {
+  if (mode === "portfolio") return portfolioContentDirty();
+  if (mode === "content") return siteContentDirty();
+  if (mode === "resume") return resumeDirty();
+  return false;
+}
+
+function resetResumeDraftInputs() {
+  state.resumeFileDraft = "";
+  state.resumeFileNameDraft = "";
+  state.resumePreviewDraft = "";
+  state.resumeFileRemoved = false;
+  state.resumePreviewRemoved = false;
+}
+
+function formResume() {
+  const label = document.getElementById("resume-label")?.value.trim() || defaultResume.label;
+  const existingResume = normalizeResume(state.resume);
+  return normalizeResume({
+    label,
+    file: state.resumeFileRemoved ? "" : state.resumeFileDraft || existingResume.file,
+    fileName: state.resumeFileRemoved ? defaultResume.fileName : state.resumeFileNameDraft || existingResume.fileName,
+    previewImage: state.resumePreviewRemoved ? "" : state.resumePreviewDraft || existingResume.previewImage,
+    updatedAt: (state.resumeFileDraft || state.resumePreviewDraft || label !== existingResume.label)
+      ? new Date().toISOString()
+      : existingResume.updatedAt
+  });
+}
+
+function renderResumeAdmin() {
+  const form = document.getElementById("resume-form");
+  if (!form) return;
+
+  const resume = formResume();
+  document.getElementById("resume-label").value = resume.label;
+  document.getElementById("resume-file-name").textContent = resume.file
+    ? state.resumeFileNameDraft || resume.fileName || "Existing resume selected"
+    : "Choose a PDF";
+  document.getElementById("resume-preview-file-name").textContent = resume.previewImage
+    ? state.resumePreviewDraft ? "New preview selected" : "Existing preview selected"
+    : "Choose a preview image";
+  document.getElementById("resume-publish-state").textContent = resumeDirty() ? "Draft not published" : "Published";
+  document.getElementById("admin-resume-preview").innerHTML = `
+    <article class="resume-admin-preview-card ${resumeDirty() ? "draft-dirty" : ""}">
+      <div class="resume-preview-frame">${resumePreviewMarkup(resume)}</div>
+      <div>
+        <strong>${escapeHtml(resume.fileName || defaultResume.fileName)}</strong>
+        <small>${resume.file ? "Resume PDF ready" : "No resume PDF selected"}</small>
+        ${resume.updatedAt ? `<small>Updated ${escapeHtml(new Date(resume.updatedAt).toLocaleDateString())}</small>` : ""}
+        ${resumeDirty() ? renderDirtyBadge() : ""}
+      </div>
+    </article>
+  `;
+}
+
+async function readResumePdfAsDataUrl(file) {
+  if (!file) return "";
+  const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+  if (!isPdf) throw new Error("Please choose a PDF resume.");
+  return readRawFileAsDataUrl(file);
+}
+
+async function readResumePreviewAsDataUrl(file) {
+  if (!file) return "";
+  if (!file.type?.startsWith("image/")) throw new Error("Please choose an image for the resume preview.");
+  const blob = await compressedImageBlob(file);
+  return blob ? readRawFileAsDataUrl(blob) : readFileAsDataUrl(file);
+}
+
+async function saveResumeDraft(event) {
+  event.preventDefault();
+  if (!(await confirmAction("Save this resume as a draft?", "Save Resume"))) return;
+  try {
+    saveDraftPortfolio(portfolioSnapshot({ resume: formResume() }));
+  } catch {
+    alert("The resume is too large for browser storage. Try a smaller PDF, then publish again.");
+    return;
+  }
+  resetResumeDraftInputs();
+  renderResumeAdmin();
+  renderAdminMode();
+  updateResumeLinks();
+  showToast("Resume saved as draft.");
+}
+
+async function resetResumeDraft() {
+  if (!(await confirmAction("Reset resume draft back to the currently published resume?", "Reset Resume"))) return;
+  resetResumeDraftInputs();
+  state.resume = normalizeResume(publishedResume);
+  saveDraftPortfolio(portfolioSnapshot({ resume: state.resume }));
+  renderResumeAdmin();
+  renderAdminMode();
+  updateResumeLinks();
+  showToast("Resume draft reset.");
+}
+
+function setupResumeAdmin() {
+  const form = document.getElementById("resume-form");
+  if (!form) return;
+  resetResumeDraftInputs();
+  document.getElementById("resume-label").value = state.resume.label || defaultResume.label;
+  renderResumeAdmin();
+
+  form.addEventListener("input", renderResumeAdmin);
+  form.addEventListener("submit", saveResumeDraft);
+  document.getElementById("reset-resume-draft").addEventListener("click", resetResumeDraft);
+  document.getElementById("clear-resume-file").addEventListener("click", () => {
+    document.getElementById("resume-file").value = "";
+    state.resumeFileDraft = "";
+    state.resumeFileNameDraft = "";
+    state.resumeFileRemoved = true;
+    renderResumeAdmin();
+  });
+  document.getElementById("clear-resume-preview").addEventListener("click", () => {
+    document.getElementById("resume-preview-file").value = "";
+    state.resumePreviewDraft = "";
+    state.resumePreviewRemoved = true;
+    renderResumeAdmin();
+  });
+  document.getElementById("resume-file").addEventListener("change", async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    showLoadingBanner("Preparing resume PDF...");
+    try {
+      state.resumeFileDraft = await readResumePdfAsDataUrl(file);
+      state.resumeFileNameDraft = file.name || defaultResume.fileName;
+      state.resumeFileRemoved = false;
+      renderResumeAdmin();
+    } catch (error) {
+      showToast(error.message || "Could not read resume.");
+      event.target.value = "";
+    } finally {
+      hideLoadingBanner();
+    }
+  });
+  document.getElementById("resume-preview-file").addEventListener("change", async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    showLoadingBanner("Preparing resume preview...");
+    try {
+      state.resumePreviewDraft = await readResumePreviewAsDataUrl(file);
+      state.resumePreviewRemoved = false;
+      renderResumeAdmin();
+    } catch (error) {
+      showToast(error.message || "Could not read resume preview.");
+      event.target.value = "";
+    } finally {
+      hideLoadingBanner();
+    }
   });
 }
 
@@ -3201,6 +3500,7 @@ function setupAdmin() {
   state.portfolioProjects = cloneItems(draft.portfolioProjects);
   state.featuredProducts = cloneItems(draft.featuredProducts);
   state.siteContent = normalizeSiteContent(draft.siteContent);
+  state.resume = normalizeResume(draft.resume);
   applySiteContent();
   state.previewImage = "";
   state.projectImageRemoved = false;
@@ -3218,6 +3518,7 @@ function setupAdmin() {
   renderAdminExperienceList();
   setupAdminModes();
   setupContentEditor();
+  setupResumeAdmin();
 
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
   document.getElementById("clear-experience-form").addEventListener("click", clearExperienceForm);
@@ -3545,6 +3846,7 @@ async function finishPublishDraft(scope, portfolio, result = {}, message = "") {
   renderAdminExperienceList();
   renderAdminList();
   renderContentEditor();
+  renderResumeAdmin();
   renderAdminMode();
 
   if (message) {
@@ -3552,8 +3854,9 @@ async function finishPublishDraft(scope, portfolio, result = {}, message = "") {
     return;
   }
 
-  const assetText = result.assetCount
-    ? ` ${result.assetCount} image asset(s) moved to GitHub.`
+  const changedAssets = Number(result.assetCount || 0) + Number(result.updatedAssetCount || 0);
+  const assetText = changedAssets
+    ? ` ${changedAssets} asset(s) moved to GitHub.`
     : " Vercel should deploy next.";
   showToast(`Published ${publishScopeLabel(scope)}.${assetText}`);
 }
@@ -3611,12 +3914,14 @@ async function resetProjects() {
     projects: publishedProjects,
     portfolioProjects: publishedPortfolioProjects,
     featuredProducts: publishedFeaturedProducts,
-    siteContent: publishedSiteContent
+    siteContent: publishedSiteContent,
+    resume: publishedResume
   });
   renderExperienceSelect();
   renderAdminExperienceList();
   clearForm();
   renderAdminList();
+  renderResumeAdmin();
   renderAdminMode();
   showToast("Drafts reset to published version.");
 }

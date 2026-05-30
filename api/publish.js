@@ -7,6 +7,8 @@ const githubHeaders = (token) => ({
   "User-Agent": "prerna-portfolio-publisher",
   "X-GitHub-Api-Version": "2022-11-28"
 });
+const RESUME_FILE_PATH = "assets/resume/prerna-sharma-resume.pdf";
+const RESUME_PREVIEW_PATH = "assets/resume/prerna-sharma-resume-preview.webp";
 
 function readBody(req) {
   if (req.body && typeof req.body === "object") return Promise.resolve(req.body);
@@ -75,6 +77,31 @@ function parseDataImage(value = "") {
   };
 }
 
+function parseDataFile(value = "") {
+  const match = String(value).match(/^data:([a-z0-9.+/-]+);base64,([a-z0-9+/=\s]+)$/i);
+  if (!match) return null;
+  const buffer = Buffer.from(match[2].replace(/\s/g, ""), "base64");
+  if (!buffer.length) return null;
+  return {
+    mimeType: match[1],
+    buffer,
+    base64: buffer.toString("base64")
+  };
+}
+
+async function currentGithubFile(path, github) {
+  const encodedPath = encodeGithubPath(path);
+  const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/contents/${encodedPath}?ref=${github.branch}`, {
+    headers: github.headers
+  });
+
+  if (response.ok) return response.json();
+  if (response.status === 404) return null;
+
+  const details = await response.json().catch(() => ({}));
+  throw new Error(githubErrorMessage(response.status, details.message || `Could not read ${path}.`));
+}
+
 async function uploadAssetIfNeeded(dataUrl, github, cache, stats) {
   if (cache.has(dataUrl)) return cache.get(dataUrl);
 
@@ -117,6 +144,52 @@ async function uploadAssetIfNeeded(dataUrl, github, cache, stats) {
   stats.uploaded += 1;
   cache.set(dataUrl, assetPath);
   return assetPath;
+}
+
+async function uploadFixedAssetIfNeeded(dataUrl, assetPath, github, stats) {
+  const parsed = parseDataFile(dataUrl);
+  if (!parsed) return dataUrl;
+
+  const currentFile = await currentGithubFile(assetPath, github);
+  const uploadResponse = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/contents/${encodeGithubPath(assetPath)}`, {
+    method: "PUT",
+    headers: github.headers,
+    body: JSON.stringify({
+      branch: github.branch,
+      message: `Update ${assetPath}`,
+      content: parsed.base64,
+      sha: currentFile?.sha
+    })
+  });
+
+  if (!uploadResponse.ok) {
+    const details = await uploadResponse.json().catch(() => ({}));
+    throw new Error(githubErrorMessage(uploadResponse.status, details.message || `Could not upload ${assetPath}.`));
+  }
+
+  stats.uploaded += currentFile ? 0 : 1;
+  stats.updated += currentFile ? 1 : 0;
+  return assetPath;
+}
+
+async function prepareResumeAssets(portfolio, github, stats) {
+  const preparedPortfolio = {
+    ...portfolio,
+    resume: {
+      ...(portfolio.resume || {})
+    }
+  };
+  const resume = preparedPortfolio.resume;
+
+  if (typeof resume.file === "string" && resume.file.startsWith("data:application/pdf")) {
+    resume.file = await uploadFixedAssetIfNeeded(resume.file, RESUME_FILE_PATH, github, stats);
+  }
+
+  if (typeof resume.previewImage === "string" && resume.previewImage.startsWith("data:image/")) {
+    resume.previewImage = await uploadFixedAssetIfNeeded(resume.previewImage, RESUME_PREVIEW_PATH, github, stats);
+  }
+
+  return preparedPortfolio;
 }
 
 async function replaceDataImages(value, uploadImage) {
@@ -178,16 +251,18 @@ module.exports = async function handler(req, res) {
     const path = encodeGithubPath(GITHUB_FILE_PATH);
     const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
     const headers = githubHeaders(GITHUB_TOKEN);
-    const assetStats = { uploaded: 0, reused: 0 };
+    const github = {
+      owner: GITHUB_OWNER,
+      repo: GITHUB_REPO,
+      branch: GITHUB_BRANCH,
+      headers
+    };
+    const assetStats = { uploaded: 0, reused: 0, updated: 0 };
     const assetCache = new Map();
+    const portfolioWithResumeAssets = await prepareResumeAssets(portfolio, github, assetStats);
     const preparedPortfolio = await replaceDataImages(
-      portfolio,
-      (dataUrl) => uploadAssetIfNeeded(dataUrl, {
-        owner: GITHUB_OWNER,
-        repo: GITHUB_REPO,
-        branch: GITHUB_BRANCH,
-        headers
-      }, assetCache, assetStats)
+      portfolioWithResumeAssets,
+      (dataUrl) => uploadAssetIfNeeded(dataUrl, github, assetCache, assetStats)
     );
     const currentFileResponse = await fetch(fileUrl, { headers });
     let sha;
@@ -227,6 +302,7 @@ module.exports = async function handler(req, res) {
       ok: true,
       commitUrl: result.commit?.html_url || "",
       assetCount: assetStats.uploaded,
+      updatedAssetCount: assetStats.updated,
       reusedAssetCount: assetStats.reused
     });
   } catch (error) {

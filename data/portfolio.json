@@ -493,5 +493,12 @@
       "buttonColor": "#087f6f",
       "textStyles": {}
     }
+  },
+  "resume": {
+    "label": "Download Resume",
+    "file": "",
+    "fileName": "Prerna-Sharma-Resume.pdf",
+    "previewImage": "",
+    "updatedAt": ""
   }
 }
