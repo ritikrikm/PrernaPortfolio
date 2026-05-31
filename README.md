@@ -1,6 +1,6 @@
-# Prerna Sharma Portfolio
+# Prerna Sharma Design Showcase
 
-Static portfolio site with a private admin studio at `#/studio`.
+Static design showcase site with a private admin studio at `#/studio`.
 
 ## Publish Setup
 
@@ -28,7 +28,7 @@ python3 -m http.server 8766
 Then open:
 
 ```txt
-http://localhost:8766/index.html#/portfolio
+http://localhost:8766/index.html#/featured-projects
 ```
 
 On production, admin login uses the Vercel `ADMIN_PASSWORD` environment variable.

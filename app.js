@@ -6,11 +6,10 @@ const PREVIEW_SESSION_KEY = "prerna-portfolio-preview-drafts";
 const LOCAL_ADMIN_PASSWORD = "prerna-admin";
 const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
-const PORTFOLIO_FILTERS = ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration"];
 const DEFAULT_PROJECT_CATEGORIES = ["Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Campaign Design", "Graphic Design", "Multimedia"];
 const HOME_SECTION_NAV = {
+  featured: { selector: "#home-featured-section", route: "/featured-projects" },
   work: { selector: "#home-work-section", route: "/work" },
-  portfolio: { selector: "#home-portfolio-section", route: "/portfolio" }
 };
 const RESUME_FILE_PATH = "assets/resume/prerna-sharma-resume.pdf";
 const RESUME_PREVIEW_PATH = "assets/resume/prerna-sharma-resume-preview.webp";
@@ -76,22 +75,22 @@ const typewriterWords = [
 
 const defaultSiteContent = {
   global: {
-    metaTitle: "Prerna Sharma | Graphic Designer Portfolio",
-    metaDescription: "Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
-    skipLink: "Skip to portfolio",
+    metaTitle: "Prerna Sharma | Graphic Designer",
+    metaDescription: "Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
+    skipLink: "Skip to site",
     brandSymbol: "PS",
     brandName: "Prerna Sharma",
     brandSubtitle: "Graphic Designer + Motion Artist",
     nav: {
       home: "Home",
       work: "Work",
-      portfolio: "Portfolio",
+      featured: "Featured Projects",
       about: "About",
       contact: "Contact"
     }
   },
   home: {
-    eyebrow: "Graphic design portfolio",
+    eyebrow: "Graphic design work",
     headline: "Design work that moves from brief to brand, campaign, and motion.",
     typewriterPrefix: "I am",
     typewriterWords: [
@@ -101,7 +100,7 @@ const defaultSiteContent = {
       "a Visual Storyteller",
       "a Creative Maker"
     ],
-    summary: "A recruiter-friendly portfolio for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
+    summary: "A recruiter-friendly project showcase for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
     primaryAction: "View Experience",
     secondaryAction: "Contact",
     quickScanEyebrow: "Quick scan",
@@ -123,29 +122,27 @@ const defaultSiteContent = {
         text: "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
       }
     ],
-    featuredEyebrow: "Featured products",
-    featuredHeadline: "Small, polished product pieces recruiters can scan first.",
+    featuredEyebrow: "Featured projects",
+    featuredHeadline: "Small, polished project pieces recruiters can scan first.",
     featuredFilters: ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Multimedia"],
-    workEyebrow: "Portfolio path",
-    workHeadline: "Start with work experience, then open the projects inside each role.",
-    portfolioEyebrow: "Portfolio cards",
-    portfolioHeadline: "Selected work across branding, social media, motion, and illustration."
+    workEyebrow: "Work experience",
+    workHeadline: "Start with work experience, then open the projects inside each role."
   },
   work: {
     eyebrow: "Work experience",
     headline: "Choose an experience to see the work created inside it.",
     searchPlaceholder: "Search project, tool, outcome"
   },
-  portfolio: {
-    eyebrow: "Portfolio",
+  featured: {
+    eyebrow: "Featured projects",
     headline: "Browse selected campaigns, visuals, motion pieces, and illustration work.",
-    searchPlaceholder: "Search portfolio, tool, outcome"
+    searchPlaceholder: "Search featured project, tool, outcome"
   },
   about: {
     eyebrow: "About the designer",
     headline: "Graphic designer with campaign discipline and a handmade visual voice.",
     body: [
-      "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her portfolio connects practical production skills with expressive, human visual details.",
+      "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details.",
       "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
     ],
     sketchAlt: "Sketch-style illustration of a designer creating at a desk",
@@ -192,8 +189,8 @@ const defaultSiteContent = {
       {
         icon: "Be",
         label: "Behance",
-        value: "behance.net/gallery/177375659/PORTFOLIO",
-        href: "https://www.behance.net/gallery/177375659/PORTFOLIO"
+        value: "Behance project gallery",
+        href: "https://www.behance.net/gallery/177375659"
       }
     ]
   },
@@ -213,7 +210,7 @@ const CONTENT_PAGES = [
   { id: "contact", label: "Contact" },
   { id: "global", label: "Header" },
   { id: "work", label: "Work" },
-  { id: "portfolio", label: "Portfolio" },
+  { id: "featured", label: "Featured Projects" },
   { id: "appearance", label: "Appearance" }
 ];
 
@@ -226,7 +223,7 @@ const CONTENT_FIELDS = [
   { page: "global", key: "global.metaDescription", label: "Meta description", path: "global.metaDescription", type: "textarea" },
   { page: "global", key: "global.nav.home", label: "Nav: Home", path: "global.nav.home" },
   { page: "global", key: "global.nav.work", label: "Nav: Work", path: "global.nav.work" },
-  { page: "global", key: "global.nav.portfolio", label: "Nav: Portfolio", path: "global.nav.portfolio" },
+  { page: "global", key: "global.nav.featured", label: "Nav: Featured Projects", path: "global.nav.featured" },
   { page: "global", key: "global.nav.about", label: "Nav: About", path: "global.nav.about" },
   { page: "global", key: "global.nav.contact", label: "Nav: Contact", path: "global.nav.contact" },
   { page: "home", key: "home.eyebrow", label: "Hero eyebrow", path: "home.eyebrow" },
@@ -245,19 +242,17 @@ const CONTENT_FIELDS = [
   { page: "home", key: "home.quickScan.2.text", label: "Quick scan 3 text", path: "home.quickScan.2.text", type: "textarea" },
   { page: "home", key: "home.quickScan.3.label", label: "Quick scan 4 label", path: "home.quickScan.3.label" },
   { page: "home", key: "home.quickScan.3.text", label: "Quick scan 4 text", path: "home.quickScan.3.text", type: "textarea" },
-  { page: "home", key: "home.featuredEyebrow", label: "Featured products eyebrow", path: "home.featuredEyebrow" },
-  { page: "home", key: "home.featuredHeadline", label: "Featured products headline", path: "home.featuredHeadline", type: "textarea" },
-  { page: "home", key: "home.featuredFilters", label: "Featured product filters", path: "home.featuredFilters", type: "list", helper: "One filter per line. Use All as the first item." },
+  { page: "home", key: "home.featuredEyebrow", label: "Featured projects eyebrow", path: "home.featuredEyebrow" },
+  { page: "home", key: "home.featuredHeadline", label: "Featured projects headline", path: "home.featuredHeadline", type: "textarea" },
+  { page: "home", key: "home.featuredFilters", label: "Featured project filters", path: "home.featuredFilters", type: "list", helper: "One filter per line. Use All as the first item." },
   { page: "home", key: "home.workEyebrow", label: "Work section eyebrow", path: "home.workEyebrow" },
   { page: "home", key: "home.workHeadline", label: "Work section headline", path: "home.workHeadline", type: "textarea" },
-  { page: "home", key: "home.portfolioEyebrow", label: "Portfolio section eyebrow", path: "home.portfolioEyebrow" },
-  { page: "home", key: "home.portfolioHeadline", label: "Portfolio section headline", path: "home.portfolioHeadline", type: "textarea" },
   { page: "work", key: "work.eyebrow", label: "Work page eyebrow", path: "work.eyebrow" },
   { page: "work", key: "work.headline", label: "Work page headline", path: "work.headline", type: "textarea" },
   { page: "work", key: "work.searchPlaceholder", label: "Work search placeholder", path: "work.searchPlaceholder" },
-  { page: "portfolio", key: "portfolio.eyebrow", label: "Portfolio page eyebrow", path: "portfolio.eyebrow" },
-  { page: "portfolio", key: "portfolio.headline", label: "Portfolio page headline", path: "portfolio.headline", type: "textarea" },
-  { page: "portfolio", key: "portfolio.searchPlaceholder", label: "Portfolio search placeholder", path: "portfolio.searchPlaceholder" },
+  { page: "featured", key: "featured.eyebrow", label: "Featured projects page eyebrow", path: "featured.eyebrow" },
+  { page: "featured", key: "featured.headline", label: "Featured projects page headline", path: "featured.headline", type: "textarea" },
+  { page: "featured", key: "featured.searchPlaceholder", label: "Featured projects search placeholder", path: "featured.searchPlaceholder" },
   { page: "about", key: "about.eyebrow", label: "About eyebrow", path: "about.eyebrow" },
   { page: "about", key: "about.headline", label: "About headline", path: "about.headline", type: "textarea" },
   { page: "about", key: "about.body.0", label: "About paragraph 1", path: "about.body.0", type: "textarea" },
@@ -435,68 +430,7 @@ const sampleProjects = [
   }
 ];
 
-const samplePortfolioProjects = [
-  {
-    id: "portfolio-brand-systems",
-    experienceId: "",
-    title: "Brand Identity Systems",
-    category: "Branding",
-    mediaType: "Case Study",
-    role: "Graphic Designer",
-    year: "2024",
-    tools: "Illustrator, Photoshop, Figma",
-    summary: "Selected identity, typography, layout, and visual system explorations created for brand-led campaigns and digital storytelling.",
-    impact: "Shows brand thinking, visual consistency, and presentation-ready design craft",
-    link: "",
-    accent: "#a348ff",
-    image: ""
-  },
-  {
-    id: "portfolio-social-campaigns",
-    experienceId: "",
-    title: "Social Media Campaign Visuals",
-    category: "Social Media",
-    mediaType: "Image",
-    role: "Social + Graphic Designer",
-    year: "2023-2024",
-    tools: "Photoshop, Illustrator, Premiere Pro",
-    summary: "A portfolio set for social-first posts, campaign layouts, launch graphics, and platform-ready visual storytelling.",
-    impact: "Highlights campaign thinking, content rhythm, and production polish",
-    link: "",
-    accent: "#ff6542",
-    image: ""
-  },
-  {
-    id: "portfolio-motion-edits",
-    experienceId: "",
-    title: "Motion Graphics and Video Edits",
-    category: "Motion Graphics",
-    mediaType: "Video",
-    role: "Motion Designer",
-    year: "2024",
-    tools: "After Effects, Premiere Pro, Photoshop",
-    summary: "Motion-led portfolio work covering animated brand elements, short-form edits, social videos, and visual transitions.",
-    impact: "Shows pacing, motion taste, editing structure, and multimedia fluency",
-    link: "",
-    accent: "#3557ff",
-    image: ""
-  },
-  {
-    id: "portfolio-illustration-products",
-    experienceId: "",
-    title: "Illustration and Custom Product Art",
-    category: "Illustration",
-    mediaType: "Image",
-    role: "Illustrator",
-    year: "2018-2024",
-    tools: "Procreate, Illustrator, Photoshop",
-    summary: "Illustration-led visual work for custom products, handmade gifts, packaging, cards, calendars, and social selling.",
-    impact: "Shows personal style, detail, product thinking, and client-led creative execution",
-    link: "",
-    accent: "#ff4fa3",
-    image: ""
-  }
-];
+const samplePortfolioProjects = [];
 
 let publishedProjects = sampleProjects.map((project) => ({ ...project }));
 let publishedPortfolioProjects = samplePortfolioProjects.map((project) => ({ ...project }));
@@ -504,14 +438,15 @@ const sampleFeaturedProducts = [
   {
     id: "featured-custom-illustrations",
     placement: "featured",
+    homeSlot: "1",
     title: "Custom Illustration Products",
     category: "Illustration",
     mediaType: "Image",
     role: "Illustrator + Product Designer",
     year: "2018-2024",
     tools: "Procreate, Photoshop, Illustrator",
-    summary: "Personalized illustration-led product work for cards, stationery, calendars, and handmade gifts.",
-    impact: "Built from The Creative Bud's client-led product practice",
+    summary: "Personalized illustration-led project work for cards, stationery, calendars, and handmade gifts.",
+    impact: "Built from The Creative Bud's client-led project practice",
     link: "",
     accent: "#ff4fa3",
     image: ""
@@ -519,6 +454,7 @@ const sampleFeaturedProducts = [
   {
     id: "featured-social-campaigns",
     placement: "featured",
+    homeSlot: "2",
     title: "Social Campaign Visuals",
     category: "Social Media",
     mediaType: "Image",
@@ -534,6 +470,7 @@ const sampleFeaturedProducts = [
   {
     id: "featured-motion-thumbnails",
     placement: "featured",
+    homeSlot: "3",
     title: "Motion + Video Thumbnails",
     category: "Motion Graphics",
     mediaType: "Multimedia",
@@ -569,7 +506,7 @@ const state = {
   previewContentField: "",
   adminMode: "portfolio",
   filter: "All",
-  portfolioFilter: "All",
+  featuredPageFilter: "All",
   featuredFilter: "All",
   query: "",
   typewriterTimer: null,
@@ -699,7 +636,7 @@ function applySiteContent() {
   [
     ["/", nav.home, "global.nav.home"],
     ["/work", nav.work, "global.nav.work"],
-    ["/portfolio", nav.portfolio, "global.nav.portfolio"],
+    ["/featured-projects", nav.featured, "global.nav.featured"],
     ["/about", nav.about, "global.nav.about"],
     ["/contact", nav.contact, "global.nav.contact"]
   ].forEach(([route, label, key]) => setText(`.main-nav a[data-route="${route}"]`, label, key));
@@ -734,7 +671,22 @@ function mergeDeep(defaultValue, savedValue) {
 }
 
 function normalizeSiteContent(siteContent = {}) {
-  return mergeDeep(defaultSiteContent, siteContent);
+  const merged = mergeDeep(defaultSiteContent, siteContent);
+  if (!siteContent?.global?.nav?.featured && siteContent?.global?.nav?.portfolio) {
+    merged.global.nav.featured = "Featured Projects";
+  }
+  if (!siteContent?.featured && siteContent?.portfolio) {
+    merged.featured = {
+      eyebrow: "Featured projects",
+      headline: siteContent.portfolio.headline || defaultSiteContent.featured.headline,
+      searchPlaceholder: "Search featured project, tool, outcome"
+    };
+  }
+  delete merged.global.nav.portfolio;
+  delete merged.home.portfolioEyebrow;
+  delete merged.home.portfolioHeadline;
+  delete merged.portfolio;
+  return merged;
 }
 
 function pathParts(path = "") {
@@ -962,7 +914,7 @@ function currentTemplate() {
   const templates = {
     "/": "home-template",
     "/work": "work-template",
-    "/portfolio": "portfolio-template",
+    "/featured-projects": "featured-template",
     "/admin": "admin-template",
     "/studio": "admin-template",
     "/about": "about-template",
@@ -976,13 +928,13 @@ function headerScrollOffset() {
 }
 
 function activeHomeRouteFromScroll() {
+  const featuredSection = document.querySelector(HOME_SECTION_NAV.featured.selector);
   const workSection = document.querySelector(HOME_SECTION_NAV.work.selector);
-  const portfolioSection = document.querySelector(HOME_SECTION_NAV.portfolio.selector);
-  if (!workSection || !portfolioSection) return "/";
+  if (!featuredSection || !workSection) return "/";
 
   const checkpoint = headerScrollOffset() + Math.min(window.innerHeight * 0.28, 220);
-  if (portfolioSection.getBoundingClientRect().top <= checkpoint) return HOME_SECTION_NAV.portfolio.route;
   if (workSection.getBoundingClientRect().top <= checkpoint) return HOME_SECTION_NAV.work.route;
+  if (featuredSection.getBoundingClientRect().top <= checkpoint) return HOME_SECTION_NAV.featured.route;
   return "/";
 }
 
@@ -1002,9 +954,7 @@ function setActiveNav() {
 
   const activeRoute = name === "/experience" || name === "/work-project"
     ? "/work"
-    : name === "/portfolio-project"
-      ? "/portfolio"
-      : name;
+    : name;
   document.querySelectorAll(".main-nav a").forEach((link) => {
     link.classList.toggle("active", link.dataset.route === activeRoute);
   });
@@ -1078,7 +1028,7 @@ function projectById(id, collection = "work") {
   return source.find((project) => project.id === id);
 }
 
-function projectDetailUrl(project, collection = "portfolio") {
+function projectDetailUrl(project, collection = "work") {
   const route = collection === "work" ? "work-project" : "portfolio-project";
   return `#/${route}/${encodeURIComponent(project.id)}`;
 }
@@ -1153,6 +1103,18 @@ function normalizeImageZoom(value) {
   const zoom = Number(value);
   if (!Number.isFinite(zoom)) return 100;
   return Math.min(160, Math.max(100, zoom));
+}
+
+function normalizeFeaturedHomeSlot(value = "") {
+  const slot = String(value || "");
+  return ["1", "2", "3", "hidden"].includes(slot) ? slot : "";
+}
+
+function featuredHomeSlotLabel(slot = "") {
+  const normalized = normalizeFeaturedHomeSlot(slot);
+  if (normalized === "hidden") return "Featured project · hidden from home";
+  if (normalized) return `Featured project · home card ${normalized}`;
+  return "Featured project · auto home fill";
 }
 
 function imageStyle(project) {
@@ -1245,12 +1207,12 @@ function coverArt(project, size = "large") {
       <span class="cover-line line-two"></span>
       <span class="cover-tag">${escapeHtml(normalizeMediaType(project.mediaType) || project.category)}</span>
       <strong>${escapeHtml(titleWords)}</strong>
-      <em>${escapeHtml(project.year || "Portfolio")}</em>
+      <em>${escapeHtml(project.year || "Project")}</em>
     </div>
   `;
 }
 
-function projectCard(project, collection = "portfolio") {
+function projectCard(project, collection = "work") {
   const link = safeUrl(project.link);
   const isVideo = isVideoProject(project);
   const image = project.image
@@ -1269,7 +1231,7 @@ function projectCard(project, collection = "portfolio") {
         <h3>${escapeHtml(project.title)}</h3>
         <p>${escapeHtml(project.summary)}</p>
         <div class="tool-row">${toolIcons(project.tools)}</div>
-        <div class="impact">${escapeHtml(project.impact || project.role || "Portfolio project")}</div>
+        <div class="impact">${escapeHtml(project.impact || project.role || "Design project")}</div>
         <div class="project-actions">
           <a class="open-work" href="${projectDetailUrl(project, collection)}" data-open-project="${escapeHtml(project.id)}">Open</a>
           ${link && !isVideo ? `<a class="project-link" href="${link}" target="_blank" rel="noreferrer">Visit link ↗</a>` : ""}
@@ -1285,11 +1247,11 @@ function primaryMediaItem(project) {
     .find((item) => item.src || item.url || item.videoUrl) || null;
 }
 
-function featuredProductCard(product) {
+function featuredProjectCard(product) {
   const primaryItem = primaryMediaItem(product);
   const imageSrc = product.image || primaryItem?.src || primaryItem?.url || "";
   const image = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} product image" style="${imageStyle(product)}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product)}">`
     : coverArt(product, "large");
   const previewLabel = product.mediaType === "Video" ? "Play" : "Preview";
 
@@ -1299,7 +1261,7 @@ function featuredProductCard(product) {
       <div class="featured-product-body">
         <span class="pill">${escapeHtml(product.category || "Featured")}</span>
         <h3>${escapeHtml(product.title)}</h3>
-        <p>${escapeHtml(product.summary || "Featured creative product")}</p>
+        <p>${escapeHtml(product.summary || "Featured creative project")}</p>
         <div class="tool-row">${toolIcons(product.tools)}</div>
         <button class="open-work" type="button">${escapeHtml(previewLabel)}</button>
       </div>
@@ -1334,9 +1296,9 @@ function adminRow(project, collection = "work") {
   const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}">` : "";
   const isDirty = projectDirty(project, collection);
   const source = collection === "featured"
-    ? "Featured product"
+    ? featuredHomeSlotLabel(project.homeSlot)
     : collection === "portfolio"
-      ? "Portfolio page"
+      ? "Featured project archive"
       : experience ? experience.company : "Work experience";
 
   return `
@@ -1359,7 +1321,8 @@ async function renderRoute() {
   window.clearInterval(state.typewriterTimer);
   cleanupHomeSectionTracking();
   state.filter = "All";
-  state.portfolioFilter = "All";
+  state.featuredPageFilter = "All";
+  state.featuredFilter = "All";
   state.query = "";
   await loadPublishedPortfolio();
   const { name } = routeParts();
@@ -1386,7 +1349,7 @@ async function renderRoute() {
 
   if (name === "/") setupHome();
   if (name === "/work") setupWork();
-  if (name === "/portfolio") setupPortfolio();
+  if (name === "/featured-projects") setupFeaturedProjectsPage();
   if (name === "/experience") setupExperienceDetail();
   if (name === "/work-project") setupProjectDetail("work");
   if (name === "/portfolio-project") setupProjectDetail("portfolio");
@@ -1411,7 +1374,7 @@ function setupHome() {
   const home = state.siteContent.home;
   const featuredGrid = document.getElementById("home-featured-grid");
   const featuredFilters = document.getElementById("home-featured-filters");
-  const portfolioGrid = document.getElementById("home-portfolio-grid");
+  const featuredViewAll = document.getElementById("featured-view-all");
   const featuredBand = document.querySelector(".featured-products-band");
   const typeLine = document.querySelector(".type-line");
 
@@ -1438,31 +1401,26 @@ function setupHome() {
     .join("");
   setText(".featured-products-band .eyebrow", home.featuredEyebrow, "home.featuredEyebrow");
   setText(".featured-products-band h2", home.featuredHeadline, "home.featuredHeadline");
-  setText(".content-band:not(.featured-products-band):not(.home-portfolio-band) .eyebrow", home.workEyebrow, "home.workEyebrow");
-  setText(".content-band:not(.featured-products-band):not(.home-portfolio-band) h2", home.workHeadline, "home.workHeadline");
-  setText(".home-portfolio-band .eyebrow", home.portfolioEyebrow, "home.portfolioEyebrow");
-  setText(".home-portfolio-band h2", home.portfolioHeadline, "home.portfolioHeadline");
+  setText("#home-work-section .eyebrow", home.workEyebrow, "home.workEyebrow");
+  setText("#home-work-section h2", home.workHeadline, "home.workHeadline");
   runTypewriter();
 
   if (state.featuredProducts.length) {
     featuredBand.hidden = false;
     renderFeaturedFilters(featuredFilters);
-    renderFeaturedProducts(featuredGrid);
+    renderHomeFeaturedProjects(featuredGrid);
     featuredGrid.addEventListener("click", handleFeaturedProductOpen);
     featuredGrid.addEventListener("keydown", handleFeaturedProductKeydown);
     featuredFilters.addEventListener("click", handleFeaturedFilter);
+    if (featuredViewAll) featuredViewAll.hidden = state.featuredProducts.length <= 3;
   } else {
     featuredBand.hidden = true;
     featuredFilters.innerHTML = "";
     featuredGrid.innerHTML = "";
+    if (featuredViewAll) featuredViewAll.hidden = true;
   }
 
   document.getElementById("home-experience-grid").innerHTML = experiences.map(experienceCard).join("");
-  portfolioGrid.innerHTML = state.portfolioProjects.length
-    ? state.portfolioProjects.slice(0, 4).map((project) => projectCard(project, "portfolio")).join("")
-    : `<div class="empty-state"><strong>Portfolio projects will appear here after the admin adds them.</strong></div>`;
-
-  portfolioGrid.addEventListener("click", handleProjectGridClick);
   setupHomeSectionTracking();
 }
 
@@ -1475,6 +1433,44 @@ function featuredFilters() {
 
 function featuredProductMatchesFilter(product) {
   return state.featuredFilter === "All" || product.category === state.featuredFilter;
+}
+
+function featuredProjectMatchesPageFilter(project) {
+  if (state.featuredPageFilter === "All") return true;
+  if (state.featuredPageFilter === "Social Media") {
+    return ["Social Media", "Campaign Design", "Graphic Design"].includes(project.category);
+  }
+  return project.category === state.featuredPageFilter;
+}
+
+function homeFeaturedProjects() {
+  const filteredProducts = state.featuredProducts.filter(featuredProductMatchesFilter);
+  const slots = [null, null, null];
+  const usedIds = new Set();
+
+  filteredProducts.forEach((product) => {
+    const slot = normalizeFeaturedHomeSlot(product.homeSlot);
+    const slotIndex = Number(slot) - 1;
+    if (slotIndex >= 0 && slotIndex < 3 && !slots[slotIndex]) {
+      slots[slotIndex] = product;
+      usedIds.add(product.id);
+    }
+  });
+
+  const autoProducts = filteredProducts.filter((product) => {
+    const slot = normalizeFeaturedHomeSlot(product.homeSlot);
+    return !usedIds.has(product.id) && slot !== "hidden";
+  });
+
+  slots.forEach((slot, index) => {
+    if (!slot && autoProducts.length) {
+      const product = autoProducts.shift();
+      slots[index] = product;
+      usedIds.add(product.id);
+    }
+  });
+
+  return slots.filter(Boolean);
 }
 
 function renderFeaturedFilters(target = document.getElementById("home-featured-filters")) {
@@ -1494,8 +1490,16 @@ function renderFeaturedProducts(target = document.getElementById("home-featured-
   if (!target) return;
   const filteredProducts = state.featuredProducts.filter(featuredProductMatchesFilter);
   target.innerHTML = filteredProducts.length
-    ? filteredProducts.map(featuredProductCard).join("")
-    : `<div class="empty-state"><strong>No featured products match this filter yet.</strong></div>`;
+    ? filteredProducts.map(featuredProjectCard).join("")
+    : `<div class="empty-state"><strong>No featured projects match this filter yet.</strong></div>`;
+}
+
+function renderHomeFeaturedProjects(target = document.getElementById("home-featured-grid")) {
+  if (!target) return;
+  const featured = homeFeaturedProjects();
+  target.innerHTML = featured.length
+    ? featured.map(featuredProjectCard).join("")
+    : `<div class="empty-state"><strong>No featured projects match this filter yet.</strong></div>`;
 }
 
 function handleFeaturedFilter(event) {
@@ -1503,7 +1507,7 @@ function handleFeaturedFilter(event) {
   if (!button) return;
   state.featuredFilter = button.dataset.featuredFilter;
   renderFeaturedFilters();
-  renderFeaturedProducts();
+  renderHomeFeaturedProjects();
 }
 
 function featuredProductPreviewItem(product) {
@@ -1513,7 +1517,7 @@ function featuredProductPreviewItem(product) {
     src: product.image || primaryItem.src || primaryItem.url || "",
     videoUrl: product.mediaType === "Video" || primaryItem.type === "Video" ? product.link || primaryItem.videoUrl || "" : "",
     title: primaryItem.title || product.title,
-    description: primaryItem.description || product.summary || product.impact || product.category || "Featured product"
+    description: primaryItem.description || product.summary || product.impact || product.category || "Featured project"
   };
 }
 
@@ -1576,36 +1580,31 @@ function setupWork() {
   document.getElementById("experience-grid").innerHTML = experiences.map(experienceCard).join("");
 }
 
-function portfolioMatchesFilter(project) {
-  if (state.portfolioFilter === "All") return true;
-  if (state.portfolioFilter === "Social Media") {
-    return ["Social Media", "Campaign Design", "Graphic Design"].includes(project.category);
-  }
-  return project.category === state.portfolioFilter;
-}
-
-function renderPortfolioFilters() {
-  const filterGroup = document.getElementById("portfolio-filter-group");
-  filterGroup.innerHTML = PORTFOLIO_FILTERS
+function renderFeaturedPageFilters() {
+  const filterGroup = document.getElementById("featured-page-filter-group");
+  if (!filterGroup) return;
+  const filters = featuredFilters();
+  if (!filters.includes(state.featuredPageFilter)) state.featuredPageFilter = "All";
+  filterGroup.innerHTML = filters
     .map((category) => `
-      <button class="filter-chip ${category === state.portfolioFilter ? "active" : ""}" type="button" data-portfolio-category="${escapeHtml(category)}">
+      <button class="filter-chip ${category === state.featuredPageFilter ? "active" : ""}" type="button" data-featured-page-category="${escapeHtml(category)}">
         ${escapeHtml(category)}
       </button>
     `)
     .join("");
 
   filterGroup.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-portfolio-category]");
+    const button = event.target.closest("[data-featured-page-category]");
     if (!button) return;
-    state.portfolioFilter = button.dataset.portfolioCategory;
-    renderPortfolioFilters();
-    renderPortfolioProjects();
+    state.featuredPageFilter = button.dataset.featuredPageCategory;
+    renderFeaturedPageFilters();
+    renderFeaturedPageProjects();
   });
 }
 
-function filteredPortfolioProjects() {
-  return state.portfolioProjects.filter((project) => {
-    const categoryMatch = portfolioMatchesFilter(project);
+function filteredFeaturedPageProjects() {
+  return state.featuredProducts.filter((project) => {
+    const categoryMatch = featuredProjectMatchesPageFilter(project);
     const text = [
       project.title,
       project.category,
@@ -1619,27 +1618,29 @@ function filteredPortfolioProjects() {
   });
 }
 
-function renderPortfolioProjects() {
-  const grid = document.getElementById("portfolio-grid");
-  const filtered = filteredPortfolioProjects();
+function renderFeaturedPageProjects() {
+  const grid = document.getElementById("featured-page-grid");
+  if (!grid) return;
+  const filtered = filteredFeaturedPageProjects();
   grid.innerHTML = filtered.length
-    ? filtered.map((project) => projectCard(project, "portfolio")).join("")
-    : `<div class="empty-state"><strong>No portfolio projects match this filter yet.</strong></div>`;
+    ? filtered.map(featuredProjectCard).join("")
+    : `<div class="empty-state"><strong>No featured projects match this filter yet.</strong></div>`;
 }
 
-function setupPortfolio() {
-  setText(".dashboard-hero .eyebrow", state.siteContent.portfolio.eyebrow, "portfolio.eyebrow");
-  setText(".dashboard-hero h1", state.siteContent.portfolio.headline, "portfolio.headline");
-  document.getElementById("portfolio-search").placeholder = state.siteContent.portfolio.searchPlaceholder;
-  renderPortfolioFilters();
-  renderPortfolioProjects();
+function setupFeaturedProjectsPage() {
+  setText(".dashboard-hero .eyebrow", state.siteContent.featured.eyebrow, "featured.eyebrow");
+  setText(".dashboard-hero h1", state.siteContent.featured.headline, "featured.headline");
+  document.getElementById("featured-page-search").placeholder = state.siteContent.featured.searchPlaceholder;
+  renderFeaturedPageFilters();
+  renderFeaturedPageProjects();
 
-  document.getElementById("portfolio-search").addEventListener("input", (event) => {
+  document.getElementById("featured-page-search").addEventListener("input", (event) => {
     state.query = event.target.value.trim().toLowerCase();
-    renderPortfolioProjects();
+    renderFeaturedPageProjects();
   });
 
-  document.getElementById("portfolio-grid").addEventListener("click", handleProjectGridClick);
+  document.getElementById("featured-page-grid").addEventListener("click", handleFeaturedProductOpen);
+  document.getElementById("featured-page-grid").addEventListener("keydown", handleFeaturedProductKeydown);
 }
 
 function setupAbout() {
@@ -1872,10 +1873,10 @@ function setupProjectDetail(collection) {
 
   const mediaGroups = projectMediaGroups(project);
   const experience = collection === "work" ? experiences.find((item) => item.id === project.experienceId) : null;
-  const backHref = experience ? `#/experience/${experience.id}` : "#/portfolio";
-  const backText = experience ? `Back to ${experience.company}` : "Back to Portfolio";
+  const backHref = experience ? `#/experience/${experience.id}` : "#/featured-projects";
+  const backText = experience ? `Back to ${experience.company}` : "Back to Featured Projects";
   const eyebrow = [
-    experience?.company || "Portfolio",
+    experience?.company || "Featured Project",
     project.category,
     project.year
   ].filter(Boolean).join(" · ");
@@ -1891,7 +1892,7 @@ function setupProjectDetail(collection) {
         <p>${escapeHtml(project.summary)}</p>
       </div>
       <aside>
-        <strong>${escapeHtml(project.impact || "Selected portfolio campaign")}</strong>
+        <strong>${escapeHtml(project.impact || "Selected design campaign")}</strong>
         <span>${escapeHtml(project.mediaType || "Campaign")}</span>
       </aside>
     </section>
@@ -2055,7 +2056,7 @@ function showMediaModal(item, project) {
       </div>
       <div class="lightbox-caption">
         <strong>${escapeHtml(item.title || project.title)}</strong>
-        <span>${escapeHtml(item.description || `${project.category} · ${project.year || "Portfolio"}`)}</span>
+        <span>${escapeHtml(item.description || `${project.category} · ${project.year || "Project"}`)}</span>
       </div>
     </div>
   `;
@@ -2092,7 +2093,7 @@ function showToast(message) {
   window.setTimeout(() => toast.remove(), 2600);
 }
 
-function showLoadingBanner(message = "Polishing the portfolio...") {
+function showLoadingBanner(message = "Polishing the site...") {
   let banner = document.querySelector(".loading-banner");
   if (!banner) {
     banner = document.createElement("div");
@@ -2190,8 +2191,8 @@ function choosePublishScope() {
         <h2>What should go live?</h2>
         <div class="publish-choice-grid">
           <button class="publish-choice ${portfolioContentDirty() ? "has-unpublished" : ""}" type="button" data-publish-scope="portfolio">
-            <strong>Experience, Work & Portfolio</strong>
-            <span>Publish cards, projects, media, featured products, and experience changes.</span>
+            <strong>Experience, Work & Featured Projects</strong>
+            <span>Publish cards, projects, media, featured work, and experience changes.</span>
           </button>
           <button class="publish-choice ${siteContentDirty() ? "has-unpublished" : ""}" type="button" data-publish-scope="content">
             <strong>Text & Appearance</strong>
@@ -2373,7 +2374,7 @@ async function publishedPortfolioFromResponse(result, portfolio) {
 
 function publishScopeLabel(scope) {
   if (scope === "content") return "Text & Appearance";
-  if (scope === "portfolio") return "Experience, Work & Portfolio";
+  if (scope === "portfolio") return "Experience, Work & Featured Projects";
   if (scope === "resume") return "Resume";
   return "everything";
 }
@@ -2526,7 +2527,7 @@ function uniqueExperienceId(company) {
 function renderExperienceSelect() {
   const select = document.getElementById("experience");
   if (!select) return;
-  select.innerHTML = `<option value="">Portfolio only</option>` + experiences
+  select.innerHTML = `<option value="">Choose an experience</option>` + experiences
     .map((experience) => `<option value="${experience.id}">${escapeHtml(experience.company)} · ${escapeHtml(experience.title)}</option>`)
     .join("");
 }
@@ -3242,12 +3243,12 @@ function pagePreviewMarkup(pageId) {
       </div>
     `;
   }
-  if (pageId === "portfolio") {
+  if (pageId === "featured") {
     return `
       <div class="mini-page-preview">
-        <p${previewAttributes("portfolio.eyebrow", "eyebrow")}${textStyle("portfolio.eyebrow")}>${escapeHtml(content.portfolio.eyebrow)}</p>
-        <h3${previewAttributes("portfolio.headline")}${textStyle("portfolio.headline")}>${escapeHtml(content.portfolio.headline)}</h3>
-        <small${previewAttributes("portfolio.searchPlaceholder")}>Search: ${escapeHtml(content.portfolio.searchPlaceholder)}</small>
+        <p${previewAttributes("featured.eyebrow", "eyebrow")}${textStyle("featured.eyebrow")}>${escapeHtml(content.featured.eyebrow)}</p>
+        <h3${previewAttributes("featured.headline")}${textStyle("featured.headline")}>${escapeHtml(content.featured.headline)}</h3>
+        <small${previewAttributes("featured.searchPlaceholder")}>Search: ${escapeHtml(content.featured.searchPlaceholder)}</small>
       </div>
     `;
   }
@@ -3291,10 +3292,6 @@ function pagePreviewMarkup(pageId) {
         <span>
           <b${previewAttributes("home.workEyebrow")}>${escapeHtml(content.home.workEyebrow)}</b>
           <small${previewAttributes("home.workHeadline")}>${escapeHtml(content.home.workHeadline)}</small>
-        </span>
-        <span>
-          <b${previewAttributes("home.portfolioEyebrow")}>${escapeHtml(content.home.portfolioEyebrow)}</b>
-          <small${previewAttributes("home.portfolioHeadline")}>${escapeHtml(content.home.portfolioHeadline)}</small>
         </span>
       </div>
     </div>
@@ -3536,6 +3533,7 @@ function setupAdmin() {
   setupDetailMediaControls();
   form.addEventListener("input", renderPreview);
   form.addEventListener("change", renderPreview);
+  document.getElementById("projectPlacement").addEventListener("change", updateProjectPlacementFields);
   form.addEventListener("submit", handleProjectSave);
 
   imageInput.addEventListener("change", async (event) => {
@@ -3619,6 +3617,7 @@ function formProject() {
     id: document.getElementById("project-id").value || crypto.randomUUID(),
     placement,
     experienceId: placement === "work" ? document.getElementById("experience").value : "",
+    homeSlot: placement === "featured" ? normalizeFeaturedHomeSlot(document.getElementById("featuredSlot").value) : "",
     title: document.getElementById("title").value.trim() || "Untitled project",
     category: document.getElementById("category").value,
     mediaType: normalizeMediaType(document.getElementById("mediaType").value),
@@ -3639,13 +3638,31 @@ function formProject() {
   };
 }
 
+function updateProjectPlacementFields() {
+  const placement = document.getElementById("projectPlacement")?.value || "featured";
+  const experienceWrap = document.getElementById("experience")?.closest("label");
+  const featuredSlotWrap = document.getElementById("featuredSlotWrap");
+  if (experienceWrap) experienceWrap.hidden = placement !== "work";
+  if (featuredSlotWrap) featuredSlotWrap.hidden = placement !== "featured";
+}
+
 function renderPreview() {
   const preview = document.getElementById("admin-preview");
   if (!preview) return;
+  updateProjectPlacementFields();
   const project = formProject();
   preview.innerHTML = project.placement === "featured"
-    ? featuredProductCard(project)
-    : projectCard(project, project.placement === "work" ? "work" : "portfolio");
+    ? featuredProjectCard(project)
+    : projectCard(project, "work");
+}
+
+function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
+  const slot = normalizeFeaturedHomeSlot(activeProject.homeSlot);
+  if (!["1", "2", "3"].includes(slot)) return featuredProducts;
+  return featuredProducts.map((project) => {
+    if (project.id === activeProject.id || normalizeFeaturedHomeSlot(project.homeSlot) !== slot) return project;
+    return { ...project, homeSlot: "" };
+  });
 }
 
 async function handleProjectSave(event) {
@@ -3657,9 +3674,7 @@ async function handleProjectSave(event) {
     || (state.featuredProducts.some((project) => project.id === nextProject.id) ? "featured" : "");
   const nextCollection = nextProject.placement === "work"
     ? "work"
-    : nextProject.placement === "featured"
-      ? "featured"
-      : "portfolio";
+    : "featured";
   const existingProject = oldCollection === "portfolio"
     ? state.portfolioProjects.find((project) => project.id === nextProject.id)
     : oldCollection === "featured"
@@ -3690,9 +3705,7 @@ async function handleProjectSave(event) {
   } else if (nextCollection === "featured") {
     nextProject.experienceId = "";
     nextFeaturedProducts = [nextProject, ...nextFeaturedProducts];
-  } else {
-    nextProject.experienceId = "";
-    nextPortfolioProjects = [nextProject, ...nextPortfolioProjects];
+    nextFeaturedProducts = applyFeaturedHomeSlotChoice(nextFeaturedProducts, nextProject);
   }
 
   try {
@@ -3719,7 +3732,8 @@ function clearForm() {
   document.getElementById("project-form").reset();
   document.getElementById("project-id").value = "";
   document.getElementById("project-collection").value = "";
-  document.getElementById("projectPlacement").value = "portfolio";
+  document.getElementById("projectPlacement").value = "featured";
+  document.getElementById("featuredSlot").value = "";
   renderCategoryOptions();
   document.getElementById("accent").value = "#0a6f6b";
   document.getElementById("imageFit").value = "cover";
@@ -3736,29 +3750,21 @@ function renderAdminList() {
   const list = document.getElementById("admin-project-list");
   const featuredRows = state.featuredProducts.length
     ? state.featuredProducts.map((project) => adminRow(project, "featured")).join("")
-    : `<div class="empty-state"><strong>No featured products yet.</strong></div>`;
+    : `<div class="empty-state"><strong>No featured projects yet.</strong></div>`;
   const workRows = state.projects.length
     ? state.projects.map((project) => adminRow(project, "work")).join("")
     : `<div class="empty-state"><strong>No work experience projects yet.</strong></div>`;
-  const portfolioRows = state.portfolioProjects.length
-    ? state.portfolioProjects.map((project) => adminRow(project, "portfolio")).join("")
-    : `<div class="empty-state"><strong>No portfolio projects yet.</strong></div>`;
   const featuredDirty = projectCollectionDirty("featured");
   const workDirty = projectCollectionDirty("work") || !deepEqual(experiences, publishedExperiences);
-  const portfolioDirty = projectCollectionDirty("portfolio");
 
   list.innerHTML = `
     <section class="admin-project-group ${featuredDirty ? "has-unpublished" : ""}">
-      <h3>Featured Products ${featuredDirty ? renderDirtyBadge() : ""}</h3>
+      <h3>Featured Projects ${featuredDirty ? renderDirtyBadge() : ""}</h3>
       <div class="admin-project-list-inner">${featuredRows}</div>
     </section>
     <section class="admin-project-group ${workDirty ? "has-unpublished" : ""}">
       <h3>Work Experience Projects ${workDirty ? renderDirtyBadge() : ""}</h3>
       <div class="admin-project-list-inner">${workRows}</div>
-    </section>
-    <section class="admin-project-group ${portfolioDirty ? "has-unpublished" : ""}">
-      <h3>Portfolio Page Projects ${portfolioDirty ? renderDirtyBadge() : ""}</h3>
-      <div class="admin-project-list-inner">${portfolioRows}</div>
     </section>
   `;
 }
@@ -3795,8 +3801,9 @@ async function handleAdminListAction(event) {
 
   document.getElementById("project-id").value = project.id;
   document.getElementById("project-collection").value = collection;
-  document.getElementById("projectPlacement").value = collection;
+  document.getElementById("projectPlacement").value = collection === "portfolio" ? "featured" : collection;
   document.getElementById("experience").value = project.experienceId || "";
+  document.getElementById("featuredSlot").value = normalizeFeaturedHomeSlot(project.homeSlot);
   document.getElementById("title").value = project.title;
   renderCategoryOptions(project.category);
   document.getElementById("category").value = project.category;
@@ -3918,7 +3925,7 @@ async function publishDraft() {
 }
 
 async function resetProjects() {
-  if (!(await confirmAction("Reset drafts back to the currently published portfolio?", "Reset"))) return;
+  if (!(await confirmAction("Reset drafts back to the currently published site?", "Reset"))) return;
   saveDraftPortfolio({
     experiences: publishedExperiences,
     projects: publishedProjects,
@@ -3931,6 +3938,7 @@ async function resetProjects() {
   renderAdminExperienceList();
   clearForm();
   renderAdminList();
+  renderContentEditor();
   renderResumeAdmin();
   renderAdminMode();
   showToast("Drafts reset to published version.");
@@ -3941,7 +3949,7 @@ function exportProjects() {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "prerna-portfolio-draft.json";
+  anchor.download = "prerna-site-draft.json";
   anchor.click();
   URL.revokeObjectURL(url);
 }

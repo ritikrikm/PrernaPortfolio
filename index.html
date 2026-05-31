@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.">
-    <title>Prerna Sharma | Graphic Designer Portfolio</title>
+    <meta name="description" content="Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaigns.">
+    <title>Prerna Sharma | Graphic Designer</title>
     <link rel="stylesheet" href="styles.css?v=doodle-rails">
   </head>
   <body>
-    <a class="skip-link" href="#app">Skip to portfolio</a>
+    <a class="skip-link" href="#app">Skip to site</a>
     <div class="doodle-rail doodle-rail-left" aria-hidden="true">
       <svg viewBox="0 0 94 720" focusable="false">
         <path class="doodle-line" d="M47 8C18 62 78 110 46 168C19 217 76 269 43 326C16 373 78 429 45 492C22 537 66 589 42 704"/>
@@ -44,7 +44,7 @@
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#/" data-route="/">Home</a>
         <a href="#/work" data-route="/work" data-home-section="work">Work</a>
-        <a href="#/portfolio" data-route="/portfolio" data-home-section="portfolio">Portfolio</a>
+        <a href="#/featured-projects" data-route="/featured-projects" data-home-section="featured">Featured Projects</a>
         <a href="#/about" data-route="/about">About</a>
         <a href="#/contact" data-route="/contact">Contact</a>
       </nav>
@@ -55,11 +55,11 @@
     <template id="home-template">
       <section class="home-story">
         <div class="home-intro">
-          <p class="eyebrow">Graphic design portfolio</p>
+          <p class="eyebrow">Graphic design work</p>
           <h1>Design work that moves from brief to brand, campaign, and motion.</h1>
           <p class="type-line">I am <span id="typewriter" aria-live="polite"></span></p>
           <p class="hero-summary">
-            A recruiter-friendly portfolio for Prerna Sharma, focused on visual design,
+            A recruiter-friendly project showcase for Prerna Sharma, focused on visual design,
             brand systems, social campaigns, motion graphics, illustration, and digital storytelling.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
@@ -80,29 +80,24 @@
         </aside>
       </section>
 
-      <section class="content-band featured-products-band">
+      <section id="home-featured-section" class="content-band featured-products-band">
         <div class="section-heading">
-          <p class="eyebrow">Featured products</p>
-          <h2>Small, polished product pieces recruiters can scan first.</h2>
+          <p class="eyebrow">Featured projects</p>
+          <h2>Small, polished project pieces recruiters can scan first.</h2>
         </div>
-        <div id="home-featured-filters" class="filter-group featured-filter-group" aria-label="Featured product filters"></div>
+        <div id="home-featured-filters" class="filter-group featured-filter-group" aria-label="Featured project filters"></div>
         <div id="home-featured-grid" class="featured-product-grid"></div>
+        <div class="featured-view-all" id="featured-view-all" hidden>
+          <a class="button ghost" href="#/featured-projects"><span aria-hidden="true">↗</span> View All Featured Projects</a>
+        </div>
       </section>
 
       <section id="home-work-section" class="content-band">
         <div class="section-heading">
-          <p class="eyebrow">Portfolio path</p>
+          <p class="eyebrow">Work experience</p>
           <h2>Start with work experience, then open the projects inside each role.</h2>
         </div>
         <div id="home-experience-grid" class="experience-grid"></div>
-      </section>
-
-      <section id="home-portfolio-section" class="content-band home-portfolio-band">
-        <div class="section-heading">
-          <p class="eyebrow">Portfolio cards</p>
-          <h2>Selected work across branding, social media, motion, and illustration.</h2>
-        </div>
-        <section id="home-portfolio-grid" class="project-grid" aria-live="polite"></section>
       </section>
     </template>
 
@@ -136,24 +131,24 @@
       </section>
     </template>
 
-    <template id="portfolio-template">
+    <template id="featured-template">
       <section class="work-band">
         <div class="dashboard-hero">
           <div>
-            <p class="eyebrow">Portfolio</p>
+            <p class="eyebrow">Featured projects</p>
             <h1>Browse selected campaigns, visuals, motion pieces, and illustration work.</h1>
           </div>
         </div>
 
         <div class="work-toolbar">
-          <div class="filter-group" id="portfolio-filter-group" aria-label="Portfolio category filters"></div>
+          <div class="filter-group" id="featured-page-filter-group" aria-label="Featured project category filters"></div>
           <label class="search-box">
             <span aria-hidden="true">⌕</span>
-            <input id="portfolio-search" type="search" placeholder="Search portfolio, tool, outcome">
+            <input id="featured-page-search" type="search" placeholder="Search featured project, tool, outcome">
           </label>
         </div>
 
-        <section id="portfolio-grid" class="project-grid" aria-live="polite"></section>
+        <section id="featured-page-grid" class="featured-product-grid featured-page-grid" aria-live="polite"></section>
       </section>
     </template>
 
@@ -168,7 +163,7 @@
         <div class="dashboard-hero">
           <div>
             <p class="eyebrow">Studio uploader</p>
-            <h1>Manage experience cards, featured products, and portfolio projects.</h1>
+            <h1>Manage experience cards and featured projects.</h1>
           </div>
           <div class="admin-actions">
             <button class="button ghost" id="preview-site" type="button"><span aria-hidden="true">◉</span> Test Preview</button>
@@ -180,8 +175,8 @@
 
         <div class="admin-mode-grid" aria-label="Admin workspace">
           <button class="admin-mode-card active" type="button" data-admin-mode="portfolio">
-            <strong>Experience, Work & Portfolio</strong>
-            <span>Add cards, projects, featured products, media, and case-study assets.</span>
+            <strong>Experience, Work & Featured Projects</strong>
+            <span>Add cards, projects, featured work, media, and case-study assets.</span>
           </button>
           <button class="admin-mode-card" type="button" data-admin-mode="content">
             <strong>Text & Appearance</strong>
@@ -251,9 +246,18 @@
               <label>
                 Where should this show?
                 <select id="projectPlacement" name="projectPlacement" required>
-                  <option value="featured">Featured product</option>
-                  <option value="portfolio">Portfolio page</option>
+                  <option value="featured">Featured project</option>
                   <option value="work">Inside work experience</option>
+                </select>
+              </label>
+              <label id="featuredSlotWrap">
+                Home featured position
+                <select id="featuredSlot" name="featuredSlot">
+                  <option value="">Auto fill home card</option>
+                  <option value="1">Show as home card 1</option>
+                  <option value="2">Show as home card 2</option>
+                  <option value="3">Show as home card 3</option>
+                  <option value="hidden">Keep off home</option>
                 </select>
               </label>
               <label>
@@ -460,7 +464,7 @@
             <p>
               Prerna creates brand visuals, campaign assets, motion graphics,
               social content, illustration, and digital storytelling work. Her
-              portfolio connects practical production skills with expressive,
+              project showcase connects practical production skills with expressive,
               human visual details.
             </p>
             <p>
@@ -513,10 +517,10 @@
             <strong>LinkedIn</strong>
             <small>Add her real LinkedIn URL here</small>
           </a>
-          <a class="contact-card" href="https://www.behance.net/gallery/177375659/PORTFOLIO" target="_blank" rel="noreferrer">
+          <a class="contact-card" href="https://www.behance.net/gallery/177375659" target="_blank" rel="noreferrer">
             <span>Be</span>
             <strong>Behance</strong>
-            <small>behance.net/gallery/177375659/PORTFOLIO</small>
+            <small>Behance project gallery</small>
           </a>
         </div>
         <div class="resume-callout" id="resume-callout" hidden>

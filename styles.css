@@ -958,6 +958,20 @@ h3 {
   gap: 22px;
 }
 
+.featured-page-grid {
+  margin-top: 24px;
+}
+
+.featured-view-all {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.featured-view-all[hidden] {
+  display: none;
+}
+
 .featured-product-card {
   display: grid;
   overflow: hidden;

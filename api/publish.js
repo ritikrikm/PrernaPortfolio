@@ -4,7 +4,7 @@ const githubHeaders = (token) => ({
   "Accept": "application/vnd.github+json",
   "Authorization": `Bearer ${token}`,
   "Content-Type": "application/json",
-  "User-Agent": "prerna-portfolio-publisher",
+  "User-Agent": "prerna-site-publisher",
   "X-GitHub-Api-Version": "2022-11-28"
 });
 const RESUME_FILE_PATH = "assets/resume/prerna-sharma-resume.pdf";
@@ -131,7 +131,7 @@ async function uploadAssetIfNeeded(dataUrl, github, cache, stats) {
     headers: github.headers,
     body: JSON.stringify({
       branch: github.branch,
-      message: `Add portfolio asset ${hash}`,
+      message: `Add site asset ${hash}`,
       content: parsed.base64
     })
   });
@@ -244,7 +244,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (!validatePortfolio(portfolio)) {
-      res.status(400).json({ error: "Portfolio data is incomplete." });
+      res.status(400).json({ error: "Site data is incomplete." });
       return;
     }
 
@@ -284,7 +284,7 @@ module.exports = async function handler(req, res) {
       headers,
       body: JSON.stringify({
         branch: GITHUB_BRANCH,
-        message: "Update portfolio content",
+        message: "Update site content",
         content,
         sha
       })

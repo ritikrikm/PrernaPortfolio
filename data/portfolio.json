@@ -100,7 +100,7 @@
       "experienceId": "cultre-boat",
       "title": "Devan's Coffee Content Grid",
       "category": "Campaign Design",
-      "mediaType": "Mixed Media",
+      "mediaType": "Multimedia",
       "role": "Graphic + Content Designer",
       "year": "2023",
       "tools": "Photoshop, Illustrator, Premiere Pro",
@@ -160,7 +160,7 @@
       "experienceId": "freelance",
       "title": "Product Photography + Social Content",
       "category": "Graphic Design",
-      "mediaType": "Mixed Media",
+      "mediaType": "Multimedia",
       "role": "Creative Business Owner",
       "year": "2018-2024",
       "tools": "Photography, Photoshop, Illustrator, Instagram",
@@ -205,7 +205,8 @@
         "initialSketch": [],
         "finalOutput": []
       },
-      "image": "assets/uploads/c1d444afe745084dd9e9.png"
+      "image": "assets/uploads/c1d444afe745084dd9e9.png",
+      "homeSlot": "1"
     },
     {
       "id": "featured-custom-illustrations",
@@ -220,7 +221,8 @@
       "impact": "Built from The Creative Bud's client-led product practice",
       "link": "",
       "accent": "#ff4fa3",
-      "image": ""
+      "image": "",
+      "homeSlot": "2"
     },
     {
       "id": "featured-social-campaigns",
@@ -235,14 +237,15 @@
       "impact": "Quick proof of layout, hierarchy, and campaign polish",
       "link": "",
       "accent": "#ff6542",
-      "image": ""
+      "image": "",
+      "homeSlot": "3"
     },
     {
       "id": "featured-motion-thumbnails",
       "placement": "featured",
       "title": "Motion + Video Thumbnails",
       "category": "Motion Graphics",
-      "mediaType": "Mixed Media",
+      "mediaType": "Multimedia",
       "role": "Motion Designer",
       "year": "2024",
       "tools": "After Effects, Premiere Pro, Photoshop",
@@ -250,27 +253,28 @@
       "impact": "Shows multimedia thinking before opening full case studies",
       "link": "",
       "accent": "#3557ff",
-      "image": ""
+      "image": "",
+      "homeSlot": ""
     }
   ],
   "siteContent": {
     "global": {
-      "metaTitle": "Prerna Sharma | Graphic Designer Portfolio",
-      "metaDescription": "Prerna Sharma portfolio for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
-      "skipLink": "Skip to portfolio",
+      "metaTitle": "Prerna Sharma | Graphic Designer",
+      "metaDescription": "Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
+      "skipLink": "Skip to site",
       "brandSymbol": "PS",
       "brandName": "Prerna Sharma",
       "brandSubtitle": "Graphic Designer + Motion Artist",
       "nav": {
         "home": "Home",
         "work": "Work",
-        "portfolio": "Portfolio",
+        "featured": "Featured Projects",
         "about": "About",
         "contact": "Contact"
       }
     },
     "home": {
-      "eyebrow": "Graphic design portfolio",
+      "eyebrow": "Graphic design work",
       "headline": "Design work that moves from brief to brand, campaign, and motion.",
       "typewriterPrefix": "I am",
       "typewriterWords": [
@@ -280,7 +284,7 @@
         "a Visual Storyteller",
         "a Creative Maker"
       ],
-      "summary": "A recruiter-friendly portfolio for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
+      "summary": "A recruiter-friendly project showcase for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
       "primaryAction": "View Experience",
       "secondaryAction": "Contact",
       "quickScanEyebrow": "Quick scan",
@@ -302,8 +306,8 @@
           "text": "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
         }
       ],
-      "featuredEyebrow": "Featured products",
-      "featuredHeadline": "Small, polished product pieces recruiters can scan first.",
+      "featuredEyebrow": "Featured projects",
+      "featuredHeadline": "Small, polished project pieces recruiters can scan first.",
       "featuredFilters": [
         "All",
         "Branding",
@@ -313,26 +317,19 @@
         "Illustration",
         "Multimedia"
       ],
-      "workEyebrow": "Portfolio path",
-      "workHeadline": "Start with work experience, then open the projects inside each role.",
-      "portfolioEyebrow": "Portfolio cards",
-      "portfolioHeadline": "Selected work across branding, social media, motion, and illustration."
+      "workEyebrow": "Work experience",
+      "workHeadline": "Start with work experience, then open the projects inside each role."
     },
     "work": {
       "eyebrow": "Work experience",
       "headline": "Choose an experience to see the work created inside it.",
       "searchPlaceholder": "Search project, tool, outcome"
     },
-    "portfolio": {
-      "eyebrow": "Portfolio",
-      "headline": "Browse selected campaigns, visuals, motion pieces, and illustration work.",
-      "searchPlaceholder": "Search portfolio, tool, outcome"
-    },
     "about": {
       "eyebrow": "About the designer",
       "headline": "Graphic designer with campaign discipline and a handmade visual voice.",
       "body": [
-        "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her portfolio connects practical production skills with expressive, human visual details.",
+        "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details.",
         "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
       ],
       "sketchAlt": "Sketch-style illustration of a designer creating at a desk",
@@ -379,8 +376,8 @@
         {
           "icon": "Be",
           "label": "Behance",
-          "value": "behance.net/gallery/177375659/PORTFOLIO",
-          "href": "https://www.behance.net/gallery/177375659/PORTFOLIO"
+          "value": "Behance project gallery",
+          "href": "https://www.behance.net/gallery/177375659"
         }
       ]
     },
@@ -391,6 +388,11 @@
       "typewriterColor": "#ff6542",
       "buttonColor": "#087f6f",
       "textStyles": {}
+    },
+    "featured": {
+      "eyebrow": "Featured projects",
+      "headline": "Browse selected campaigns, visuals, motion pieces, and illustration work.",
+      "searchPlaceholder": "Search featured project, tool, outcome"
     }
   },
   "resume": {
