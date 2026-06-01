@@ -34,229 +34,110 @@
       "accent": "#a348ff"
     }
   ],
-  "projects": [
+  "projects": [],
+  "portfolioProjects": [
     {
-      "id": "msl-gates-campaign",
-      "experienceId": "msl",
-      "title": "Gates Foundation Campaign Visuals",
-      "category": "Campaign Design",
-      "mediaType": "Image",
-      "role": "Visual Designer",
-      "year": "2024",
-      "tools": "Photoshop, Illustrator, Figma",
-      "summary": "Designed, retouched, and composited campaign visuals for cross-channel nonprofit storytelling while keeping the creative aligned to brand and campaign goals.",
-      "impact": "Part of campaign work that contributed to 50M+ views and 2x donor conversion lift",
-      "link": "",
-      "accent": "#087f6f",
-      "image": ""
-    },
-    {
-      "id": "msl-anil-motion",
-      "experienceId": "msl",
-      "title": "Anil Agarwal Foundation Motion Stories",
-      "category": "Motion Graphics",
-      "mediaType": "Video",
-      "role": "Motion + Visual Designer",
-      "year": "2024",
-      "tools": "After Effects, Premiere Pro, Illustrator, Photoshop",
-      "summary": "Created animated visual stories and social-first video assets using illustration, motion design, editing, and brand-led storytelling.",
-      "impact": "Supported award-winning digital work, including Fulcrum and STAKES recognition",
-      "link": "",
-      "accent": "#3557ff",
-      "image": ""
-    },
-    {
-      "id": "msl-brand-ai",
-      "experienceId": "msl",
-      "title": "Brand Guidelines + AI Design Experiments",
-      "category": "Branding",
-      "mediaType": "Case Study",
-      "role": "Graphic Designer",
-      "year": "2024",
-      "tools": "Figma, Photoshop, Adobe Firefly, Runway",
-      "summary": "Explored multiple visual directions, documented brand rules, tested AI-assisted creative workflows, and improved design consistency across campaign assets.",
-      "impact": "Improved brand consistency by 25%",
-      "link": "",
-      "accent": "#ffc94a",
-      "image": ""
-    },
-    {
-      "id": "cultre-dayal-social",
-      "experienceId": "cultre-boat",
-      "title": "Dayal Opticals Social Campaign",
-      "category": "Graphic Design",
-      "mediaType": "Image",
-      "role": "Communications Designer",
-      "year": "2023",
-      "tools": "Photoshop, Illustrator, Premiere Pro",
-      "summary": "Created campaign concepts, social posts, and promotional layouts that matched the brand's personality while staying consistent across the monthly content grid.",
-      "impact": "Part of 25-day advance social planning workflow",
-      "link": "",
-      "accent": "#ff6542",
-      "image": ""
-    },
-    {
-      "id": "cultre-devans-grid",
-      "experienceId": "cultre-boat",
-      "title": "Devan's Coffee Content Grid",
-      "category": "Campaign Design",
-      "mediaType": "Multimedia",
-      "role": "Graphic + Content Designer",
-      "year": "2023",
-      "tools": "Photoshop, Illustrator, Premiere Pro",
-      "summary": "Designed coffee-led social content, copy-led posts, layouts, and video pieces with a warm visual language for digital engagement.",
-      "impact": "Contributed to 150+ graphics and videos across brand accounts",
-      "link": "",
-      "accent": "#7a4b2a",
-      "image": ""
-    },
-    {
-      "id": "cultre-lizpaul-video",
-      "experienceId": "cultre-boat",
-      "title": "LizPaul Campaign Assets",
-      "category": "Video Editing",
-      "mediaType": "Video",
-      "role": "Video + Graphic Designer",
-      "year": "2023",
-      "tools": "Premiere Pro, After Effects, Photoshop",
-      "summary": "Built visual assets and edited short-form campaign content while balancing brand accuracy, social pacing, and delivery timelines.",
-      "impact": "Helped improve engagement by 15%",
-      "link": "",
-      "accent": "#d946ef",
-      "image": ""
-    },
-    {
-      "id": "freelance-brand-identity",
-      "experienceId": "freelance",
-      "title": "The Creative Bud Brand Identity",
-      "category": "Branding",
-      "mediaType": "Image",
-      "role": "Founder + Illustrator",
-      "year": "2018-2024",
-      "tools": "Procreate, Illustrator, Photoshop",
-      "summary": "Created the visual identity, illustration style, product templates, packaging, and social presence for a handmade personalized gifts brand.",
-      "impact": "Built a loyal base of 500+ repeat clients",
-      "link": "",
-      "accent": "#a348ff",
-      "image": ""
-    },
-    {
-      "id": "freelance-illustration-products",
-      "experienceId": "freelance",
-      "title": "Personalized Illustration Products",
+      "id": "ffcb9172-eb2b-4a5e-909f-3a00001cc6f5",
+      "placement": "portfolio",
+      "experienceId": "",
+      "title": "Title",
       "category": "Illustration",
       "mediaType": "Image",
-      "role": "Illustrator",
-      "year": "2018-2024",
-      "tools": "Procreate, Photoshop, Instagram",
-      "summary": "Designed custom portraits, cards, stationery, calendars, notebooks, and printed products from concept to final customer delivery.",
-      "impact": "Managed client briefs, revisions, production, packaging, and fulfillment",
-      "link": "",
-      "accent": "#ff4fa3",
-      "image": ""
-    },
-    {
-      "id": "freelance-product-social",
-      "experienceId": "freelance",
-      "title": "Product Photography + Social Content",
-      "category": "Graphic Design",
-      "mediaType": "Multimedia",
-      "role": "Creative Business Owner",
-      "year": "2018-2024",
-      "tools": "Photography, Photoshop, Illustrator, Instagram",
-      "summary": "Produced product photos, social posts, promotional graphics, and launch visuals to market handmade products online.",
-      "impact": "Grew the brand through social media, referrals, and direct client communication",
-      "link": "",
-      "accent": "#f59e0b",
-      "image": ""
-    }
-  ],
-  "portfolioProjects": [],
-  "featuredProducts": [
-    {
-      "id": "f2ae74fc-9ca0-481c-9d3b-87fe880864d9",
-      "placement": "featured",
-      "experienceId": "",
-      "title": "title",
-      "category": "Branding",
-      "mediaType": "Video",
-      "role": "sdfsdf",
-      "year": "212",
-      "tools": "213",
-      "summary": "23123",
-      "whatPrernaDid": "23123",
-      "impact": "fsdf",
+      "role": "Designer",
+      "year": "2026",
+      "tools": "Photoshop, Illustrator",
+      "summary": "Story Work Done",
+      "whatPrernaDid": "What I did",
+      "impact": "",
       "link": "",
       "accent": "#0a6f6b",
       "imageFit": "cover",
       "imagePosition": "center center",
       "imageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Initial Sketch",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Final Output",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
       "mediaGroups": {
-        "initialSketch": [],
-        "finalOutput": []
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "Layout 1",
+            "src": "assets/uploads/bc131e38f01403bab57c.jpg",
+            "videoUrl": "",
+            "description": "Text"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/1c2b1b4367a2330aa6c8.png",
+            "videoUrl": "https://www.youtube.com/watch?v=hjygIpwTNH4&pp=ugUHEgVlbi1JTg%3D%3D",
+            "description": "video"
+          }
+        ]
       },
-      "image": "assets/uploads/c1d444afe745084dd9e9.png",
-      "homeSlot": "1"
+      "image": ""
     },
     {
-      "id": "featured-custom-illustrations",
-      "placement": "featured",
-      "title": "Custom Illustration Products",
-      "category": "Illustration",
-      "mediaType": "Image",
-      "role": "Illustrator + Product Designer",
-      "year": "2018-2024",
-      "tools": "Procreate, Photoshop, Illustrator",
-      "summary": "Personalized illustration-led product work for cards, stationery, calendars, and handmade gifts.",
-      "impact": "Built from The Creative Bud's client-led product practice",
+      "id": "portfolio-brand-systems",
+      "experienceId": "",
+      "title": "Brand Identity Systems",
+      "category": "Branding",
+      "mediaType": "Case Study",
+      "role": "Graphic Designer",
+      "year": "2024",
+      "tools": "Illustrator, Photoshop, Figma",
+      "summary": "Selected identity, typography, layout, and visual system explorations created for brand-led campaigns and digital storytelling.",
+      "impact": "Shows brand thinking, visual consistency, and presentation-ready design craft",
       "link": "",
-      "accent": "#ff4fa3",
-      "image": "",
-      "homeSlot": "2"
+      "accent": "#a348ff",
+      "image": ""
     },
     {
-      "id": "featured-social-campaigns",
-      "placement": "featured",
-      "title": "Social Campaign Visuals",
+      "id": "portfolio-social-campaigns",
+      "experienceId": "",
+      "title": "Social Media Campaign Visuals",
       "category": "Social Media",
       "mediaType": "Image",
-      "role": "Graphic Designer",
+      "role": "Social + Graphic Designer",
       "year": "2023-2024",
       "tools": "Photoshop, Illustrator, Premiere Pro",
-      "summary": "Designed carousel-ready visuals, layouts, and digital campaign pieces for platform-first storytelling.",
-      "impact": "Quick proof of layout, hierarchy, and campaign polish",
+      "summary": "A portfolio set for social-first posts, campaign layouts, launch graphics, and platform-ready visual storytelling.",
+      "impact": "Highlights campaign thinking, content rhythm, and production polish",
       "link": "",
       "accent": "#ff6542",
-      "image": "",
-      "homeSlot": "3"
+      "image": ""
     },
     {
-      "id": "featured-motion-thumbnails",
-      "placement": "featured",
-      "title": "Motion + Video Thumbnails",
+      "id": "portfolio-motion-edits",
+      "experienceId": "",
+      "title": "Motion Graphics and Video Edits",
       "category": "Motion Graphics",
-      "mediaType": "Multimedia",
+      "mediaType": "Video",
       "role": "Motion Designer",
       "year": "2024",
       "tools": "After Effects, Premiere Pro, Photoshop",
-      "summary": "Thumbnail and motion-forward visual experiments for video, reels, and animated brand moments.",
-      "impact": "Shows multimedia thinking before opening full case studies",
+      "summary": "Motion-led portfolio work covering animated brand elements, short-form edits, social videos, and visual transitions.",
+      "impact": "Shows pacing, motion taste, editing structure, and multimedia fluency",
       "link": "",
       "accent": "#3557ff",
-      "image": "",
-      "homeSlot": ""
+      "image": ""
+    },
+    {
+      "id": "portfolio-illustration-products",
+      "experienceId": "",
+      "title": "Illustration and Custom Product Art",
+      "category": "Illustration",
+      "mediaType": "Image",
+      "role": "Illustrator",
+      "year": "2018-2024",
+      "tools": "Procreate, Illustrator, Photoshop",
+      "summary": "Illustration-led visual work for custom products, handmade gifts, packaging, cards, calendars, and social selling.",
+      "impact": "Shows personal style, detail, product thinking, and client-led creative execution",
+      "link": "",
+      "accent": "#ff4fa3",
+      "image": ""
     }
   ],
+  "featuredProducts": [],
   "siteContent": {
     "global": {
       "metaTitle": "Prerna Sharma | Graphic Designer",
@@ -318,12 +199,18 @@
         "Multimedia"
       ],
       "workEyebrow": "Work experience",
-      "workHeadline": "Start with work experience, then open the projects inside each role."
+      "workHeadline": "Start with work experience, then open the projects inside each role.",
+      "workVisibleCount": 3
     },
     "work": {
       "eyebrow": "Work experience",
       "headline": "Choose an experience to see the work created inside it.",
       "searchPlaceholder": "Search project, tool, outcome"
+    },
+    "featured": {
+      "eyebrow": "Featured projects",
+      "headline": "Browse selected campaigns, visuals, motion pieces, and illustration work.",
+      "searchPlaceholder": "Search featured project, tool, outcome"
     },
     "about": {
       "eyebrow": "About the designer",
@@ -388,11 +275,6 @@
       "typewriterColor": "#ff6542",
       "buttonColor": "#087f6f",
       "textStyles": {}
-    },
-    "featured": {
-      "eyebrow": "Featured projects",
-      "headline": "Browse selected campaigns, visuals, motion pieces, and illustration work.",
-      "searchPlaceholder": "Search featured project, tool, outcome"
     }
   },
   "resume": {
