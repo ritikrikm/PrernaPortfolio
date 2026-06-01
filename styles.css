@@ -1015,6 +1015,7 @@ h3 {
 
 .featured-product-body {
   display: flex;
+  min-height: 0;
   flex-direction: column;
   gap: 10px;
   padding: 18px;
@@ -1210,10 +1211,14 @@ h3 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.85rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .experience-body strong {
   display: block;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .experience-body p {
@@ -1793,6 +1798,28 @@ h3 {
   object-fit: cover;
 }
 
+.campaign-media-frame.has-image:not(.is-video) {
+  aspect-ratio: auto;
+}
+
+.campaign-media-frame.has-image:not(.is-video) img {
+  height: auto;
+  max-height: min(76vh, 760px);
+  object-fit: contain;
+}
+
+.campaign-media-grid.is-multiple .campaign-media-frame.has-image:not(.is-video) img {
+  max-height: 520px;
+}
+
+.campaign-media-frame.is-video.has-image {
+  aspect-ratio: 16 / 9;
+}
+
+.campaign-media-frame.is-video.has-image img {
+  height: 100%;
+}
+
 .campaign-media-frame img {
   display: block;
   width: 100%;
@@ -1838,6 +1865,8 @@ h3 {
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.8rem, 3vw, 3.2rem);
   line-height: 1;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .campaign-media-card .campaign-media-copy h3 {
@@ -2286,10 +2315,42 @@ h3 {
 }
 
 .experience-admin-preview {
+  display: grid;
+  gap: 14px;
   padding: 12px;
   background: #fff;
   border: 2px dashed rgba(22, 18, 15, 0.24);
   border-radius: var(--radius);
+}
+
+.admin-preview-block {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  background: #fffaf2;
+  border: 2px solid rgba(22, 18, 15, 0.18);
+  border-radius: var(--radius);
+}
+
+.admin-preview-block .board-topline {
+  margin-bottom: 0;
+}
+
+.admin-preview-block .board-topline small {
+  text-align: right;
+}
+
+.admin-preview-content {
+  min-width: 0;
+}
+
+.admin-hero-aside-preview {
+  min-height: 260px;
+}
+
+.admin-hero-aside-preview .hero-media-card {
+  width: min(100%, 360px);
+  min-height: 260px;
 }
 
 .experience-preview-card {
@@ -2741,6 +2802,27 @@ h3 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+}
+
+.form-subsection {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 14px;
+  background: #fff;
+  border: 2px dashed rgba(22, 18, 15, 0.24);
+  border-radius: var(--radius);
+}
+
+.form-subsection[hidden] {
+  display: none;
+}
+
+.form-subsection legend {
+  padding: 0 8px;
+  color: var(--teal-dark);
+  font-weight: 900;
 }
 
 label {
@@ -3252,6 +3334,7 @@ textarea:focus {
   .media-fieldset,
   .media-group-heading,
   .experience-preview-card,
+  .form-subsection,
   .form-grid {
     grid-template-columns: 1fr;
   }

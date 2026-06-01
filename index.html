@@ -257,14 +257,14 @@
                 <button class="mini-button" id="clear-experience-image" type="button">Remove image</button>
               </label>
               <label>
-                Experience image fit
+                Experience card image fit
                 <select id="experienceImageFit">
                   <option value="cover">Crop to fill card</option>
                   <option value="contain">Show full image</option>
                 </select>
               </label>
               <label>
-                Experience image focus
+                Experience card image focus
                 <select id="experienceImagePosition">
                   <option value="center center">Center</option>
                   <option value="center top">Top</option>
@@ -276,6 +276,27 @@
               <label class="wide">
                 Experience card zoom
                 <input id="experienceImageZoom" type="range" min="100" max="160" step="5" value="100">
+              </label>
+              <label>
+                Opened experience image fit
+                <select id="experienceDetailImageFit">
+                  <option value="cover">Crop to fill hero</option>
+                  <option value="contain">Show full image</option>
+                </select>
+              </label>
+              <label>
+                Opened experience image focus
+                <select id="experienceDetailImagePosition">
+                  <option value="center center">Center</option>
+                  <option value="center top">Top</option>
+                  <option value="center bottom">Bottom</option>
+                  <option value="left center">Left</option>
+                  <option value="right center">Right</option>
+                </select>
+              </label>
+              <label class="wide">
+                Opened experience image zoom
+                <input id="experienceDetailImageZoom" type="range" min="100" max="160" step="5" value="100">
               </label>
               <div class="experience-admin-preview wide" id="experience-card-preview"></div>
             </div>
@@ -386,27 +407,78 @@
                 <strong id="image-file-name">Choose an image</strong>
                 <button class="mini-button" id="clear-project-image" type="button">Remove thumbnail</button>
               </label>
-              <label>
-                Card image fit
-                <select id="imageFit" name="imageFit">
-                  <option value="cover">Crop to fill card</option>
-                  <option value="contain">Show full image</option>
-                </select>
-              </label>
-              <label>
-                Image focus
-                <select id="imagePosition" name="imagePosition">
-                  <option value="center center">Center</option>
-                  <option value="center top">Top</option>
-                  <option value="center bottom">Bottom</option>
-                  <option value="left center">Left</option>
-                  <option value="right center">Right</option>
-                </select>
-              </label>
-              <label class="wide">
-                Card zoom
-                <input id="imageZoom" name="imageZoom" type="range" min="100" max="160" step="5" value="100">
-              </label>
+              <fieldset class="form-subsection wide" id="workImageControls">
+                <legend>Work experience project card image</legend>
+                <label>
+                  Work card image fit
+                  <select id="imageFit" name="imageFit">
+                    <option value="cover">Crop to fill work card</option>
+                    <option value="contain">Show full image</option>
+                  </select>
+                </label>
+                <label>
+                  Work card image focus
+                  <select id="imagePosition" name="imagePosition">
+                    <option value="center center">Center</option>
+                    <option value="center top">Top</option>
+                    <option value="center bottom">Bottom</option>
+                    <option value="left center">Left</option>
+                    <option value="right center">Right</option>
+                  </select>
+                </label>
+                <label class="wide">
+                  Work card zoom
+                  <input id="imageZoom" name="imageZoom" type="range" min="100" max="160" step="5" value="100">
+                </label>
+              </fieldset>
+              <fieldset class="form-subsection wide" id="featuredImageControls">
+                <legend>Featured projects card image</legend>
+                <label>
+                  Featured card image fit
+                  <select id="featuredImageFit" name="featuredImageFit">
+                    <option value="cover">Crop to fill featured card</option>
+                    <option value="contain">Show full image</option>
+                  </select>
+                </label>
+                <label>
+                  Featured card image focus
+                  <select id="featuredImagePosition" name="featuredImagePosition">
+                    <option value="center center">Center</option>
+                    <option value="center top">Top</option>
+                    <option value="center bottom">Bottom</option>
+                    <option value="left center">Left</option>
+                    <option value="right center">Right</option>
+                  </select>
+                </label>
+                <label class="wide">
+                  Featured card zoom
+                  <input id="featuredImageZoom" name="featuredImageZoom" type="range" min="100" max="160" step="5" value="100">
+                </label>
+              </fieldset>
+              <fieldset class="form-subsection wide">
+                <legend>Campaign detail right image</legend>
+                <label>
+                  Detail image fit
+                  <select id="detailImageFit" name="detailImageFit">
+                    <option value="cover">Crop to fill hero</option>
+                    <option value="contain">Show full image</option>
+                  </select>
+                </label>
+                <label>
+                  Detail image focus
+                  <select id="detailImagePosition" name="detailImagePosition">
+                    <option value="center center">Center</option>
+                    <option value="center top">Top</option>
+                    <option value="center bottom">Bottom</option>
+                    <option value="left center">Left</option>
+                    <option value="right center">Right</option>
+                  </select>
+                </label>
+                <label class="wide">
+                  Detail hero zoom
+                  <input id="detailImageZoom" name="detailImageZoom" type="range" min="100" max="160" step="5" value="100">
+                </label>
+              </fieldset>
             </div>
 
             <div class="form-actions">

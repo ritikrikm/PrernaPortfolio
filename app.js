@@ -1080,10 +1080,36 @@ function experienceHomeSlotLabel(slot = "") {
   return "Auto home fill";
 }
 
-function imageStyle(project) {
-  const fit = normalizeImageFit(project.imageFit);
-  const position = normalizeImagePosition(project.imagePosition);
-  const zoom = normalizeImageZoom(project.imageZoom);
+const IMAGE_SETTING_KEYS = {
+  default: {
+    fit: "imageFit",
+    position: "imagePosition",
+    zoom: "imageZoom"
+  },
+  featured: {
+    fit: "featuredImageFit",
+    position: "featuredImagePosition",
+    zoom: "featuredImageZoom"
+  },
+  detail: {
+    fit: "detailImageFit",
+    position: "detailImagePosition",
+    zoom: "detailImageZoom"
+  }
+};
+
+function imageSettings(item = {}, variant = "default") {
+  const keys = IMAGE_SETTING_KEYS[variant] || IMAGE_SETTING_KEYS.default;
+  const baseKeys = IMAGE_SETTING_KEYS.default;
+  return {
+    fit: normalizeImageFit(item[keys.fit] || item[baseKeys.fit]),
+    position: normalizeImagePosition(item[keys.position] || item[baseKeys.position]),
+    zoom: normalizeImageZoom(item[keys.zoom] || item[baseKeys.zoom])
+  };
+}
+
+function imageStyle(project, variant = "default") {
+  const { fit, position, zoom } = imageSettings(project, variant);
   return `object-fit: ${fit}; object-position: ${position}; transform: scale(${zoom / 100});`;
 }
 
@@ -1091,6 +1117,13 @@ function imageMarkup(imageSrc, title, style = "") {
   return imageSrc
     ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(title)}" style="${style}">`
     : "";
+}
+
+function breakableHtml(value = "") {
+  return escapeHtml(value)
+    .replace(/([a-z])([A-Z])/g, "$1<wbr>$2")
+    .replace(/([_/.-])/g, "$1<wbr>")
+    .replace(/(\S{12})(?=\S)/g, "$1<wbr>");
 }
 
 function mediaIcon(mediaType = "") {
@@ -1197,7 +1230,7 @@ function projectCard(project, collection = "work") {
           <span class="pill">${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</span>
           ${project.year ? `<span class="pill">${escapeHtml(project.year)}</span>` : ""}
         </div>
-        <h3>${escapeHtml(project.title)}</h3>
+        <h3>${breakableHtml(project.title)}</h3>
         <p>${escapeHtml(project.summary)}</p>
         <div class="project-footer">
           <div class="tool-row">${toolIcons(project.tools)}</div>
@@ -1222,7 +1255,7 @@ function featuredProjectCard(product) {
   const primaryItem = primaryMediaItem(product);
   const imageSrc = product.image || mediaVisualSrc(primaryItem || {});
   const image = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product)}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product, "featured")}">`
     : coverArt(product, "large");
   const previewLabel = "Open";
   const impact = product.impact || product.role || "";
@@ -1232,7 +1265,7 @@ function featuredProjectCard(product) {
       <div class="featured-product-thumb" style="background: ${projectGradient(product)}">${image}</div>
       <div class="featured-product-body">
         <div class="project-meta">${categoryPills(product, "Featured")}</div>
-        <h3>${escapeHtml(product.title)}</h3>
+        <h3>${breakableHtml(product.title)}</h3>
         <p>${escapeHtml(product.summary || "Featured creative project")}</p>
         <div class="project-footer">
           <div class="tool-row">${toolIcons(product.tools)}</div>
@@ -1254,12 +1287,12 @@ function experienceCard(experience) {
       <span class="experience-number">${String(experiences.indexOf(experience) + 1).padStart(2, "0")}</span>
       <div class="experience-cover ${image ? "has-image" : ""}">
         ${image}
-        <span>${escapeHtml(experience.company)}</span>
+        <span>${breakableHtml(experience.company)}</span>
       </div>
       <div class="experience-body">
         <p class="eyebrow">${escapeHtml(experience.dates)}</p>
-        <h3>${escapeHtml(experience.title)}</h3>
-        <strong>${escapeHtml(experience.company)}</strong>
+        <h3>${breakableHtml(experience.title)}</h3>
+        <strong>${breakableHtml(experience.company)}</strong>
         <p>${escapeHtml(experience.headline)}</p>
         <div class="experience-bottom">
           <span>${count} project${count === 1 ? "" : "s"}</span>
@@ -1284,7 +1317,7 @@ function adminRow(project, collection = "work") {
     <div class="admin-row ${isDirty ? "draft-dirty" : ""}" data-id="${project.id}" data-collection="${collection}">
       <div class="admin-row-thumb" style="background: ${projectGradient(project)}">${image}</div>
       <div>
-        <strong>${escapeHtml(project.title)}</strong>
+        <strong>${breakableHtml(project.title)}</strong>
         <small>${escapeHtml(source)} · ${escapeHtml(projectCategoryLabel(project))} · ${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</small>
         ${isDirty ? renderDirtyBadge() : ""}
       </div>
@@ -1405,7 +1438,7 @@ function setupHome() {
   document.getElementById("home-experience-grid").innerHTML = homeExperienceItems.length
     ? homeExperienceItems.map(experienceCard).join("")
     : `<div class="empty-state"><strong>No work experience cards selected for home yet.</strong></div>`;
-  if (workViewAll) workViewAll.hidden = !experiences.length;
+  if (workViewAll) workViewAll.hidden = experiences.length <= 3;
   setupHomeSectionTracking();
 }
 
@@ -1719,7 +1752,7 @@ function experienceHeroAside(experience, projectCount = 0) {
   const image = imageMarkup(
     experience.image || "",
     `${experience.company} experience thumbnail`,
-    imageStyle(experience)
+    imageStyle(experience, "detail")
   );
   return `
     <aside class="hero-media-card ${image ? "has-image" : ""}">
@@ -1747,8 +1780,8 @@ function setupExperienceDetail() {
     <section class="experience-hero" style="--experience-accent: ${experience.accent}">
       <div>
         <p class="eyebrow">${escapeHtml(experience.dates)} · ${escapeHtml(experience.location)}</p>
-        <h1>${escapeHtml(experience.company)}</h1>
-        <h2>${escapeHtml(experience.title)}</h2>
+        <h1>${breakableHtml(experience.company)}</h1>
+        <h2>${breakableHtml(experience.title)}</h2>
         <p>${escapeHtml(experience.summary)}</p>
       </div>
       ${experienceHeroAside(experience, projects.length)}
@@ -1883,17 +1916,18 @@ function campaignMediaFrame(item, project) {
   const visual = imageSrc
     ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}" style="${mediaImageStyle(item, project)}">`
     : coverArt(project, "large");
+  const frameClass = `campaign-media-frame ${imageSrc ? "has-image" : ""}`;
 
   if (type === "Video" && videoUrl) {
     return `
-      <div class="campaign-media-frame is-video">
+      <div class="${frameClass} is-video">
         ${visual}
         <span aria-hidden="true">▶</span>
       </div>
     `;
   }
 
-  return `<div class="campaign-media-frame">${visual}</div>`;
+  return `<div class="${frameClass}">${visual}</div>`;
 }
 
 function campaignMediaCard(item, index, groupId, project) {
@@ -1903,7 +1937,7 @@ function campaignMediaCard(item, index, groupId, project) {
       ${campaignMediaFrame(item, project)}
       ${copy.length ? `
         <div class="campaign-media-copy">
-          ${item.title ? `<h3>${escapeHtml(item.title)}</h3>` : ""}
+          ${item.title ? `<h3>${breakableHtml(item.title)}</h3>` : ""}
           ${item.description ? `<p>${escapeHtml(item.description)}</p>` : ""}
         </div>
       ` : ""}
@@ -1940,7 +1974,7 @@ function projectHeroAside(project) {
   const image = imageMarkup(
     imageSrc,
     `${project.title} project thumbnail`,
-    imageSrc === project.image ? imageStyle(project) : mediaImageStyle(primaryItem, project)
+    imageStyle(project, "detail")
   );
   return `
     <aside class="hero-media-card project-hero-media ${image ? "has-image" : ""}">
@@ -1980,8 +2014,8 @@ function setupProjectDetail(collection) {
     <section class="experience-hero project-hero" style="--experience-accent: ${heroAccent}">
       <div>
         <p class="eyebrow">${escapeHtml(eyebrow)}</p>
-        <h1>${escapeHtml(project.title)}</h1>
-        <h2>${escapeHtml(project.role || "Campaign project")}</h2>
+        <h1>${breakableHtml(project.title)}</h1>
+        <h2>${breakableHtml(project.role || "Campaign project")}</h2>
         <p>${escapeHtml(project.summary)}</p>
       </div>
       ${projectHeroAside(project)}
@@ -2671,7 +2705,10 @@ function formExperience() {
     image,
     imageFit: document.getElementById("experienceImageFit")?.value || "cover",
     imagePosition: document.getElementById("experienceImagePosition")?.value || "center center",
-    imageZoom: document.getElementById("experienceImageZoom")?.value || "100"
+    imageZoom: document.getElementById("experienceImageZoom")?.value || "100",
+    detailImageFit: document.getElementById("experienceDetailImageFit")?.value || document.getElementById("experienceImageFit")?.value || "cover",
+    detailImagePosition: document.getElementById("experienceDetailImagePosition")?.value || document.getElementById("experienceImagePosition")?.value || "center center",
+    detailImageZoom: document.getElementById("experienceDetailImageZoom")?.value || document.getElementById("experienceImageZoom")?.value || "100"
   };
 }
 
@@ -2679,22 +2716,38 @@ function renderExperiencePreview() {
   const target = document.getElementById("experience-card-preview");
   if (!target) return;
   const experience = formExperience();
+  const projectCount = projectsForExperience(experience.id).length;
   const image = imageMarkup(
     experience.image,
     `${experience.company || "Experience"} card preview`,
     imageStyle(experience)
   );
   target.innerHTML = `
-    <article class="experience-preview-card" style="--experience-accent: ${escapeHtml(experience.accent || "#0a6f6b")}">
-      <div class="experience-preview-cover ${image ? "has-image" : ""}">
-        ${image || `<span>${escapeHtml(experience.company || "Experience")}</span>`}
+    <section class="admin-preview-block">
+      <div class="board-topline">
+        <strong>Home / Work Experience Card</strong>
+        <small>Uses the experience card image settings</small>
       </div>
-      <div>
-        <p class="eyebrow">Experience Card Preview</p>
-        <strong>${escapeHtml(experience.company || "Company name")}</strong>
-        <small>${escapeHtml(experience.title || "Role")} · ${escapeHtml(experienceHomeSlotLabel(experience.homeSlot))}</small>
+      <article class="experience-preview-card" style="--experience-accent: ${escapeHtml(experience.accent || "#0a6f6b")}">
+        <div class="experience-preview-cover ${image ? "has-image" : ""}">
+          ${image || `<span>${breakableHtml(experience.company || "Experience")}</span>`}
+        </div>
+        <div>
+          <p class="eyebrow">Card preview</p>
+          <strong>${breakableHtml(experience.company || "Company name")}</strong>
+          <small>${breakableHtml(experience.title || "Role")} · ${escapeHtml(experienceHomeSlotLabel(experience.homeSlot))}</small>
+        </div>
+      </article>
+    </section>
+    <section class="admin-preview-block">
+      <div class="board-topline">
+        <strong>Opened Experience Right Image</strong>
+        <small>Uses the opened experience image settings</small>
       </div>
-    </article>
+      <div class="admin-hero-aside-preview" style="--experience-accent: ${escapeHtml(experience.accent || "#0a6f6b")}">
+        ${experienceHeroAside(experience, projectCount)}
+      </div>
+    </section>
   `;
 }
 
@@ -2707,6 +2760,9 @@ function clearExperienceForm() {
   document.getElementById("experienceImageFit").value = "cover";
   document.getElementById("experienceImagePosition").value = "center center";
   document.getElementById("experienceImageZoom").value = "100";
+  document.getElementById("experienceDetailImageFit").value = "cover";
+  document.getElementById("experienceDetailImagePosition").value = "center center";
+  document.getElementById("experienceDetailImageZoom").value = "100";
   document.getElementById("experience-image-file-name").textContent = "Choose an image";
   state.experiencePreviewImage = "";
   state.experienceImageRemoved = false;
@@ -2889,10 +2945,9 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
 function renderMediaBuilder(mediaGroups = state.mediaBuilderGroups, mediaGroupMeta = state.mediaBuilderMeta) {
   const builder = document.getElementById("media-builder-fields");
   if (!builder) return;
-  const preservedImages = { ...state.detailMediaImages };
-  state.detailMediaImages = preservedImages;
   state.mediaBuilderGroups = normalizeMediaBuilderGroups(mediaGroups || defaultMediaBuilderGroups());
   state.mediaBuilderMeta = normalizeMediaGroupMeta(mediaGroupMeta || defaultMediaGroupMeta());
+  state.detailMediaImages = {};
 
   builder.innerHTML = MEDIA_GROUPS
     .map((group) => {
@@ -3139,7 +3194,7 @@ function adminExperienceRow(experience) {
     <div class="admin-experience-row ${isDirty ? "draft-dirty" : ""}" data-experience-id="${escapeHtml(experience.id)}">
       <span style="--experience-accent: ${experience.accent}"></span>
       <div>
-        <strong>${escapeHtml(experience.company)}</strong>
+        <strong>${breakableHtml(experience.company)}</strong>
         <small>${escapeHtml(experience.title)} · ${count} project${count === 1 ? "" : "s"} · ${escapeHtml(experienceHomeSlotLabel(experience.homeSlot))}</small>
         ${isDirty ? renderDirtyBadge() : ""}
       </div>
@@ -3226,6 +3281,9 @@ async function handleAdminExperienceAction(event) {
   document.getElementById("experienceImageFit").value = normalizeImageFit(experience.imageFit);
   document.getElementById("experienceImagePosition").value = normalizeImagePosition(experience.imagePosition);
   document.getElementById("experienceImageZoom").value = normalizeImageZoom(experience.imageZoom);
+  document.getElementById("experienceDetailImageFit").value = imageSettings(experience, "detail").fit;
+  document.getElementById("experienceDetailImagePosition").value = imageSettings(experience, "detail").position;
+  document.getElementById("experienceDetailImageZoom").value = imageSettings(experience, "detail").zoom;
   document.getElementById("experience-image-file-name").textContent = experience.image ? "Existing image selected" : "Choose an image";
   state.experiencePreviewImage = experience.image || "";
   state.experienceImageRemoved = false;
@@ -3954,6 +4012,12 @@ function formProject() {
     imageFit: document.getElementById("imageFit").value,
     imagePosition: document.getElementById("imagePosition").value,
     imageZoom: document.getElementById("imageZoom").value,
+    featuredImageFit: document.getElementById("featuredImageFit")?.value || document.getElementById("imageFit").value,
+    featuredImagePosition: document.getElementById("featuredImagePosition")?.value || document.getElementById("imagePosition").value,
+    featuredImageZoom: document.getElementById("featuredImageZoom")?.value || document.getElementById("imageZoom").value,
+    detailImageFit: document.getElementById("detailImageFit")?.value || document.getElementById("imageFit").value,
+    detailImagePosition: document.getElementById("detailImagePosition")?.value || document.getElementById("imagePosition").value,
+    detailImageZoom: document.getElementById("detailImageZoom")?.value || document.getElementById("imageZoom").value,
     mediaGroupMeta: formMediaGroupMeta(),
     mediaGroups: formMediaGroups(),
     image: state.previewImage
@@ -3968,6 +4032,8 @@ function updateProjectPlacementFields() {
   const experienceWrap = document.getElementById("experienceWrap") || experienceSelect?.closest("label");
   const featuredSlot = document.getElementById("featuredSlot");
   const featuredSlotWrap = document.getElementById("featuredSlotWrap");
+  const workImageControls = document.getElementById("workImageControls");
+  const featuredImageControls = document.getElementById("featuredImageControls");
   if (experienceWrap) experienceWrap.hidden = !isWorkProject;
   if (experienceSelect) {
     experienceSelect.required = isWorkProject;
@@ -3980,6 +4046,20 @@ function updateProjectPlacementFields() {
     featuredSlot.disabled = !isFeaturedProject;
     if (!isFeaturedProject) featuredSlot.value = "";
   }
+  if (workImageControls) workImageControls.hidden = !isWorkProject;
+  if (featuredImageControls) featuredImageControls.hidden = !isFeaturedProject;
+}
+
+function adminPreviewBlock(title, helper, content) {
+  return `
+    <section class="admin-preview-block">
+      <div class="board-topline">
+        <strong>${escapeHtml(title)}</strong>
+        <small>${escapeHtml(helper)}</small>
+      </div>
+      <div class="admin-preview-content">${content}</div>
+    </section>
+  `;
 }
 
 function adminCampaignPreview(project) {
@@ -4008,11 +4088,29 @@ function renderPreview() {
   if (!preview) return;
   updateProjectPlacementFields();
   const project = formProject();
-  const cardPreview = project.placement === "featured"
-    ? featuredProjectCard(project)
-    : projectCard(project, "work");
+  const cardPreviews = [
+    placementUsesFeatured(project.placement)
+      ? adminPreviewBlock(
+          "Featured Projects Page Card",
+          "Uses the featured project image settings",
+          featuredProjectCard(project)
+        )
+      : "",
+    placementUsesWork(project.placement)
+      ? adminPreviewBlock(
+          "Work Experience Project Card",
+          "Uses the card image settings",
+          projectCard(project, "work")
+        )
+      : "",
+    adminPreviewBlock(
+      "Campaign Detail Right Image",
+      "Uses the campaign detail image settings",
+      `<div class="admin-hero-aside-preview" style="--experience-accent: ${escapeHtml(project.accent || categoryColor(projectPrimaryCategory(project)))}">${projectHeroAside(project)}</div>`
+    )
+  ].filter(Boolean).join("");
   preview.innerHTML = `
-    ${cardPreview}
+    ${cardPreviews}
     ${adminCampaignPreview(project)}
   `;
 }
@@ -4106,6 +4204,12 @@ function clearForm() {
   document.getElementById("imageFit").value = "cover";
   document.getElementById("imagePosition").value = "center center";
   document.getElementById("imageZoom").value = "100";
+  document.getElementById("featuredImageFit").value = "cover";
+  document.getElementById("featuredImagePosition").value = "center center";
+  document.getElementById("featuredImageZoom").value = "100";
+  document.getElementById("detailImageFit").value = "cover";
+  document.getElementById("detailImagePosition").value = "center center";
+  document.getElementById("detailImageZoom").value = "100";
   document.getElementById("image-file-name").textContent = "Choose an image";
   state.previewImage = "";
   state.projectImageRemoved = false;
@@ -4197,6 +4301,12 @@ async function handleAdminListAction(event) {
   document.getElementById("imageFit").value = normalizeImageFit(projectForForm.imageFit);
   document.getElementById("imagePosition").value = normalizeImagePosition(projectForForm.imagePosition);
   document.getElementById("imageZoom").value = normalizeImageZoom(projectForForm.imageZoom);
+  document.getElementById("featuredImageFit").value = imageSettings(projectForForm, "featured").fit;
+  document.getElementById("featuredImagePosition").value = imageSettings(projectForForm, "featured").position;
+  document.getElementById("featuredImageZoom").value = imageSettings(projectForForm, "featured").zoom;
+  document.getElementById("detailImageFit").value = imageSettings(projectForForm, "detail").fit;
+  document.getElementById("detailImagePosition").value = imageSettings(projectForForm, "detail").position;
+  document.getElementById("detailImageZoom").value = imageSettings(projectForForm, "detail").zoom;
   document.getElementById("image-file-name").textContent = projectForForm.image ? "Existing image selected" : "Choose an image";
   state.previewImage = projectForForm.image || "";
   state.projectImageRemoved = false;
