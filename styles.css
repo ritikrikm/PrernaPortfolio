@@ -2868,6 +2868,13 @@ label {
   font-weight: 900;
 }
 
+.field-hint {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
 .wide {
   grid-column: 1 / -1;
 }
@@ -2991,6 +2998,17 @@ textarea:focus {
 
 .preview-panel .project-card {
   min-height: auto;
+}
+
+.preview-panel .project-card .project-thumb {
+  aspect-ratio: 4 / 3;
+}
+
+.preview-panel .project-body > p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 .preview-panel .featured-product-card {

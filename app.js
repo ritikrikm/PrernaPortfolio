@@ -2772,26 +2772,52 @@ function renderExperienceHomeLimitSelect() {
   select.value = String(homeExperienceLimit());
 }
 
+function featuredRankOptionLimit(activeProjectId = "") {
+  const isExistingFeatured = activeProjectId
+    ? state.featuredProducts.some((project) => project.id === activeProjectId)
+    : false;
+  const projectedCount = state.featuredProducts.length + (isExistingFeatured ? 0 : 1);
+  return Math.min(6, Math.max(1, projectedCount));
+}
+
+function featuredRankConflict(project = {}) {
+  const rank = normalizeFeaturedRank(project.featuredRank);
+  if (!rank) return null;
+  return state.featuredProducts.find((item) => item.id !== project.id && normalizeFeaturedRank(item.featuredRank) === rank) || null;
+}
+
 function renderFeaturedRankOptions(selectedRank = "", activeProjectId = "") {
   const select = document.getElementById("featuredRank");
   if (!select) return;
+  const hint = document.getElementById("featuredRankHint");
+  const maxRank = featuredRankOptionLimit(activeProjectId);
   const usedRanks = new Map();
   state.featuredProducts.forEach((project) => {
     const rank = normalizeFeaturedRank(project.featuredRank);
     if (rank && project.id !== activeProjectId) usedRanks.set(rank, project.title);
   });
-  const normalizedSelected = normalizeFeaturedRank(selectedRank);
+  const normalizedSelected = Number(normalizeFeaturedRank(selectedRank)) <= maxRank
+    ? normalizeFeaturedRank(selectedRank)
+    : "";
   select.innerHTML = [
-    `<option value="">Auto order</option>`,
-    ...Array.from({ length: 6 }, (_, index) => {
+    `<option value="">No rank / auto order</option>`,
+    ...Array.from({ length: maxRank }, (_, index) => {
       const rank = String(index + 1);
       const owner = usedRanks.get(rank);
       const disabled = owner ? " disabled" : "";
-      const label = owner ? `Rank ${rank} · used by ${stripSavedBreakHints(owner)}` : `Rank ${rank}`;
+      const label = owner ? `Rank ${rank} · already used by ${stripSavedBreakHints(owner)}` : `Rank ${rank}`;
       return `<option value="${rank}"${rank === normalizedSelected ? " selected" : ""}${disabled}>${escapeHtml(label)}</option>`;
     })
   ].join("");
   select.value = normalizedSelected;
+  if (hint) {
+    const usedText = [...usedRanks.entries()]
+      .filter(([rank]) => Number(rank) <= maxRank)
+      .map(([rank, title]) => `Rank ${rank}: ${stripSavedBreakHints(title)}`);
+    hint.textContent = usedText.length
+      ? `Available ranks are 1-${maxRank}. Already used: ${usedText.join(" · ")}. Choose no rank first if you want to reshuffle.`
+      : `Available ranks are 1-${maxRank}. Choose no rank / auto order to leave this project unranked.`;
+  }
 }
 
 function siteContentWithExperienceHomeLimit() {
@@ -3995,7 +4021,7 @@ function setupAdmin() {
   renderExperienceHomeLimitSelect();
   renderExperiencePreview();
   renderMediaBuilder();
-  renderPreview();
+  renderPreview({ resetScroll: true });
   renderAdminList();
   renderAdminExperienceList();
   setupAdminModes();
@@ -4026,7 +4052,8 @@ function setupAdmin() {
   form.addEventListener("change", renderPreview);
   document.getElementById("projectPlacement").addEventListener("change", () => {
     updateProjectPlacementFields();
-    renderPreview();
+    renderFeaturedRankOptions(document.getElementById("featuredRank")?.value || "", document.getElementById("project-id")?.value || "");
+    renderPreview({ resetScroll: true });
   });
   form.addEventListener("submit", handleProjectSave);
 
@@ -4217,9 +4244,10 @@ function adminCampaignPreview(project) {
   `;
 }
 
-function renderPreview() {
+function renderPreview(options = {}) {
   const preview = document.getElementById("admin-preview");
   if (!preview) return;
+  const previousScrollTop = preview.scrollTop;
   updateProjectPlacementFields();
   const project = formProject();
   const cardPreviews = [
@@ -4247,6 +4275,7 @@ function renderPreview() {
     ${cardPreviews}
     ${adminCampaignPreview(project)}
   `;
+  preview.scrollTop = options.resetScroll ? 0 : previousScrollTop;
 }
 
 function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
@@ -4255,15 +4284,6 @@ function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
   return featuredProducts.map((project) => {
     if (project.id === activeProject.id || normalizeFeaturedHomeSlot(project.homeSlot) !== slot) return project;
     return { ...project, homeSlot: "" };
-  });
-}
-
-function applyFeaturedRankChoice(featuredProducts, activeProject) {
-  const rank = normalizeFeaturedRank(activeProject.featuredRank);
-  if (!rank) return featuredProducts;
-  return featuredProducts.map((project) => {
-    if (project.id === activeProject.id || normalizeFeaturedRank(project.featuredRank) !== rank) return project;
-    return { ...project, featuredRank: "" };
   });
 }
 
@@ -4301,6 +4321,23 @@ async function handleProjectSave(event) {
     return;
   }
 
+  if (placementUsesFeatured(nextPlacement)) {
+    const maxRank = featuredRankOptionLimit(nextProject.id);
+    const selectedRank = Number(normalizeFeaturedRank(nextProject.featuredRank));
+    if (Number.isFinite(selectedRank) && selectedRank > maxRank) {
+      showToast(`Choose a rank between 1 and ${maxRank}, or choose no rank / auto order.`);
+      renderFeaturedRankOptions("", nextProject.id);
+      return;
+    }
+
+    const conflict = featuredRankConflict(nextProject);
+    if (conflict) {
+      showToast(`Rank ${nextProject.featuredRank} is already used by ${stripSavedBreakHints(conflict.title)}. Choose no rank or another available rank.`);
+      renderFeaturedRankOptions("", nextProject.id);
+      return;
+    }
+  }
+
   if (!(await confirmAction("Save this project card?", "Save Project"))) return;
 
   let nextProjects = state.projects.filter((project) => project.id !== nextProject.id);
@@ -4314,7 +4351,6 @@ async function handleProjectSave(event) {
   if (placementUsesFeatured(nextPlacement)) {
     nextFeaturedProducts = [nextProject, ...nextFeaturedProducts];
     nextFeaturedProducts = applyFeaturedHomeSlotChoice(nextFeaturedProducts, nextProject);
-    nextFeaturedProducts = applyFeaturedRankChoice(nextFeaturedProducts, nextProject);
     nextFeaturedProducts = sortFeaturedProjects(nextFeaturedProducts);
   }
 
@@ -4334,6 +4370,7 @@ async function handleProjectSave(event) {
   clearForm();
   renderAdminList();
   renderAdminExperienceList();
+  renderFeaturedRankOptions();
   renderAdminMode();
   showToast("Project saved as draft.");
 }
@@ -4360,7 +4397,7 @@ function clearForm() {
   state.previewImage = "";
   state.projectImageRemoved = false;
   clearMediaFields();
-  renderPreview();
+  renderPreview({ resetScroll: true });
 }
 
 function renderAdminList() {
@@ -4421,6 +4458,7 @@ async function handleAdminListAction(event) {
     }
     renderAdminList();
     renderAdminExperienceList();
+    renderFeaturedRankOptions(document.getElementById("featuredRank")?.value || "", document.getElementById("project-id")?.value || "");
     renderAdminMode();
     showToast("Project removed from drafts.");
     return;
@@ -4459,7 +4497,7 @@ async function handleAdminListAction(event) {
   state.previewImage = projectForForm.image || "";
   state.projectImageRemoved = false;
   fillMediaFields(projectForForm.mediaGroups || projectForForm.mediaItems || [], projectForForm.mediaGroupMeta || {});
-  renderPreview();
+  renderPreview({ resetScroll: true });
   document.getElementById("title").focus();
 }
 
