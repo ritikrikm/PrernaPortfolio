@@ -433,6 +433,58 @@ function deepEqual(firstValue, secondValue) {
   return JSON.stringify(firstValue ?? null) === JSON.stringify(secondValue ?? null);
 }
 
+function sanitizeBreakHintText(value) {
+  if (typeof value === "string") return stripSavedBreakHints(value);
+  if (Array.isArray(value)) return value.map(sanitizeBreakHintText);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, sanitizeBreakHintText(item)]));
+  }
+  return value;
+}
+
+function comparableExperience(experience = {}) {
+  const clean = sanitizeBreakHintText(experience);
+  const detailSettings = imageSettings(clean, "detail");
+  return {
+    ...clean,
+    homeSlot: normalizeFeaturedHomeSlot(clean.homeSlot),
+    imageFit: imageSettings(clean).fit,
+    imagePosition: imageSettings(clean).position,
+    imageZoom: String(imageSettings(clean).zoom),
+    detailImageFit: detailSettings.fit,
+    detailImagePosition: detailSettings.position,
+    detailImageZoom: String(detailSettings.zoom)
+  };
+}
+
+function comparableProject(project = {}) {
+  const clean = sanitizeBreakHintText(project);
+  const cardSettings = imageSettings(clean);
+  const featuredSettings = imageSettings(clean, "featured");
+  const detailSettings = imageSettings(clean, "detail");
+  return {
+    ...clean,
+    homeSlot: normalizeFeaturedHomeSlot(clean.homeSlot),
+    featuredRank: normalizeFeaturedRank(clean.featuredRank),
+    category: projectCategoriesFor(clean)[0] || "",
+    categories: projectCategoriesFor(clean),
+    imageFit: cardSettings.fit,
+    imagePosition: cardSettings.position,
+    imageZoom: String(cardSettings.zoom),
+    featuredImageFit: featuredSettings.fit,
+    featuredImagePosition: featuredSettings.position,
+    featuredImageZoom: String(featuredSettings.zoom),
+    detailImageFit: detailSettings.fit,
+    detailImagePosition: detailSettings.position,
+    detailImageZoom: String(detailSettings.zoom)
+  };
+}
+
+function comparableItems(items = [], type = "project") {
+  const normalize = type === "experience" ? comparableExperience : comparableProject;
+  return cloneItems(items).map(normalize);
+}
+
 function mergeDeep(defaultValue, savedValue) {
   if (Array.isArray(defaultValue)) {
     return Array.isArray(savedValue) ? cloneItems(savedValue) : cloneItems(defaultValue);
@@ -521,21 +573,24 @@ function siteContentDirty() {
 }
 
 function portfolioContentDirty() {
-  return !deepEqual(experiences, publishedExperiences)
-    || !deepEqual(state.projects, publishedProjects)
-    || !deepEqual(state.portfolioProjects, publishedPortfolioProjects)
-    || !deepEqual(state.featuredProducts, publishedFeaturedProducts);
+  return !deepEqual(comparableItems(experiences, "experience"), comparableItems(publishedExperiences, "experience"))
+    || !deepEqual(comparableItems(state.projects), comparableItems(publishedProjects))
+    || !deepEqual(comparableItems(state.portfolioProjects), comparableItems(publishedPortfolioProjects))
+    || !deepEqual(comparableItems(state.featuredProducts), comparableItems(publishedFeaturedProducts));
 }
 
 function projectCollectionDirty(collection) {
-  if (collection === "featured") return !deepEqual(state.featuredProducts, publishedFeaturedProducts);
-  if (collection === "portfolio") return !deepEqual(state.portfolioProjects, publishedPortfolioProjects);
-  return !deepEqual(state.projects, publishedProjects);
+  if (collection === "featured") return !deepEqual(comparableItems(state.featuredProducts), comparableItems(publishedFeaturedProducts));
+  if (collection === "portfolio") return !deepEqual(comparableItems(state.portfolioProjects), comparableItems(publishedPortfolioProjects));
+  return !deepEqual(comparableItems(state.projects), comparableItems(publishedProjects));
 }
 
 function itemDirty(item, currentCollection, publishedCollection) {
   const publishedItem = publishedCollection.find((candidate) => candidate.id === item.id);
-  return !publishedItem || !deepEqual(item, publishedItem);
+  if (!publishedItem) return true;
+  const type = currentCollection === experiences ? "experience" : "project";
+  const normalize = type === "experience" ? comparableExperience : comparableProject;
+  return !deepEqual(normalize(item), normalize(publishedItem));
 }
 
 function experienceDirty(experience) {
@@ -595,21 +650,22 @@ function publishedPortfolioSignature() {
 }
 
 function normalizePortfolioData(data) {
+  const cleanData = sanitizeBreakHintText(data || {});
   return {
-    experiences: Array.isArray(data?.experiences)
-      ? cloneItems(data.experiences)
+    experiences: Array.isArray(cleanData?.experiences)
+      ? cloneItems(cleanData.experiences)
       : [],
-    projects: Array.isArray(data?.projects)
-      ? cloneItems(data.projects)
+    projects: Array.isArray(cleanData?.projects)
+      ? cloneItems(cleanData.projects)
       : [],
-    portfolioProjects: Array.isArray(data?.portfolioProjects)
-      ? cloneItems(data.portfolioProjects)
+    portfolioProjects: Array.isArray(cleanData?.portfolioProjects)
+      ? cloneItems(cleanData.portfolioProjects)
       : [],
-    featuredProducts: Array.isArray(data?.featuredProducts)
-      ? cloneItems(data.featuredProducts)
+    featuredProducts: Array.isArray(cleanData?.featuredProducts)
+      ? cloneItems(cleanData.featuredProducts)
       : [],
-    siteContent: normalizeSiteContent(data?.siteContent),
-    resume: normalizeResume(data?.resume || state?.resume || defaultResume)
+    siteContent: normalizeSiteContent(cleanData?.siteContent),
+    resume: normalizeResume(cleanData?.resume || state?.resume || defaultResume)
   };
 }
 
@@ -1056,6 +1112,12 @@ function normalizeFeaturedHomeSlot(value = "") {
   return ["1", "2", "3", "hidden"].includes(slot) ? slot : "";
 }
 
+function normalizeFeaturedRank(value = "") {
+  const rank = Number.parseInt(value, 10);
+  if (!Number.isFinite(rank)) return "";
+  return rank >= 1 && rank <= 6 ? String(rank) : "";
+}
+
 function normalizeHomeCardLimit(value = 3) {
   const count = Number.parseInt(value, 10);
   if (!Number.isFinite(count)) return 3;
@@ -1071,6 +1133,11 @@ function featuredHomeSlotLabel(slot = "") {
   if (normalized === "hidden") return "Featured project · hidden from home";
   if (normalized) return `Featured project · home card ${normalized}`;
   return "Featured project · auto home fill";
+}
+
+function featuredRankLabel(rank = "") {
+  const normalized = normalizeFeaturedRank(rank);
+  return normalized ? `Featured rank ${normalized}` : "Featured rank auto";
 }
 
 function experienceHomeSlotLabel(slot = "") {
@@ -1119,11 +1186,29 @@ function imageMarkup(imageSrc, title, style = "") {
     : "";
 }
 
+function stripSavedBreakHints(value = "") {
+  return String(value)
+    .replace(/&lt;\s*wbr\s*\/?\s*&gt;/gi, "")
+    .replace(/<\s*wbr\s*\/?\s*>/gi, "");
+}
+
 function breakableHtml(value = "") {
-  return escapeHtml(value)
-    .replace(/([a-z])([A-Z])/g, "$1<wbr>$2")
-    .replace(/([_/.-])/g, "$1<wbr>")
-    .replace(/(\S{12})(?=\S)/g, "$1<wbr>");
+  const cleanValue = stripSavedBreakHints(value);
+  return cleanValue
+    .split(/(\s+)/)
+    .map((token) => {
+      if (/^\s+$/.test(token)) return escapeHtml(token);
+      return Array.from(token).map((char, index, chars) => {
+        const next = chars[index + 1];
+        const shouldBreak = next && (
+          (/[a-z]/.test(char) && /[A-Z]/.test(next))
+          || /[_/.-]/.test(char)
+          || ((index + 1) % 12 === 0)
+        );
+        return `${escapeHtml(char)}${shouldBreak ? "<wbr>" : ""}`;
+      }).join("");
+    })
+    .join("");
 }
 
 function mediaIcon(mediaType = "") {
@@ -1308,7 +1393,7 @@ function adminRow(project, collection = "work") {
   const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}">` : "";
   const isDirty = projectDirty(project, collection);
   const source = collection === "featured"
-    ? featuredHomeSlotLabel(project.homeSlot)
+    ? `${featuredRankLabel(project.featuredRank)} · ${featuredHomeSlotLabel(project.homeSlot)}`
     : collection === "portfolio"
       ? "Featured project archive"
       : experience ? experience.company : "Work experience";
@@ -1463,8 +1548,23 @@ function featuredProjectMatchesPageFilter(project) {
   return projectHasCategory(project, state.featuredPageFilter);
 }
 
+function featuredRankValue(project = {}) {
+  const rank = Number.parseInt(normalizeFeaturedRank(project.featuredRank), 10);
+  return Number.isFinite(rank) ? rank : Number.POSITIVE_INFINITY;
+}
+
+function sortFeaturedProjects(projectsToSort = []) {
+  const originalIndex = new Map(state.featuredProducts.map((project, index) => [project.id, index]));
+  return [...projectsToSort].sort((first, second) => {
+    const firstRank = featuredRankValue(first);
+    const secondRank = featuredRankValue(second);
+    if (firstRank !== secondRank) return firstRank - secondRank;
+    return (originalIndex.get(first.id) ?? 0) - (originalIndex.get(second.id) ?? 0);
+  });
+}
+
 function homeFeaturedProjects() {
-  const filteredProducts = state.featuredProducts.filter(featuredProductMatchesFilter);
+  const filteredProducts = sortFeaturedProjects(state.featuredProducts.filter(featuredProductMatchesFilter));
   const slots = [null, null, null];
   const usedIds = new Set();
 
@@ -1538,7 +1638,7 @@ function renderFeaturedFilters(target = document.getElementById("home-featured-f
 
 function renderFeaturedProducts(target = document.getElementById("home-featured-grid")) {
   if (!target) return;
-  const filteredProducts = state.featuredProducts.filter(featuredProductMatchesFilter);
+  const filteredProducts = sortFeaturedProjects(state.featuredProducts.filter(featuredProductMatchesFilter));
   target.innerHTML = filteredProducts.length
     ? filteredProducts.map(featuredProjectCard).join("")
     : `<div class="empty-state"><strong>No featured projects match this filter yet.</strong></div>`;
@@ -1642,7 +1742,7 @@ function renderFeaturedPageFilters() {
 }
 
 function filteredFeaturedPageProjects() {
-  return state.featuredProducts.filter((project) => {
+  return sortFeaturedProjects(state.featuredProducts.filter((project) => {
     const categoryMatch = featuredProjectMatchesPageFilter(project);
     const text = [
       project.title,
@@ -1654,7 +1754,7 @@ function filteredFeaturedPageProjects() {
       project.impact
     ].join(" ").toLowerCase();
     return categoryMatch && text.includes(state.query);
-  });
+  }));
 }
 
 function renderFeaturedPageProjects() {
@@ -2670,6 +2770,28 @@ function renderExperienceHomeLimitSelect() {
   const select = document.getElementById("experienceHomeLimit");
   if (!select) return;
   select.value = String(homeExperienceLimit());
+}
+
+function renderFeaturedRankOptions(selectedRank = "", activeProjectId = "") {
+  const select = document.getElementById("featuredRank");
+  if (!select) return;
+  const usedRanks = new Map();
+  state.featuredProducts.forEach((project) => {
+    const rank = normalizeFeaturedRank(project.featuredRank);
+    if (rank && project.id !== activeProjectId) usedRanks.set(rank, project.title);
+  });
+  const normalizedSelected = normalizeFeaturedRank(selectedRank);
+  select.innerHTML = [
+    `<option value="">Auto order</option>`,
+    ...Array.from({ length: 6 }, (_, index) => {
+      const rank = String(index + 1);
+      const owner = usedRanks.get(rank);
+      const disabled = owner ? " disabled" : "";
+      const label = owner ? `Rank ${rank} · used by ${stripSavedBreakHints(owner)}` : `Rank ${rank}`;
+      return `<option value="${rank}"${rank === normalizedSelected ? " selected" : ""}${disabled}>${escapeHtml(label)}</option>`;
+    })
+  ].join("");
+  select.value = normalizedSelected;
 }
 
 function siteContentWithExperienceHomeLimit() {
@@ -3868,6 +3990,7 @@ function setupAdmin() {
   const imageInput = document.getElementById("image");
 
   renderCategoryOptions();
+  renderFeaturedRankOptions();
   renderExperienceSelect();
   renderExperienceHomeLimitSelect();
   renderExperiencePreview();
@@ -3901,7 +4024,10 @@ function setupAdmin() {
   setupDetailMediaControls();
   form.addEventListener("input", renderPreview);
   form.addEventListener("change", renderPreview);
-  document.getElementById("projectPlacement").addEventListener("change", updateProjectPlacementFields);
+  document.getElementById("projectPlacement").addEventListener("change", () => {
+    updateProjectPlacementFields();
+    renderPreview();
+  });
   form.addEventListener("submit", handleProjectSave);
 
   imageInput.addEventListener("change", async (event) => {
@@ -3997,7 +4123,8 @@ function formProject() {
     placement,
     experienceId: placementUsesWork(placement) ? document.getElementById("experience").value : "",
     homeSlot: placementUsesFeatured(placement) ? normalizeFeaturedHomeSlot(document.getElementById("featuredSlot").value) : "",
-    title: document.getElementById("title").value.trim() || "Untitled project",
+    featuredRank: placementUsesFeatured(placement) ? normalizeFeaturedRank(document.getElementById("featuredRank")?.value || "") : "",
+    title: stripSavedBreakHints(document.getElementById("title").value.trim()) || "Untitled project",
     category: categories[0],
     categories,
     mediaType: normalizeMediaType(document.getElementById("mediaType").value),
@@ -4032,6 +4159,8 @@ function updateProjectPlacementFields() {
   const experienceWrap = document.getElementById("experienceWrap") || experienceSelect?.closest("label");
   const featuredSlot = document.getElementById("featuredSlot");
   const featuredSlotWrap = document.getElementById("featuredSlotWrap");
+  const featuredRank = document.getElementById("featuredRank");
+  const featuredRankWrap = document.getElementById("featuredRankWrap");
   const workImageControls = document.getElementById("workImageControls");
   const featuredImageControls = document.getElementById("featuredImageControls");
   if (experienceWrap) experienceWrap.hidden = !isWorkProject;
@@ -4045,6 +4174,11 @@ function updateProjectPlacementFields() {
   if (featuredSlot) {
     featuredSlot.disabled = !isFeaturedProject;
     if (!isFeaturedProject) featuredSlot.value = "";
+  }
+  if (featuredRankWrap) featuredRankWrap.hidden = !isFeaturedProject;
+  if (featuredRank) {
+    featuredRank.disabled = !isFeaturedProject;
+    if (!isFeaturedProject) featuredRank.value = "";
   }
   if (workImageControls) workImageControls.hidden = !isWorkProject;
   if (featuredImageControls) featuredImageControls.hidden = !isFeaturedProject;
@@ -4124,6 +4258,15 @@ function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
   });
 }
 
+function applyFeaturedRankChoice(featuredProducts, activeProject) {
+  const rank = normalizeFeaturedRank(activeProject.featuredRank);
+  if (!rank) return featuredProducts;
+  return featuredProducts.map((project) => {
+    if (project.id === activeProject.id || normalizeFeaturedRank(project.featuredRank) !== rank) return project;
+    return { ...project, featuredRank: "" };
+  });
+}
+
 function applyExperienceHomeSlotChoice(experienceItems, activeExperience) {
   const slot = normalizeFeaturedHomeSlot(activeExperience.homeSlot);
   if (!["1", "2", "3"].includes(slot)) return experienceItems;
@@ -4171,6 +4314,8 @@ async function handleProjectSave(event) {
   if (placementUsesFeatured(nextPlacement)) {
     nextFeaturedProducts = [nextProject, ...nextFeaturedProducts];
     nextFeaturedProducts = applyFeaturedHomeSlotChoice(nextFeaturedProducts, nextProject);
+    nextFeaturedProducts = applyFeaturedRankChoice(nextFeaturedProducts, nextProject);
+    nextFeaturedProducts = sortFeaturedProjects(nextFeaturedProducts);
   }
 
   try {
@@ -4199,6 +4344,7 @@ function clearForm() {
   document.getElementById("project-collection").value = "";
   document.getElementById("projectPlacement").value = "featured";
   document.getElementById("featuredSlot").value = "";
+  renderFeaturedRankOptions("", "");
   renderCategoryOptions(DEFAULT_PROJECT_CATEGORIES[0], [DEFAULT_PROJECT_CATEGORIES[0]]);
   document.getElementById("accent").value = "#0a6f6b";
   document.getElementById("imageFit").value = "cover";
@@ -4260,7 +4406,8 @@ async function handleAdminListAction(event) {
     ...(pairedWorkProject || {}),
     ...project,
     experienceId: pairedWorkProject?.experienceId || project.experienceId || "",
-    homeSlot: normalizeFeaturedHomeSlot(pairedFeaturedProject?.homeSlot || project.homeSlot)
+    homeSlot: normalizeFeaturedHomeSlot(pairedFeaturedProject?.homeSlot || project.homeSlot),
+    featuredRank: normalizeFeaturedRank(pairedFeaturedProject?.featuredRank || project.featuredRank)
   };
 
   if (button.dataset.action === "delete") {
@@ -4286,6 +4433,7 @@ async function handleAdminListAction(event) {
     : collection === "portfolio" ? "featured" : collection;
   document.getElementById("experience").value = projectForForm.experienceId || "";
   document.getElementById("featuredSlot").value = normalizeFeaturedHomeSlot(projectForForm.homeSlot);
+  renderFeaturedRankOptions(projectForForm.featuredRank, projectForForm.id);
   document.getElementById("title").value = projectForForm.title;
   const selectedCategories = projectCategoriesFor(projectForForm);
   renderCategoryOptions(selectedCategories[0], selectedCategories);
