@@ -35,20 +35,20 @@
       "role": "Designer",
       "year": "2024",
       "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
-      "summary": "#HunarSePehchaan (Recognition Through Skills) was an International Women’s Day campaign by the Anil Agarwal Foundation that celebrated women whose identities are shaped by their talent, skills, and determination. The campaign highlighted the importance of skill development, self-reliance, and economic empowerment, encouraging society to recognize women not just for who they are, but for what they achieve through their capabilities.",
+      "summary": "#HunarSePehchaan (Recognition Through Skills) is an International Women’s Day campaign by the Anil Agarwal Foundation, aligned with the 2024 UN theme “Invest in Women: Accelerate Progress.” The campaign showcases how initiatives like Nand Ghar, TARA, FACOR Sathi Jivika, and Project Sakhi empower women with financial independence and confidence.\nThrough real transformation stories, it emphasizes that access to learning and livelihood opportunities is essential for every woman. Ultimately, the campaign highlights the importance of skill development and economic empowerment, urging society to recognize women for their achievements and capabilities.",
       "whatPrernaDid": "Developed the creative direction for the Hunar Se Pehchaan campaign by creating campaign concepts, moodboards, and visual storytelling frameworks. Produced logo animations and narrative-driven content that showcased the impact of Anil Agarwal Foundation and Nand Ghar's initiatives in women's skill development, empowerment, and community transformation across digital platforms.",
       "impact": "",
       "link": "",
-      "accent": "#0a6f6b",
+      "accent": "#3d0a70",
       "imageFit": "contain",
       "imagePosition": "center center",
-      "imageZoom": "100",
+      "imageZoom": "160",
       "featuredImageFit": "contain",
       "featuredImagePosition": "center center",
       "featuredImageZoom": "100",
       "detailImageFit": "contain",
       "detailImagePosition": "center center",
-      "detailImageZoom": "100",
+      "detailImageZoom": "130",
       "mediaGroupMeta": {
         "initialSketch": {
           "label": "Campaign Ideation",
@@ -64,7 +64,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/b579ab3dcb17957bebee.webp",
+            "src": "assets/uploads/c19590071231b327a682.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -74,17 +74,158 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/d43bae7f93cbb18c44c3.webp",
+            "src": "assets/uploads/9e01df88882aad637a32.webp",
             "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/1c118c23156f849ae8d6.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/85c8df96d8cebede5e16.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9f0084ed3e2d80787d0e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1c6-Q6mWxP5uyh1IcgceX0aNQFs_1zc8I/view?usp=drive_link",
             "description": "",
             "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
         ],
-        "finalOutput": []
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "Logo Reveal",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1u7jTvqtSRe0rh_SGPxu8Q-_pTLW7Cg6B/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1pQtcX3Xo_eD0bRLY8LlH0aoEN05If8Xl/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1kYHoGQxqcissulluqgnJbI37MMy0vE2X/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/fbb6335e4e723e22b5c8.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/5eaa3c409b88dee0b15a.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/ef089033796061235cc4.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1MU4_Id6ZG6VO7nelRRqk055KmA5MqtIx/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/16rtSS2BkbiN_oU19fNhRmXn_WTgUeDLx/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/18-cq_aEK2aUlrUQSwRzZuGHyqwYee4oE/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1L-hHXjhJIXGN7IxUnPOJNxMFSKmv5nBg/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
       },
-      "image": "assets/uploads/5d8271fc193b9248fb5c.png"
+      "image": "assets/uploads/696a7f867dc881583d0d.webp"
     },
     {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
@@ -366,20 +507,20 @@
       "role": "Designer",
       "year": "2024",
       "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
-      "summary": "#HunarSePehchaan (Recognition Through Skills) was an International Women’s Day campaign by the Anil Agarwal Foundation that celebrated women whose identities are shaped by their talent, skills, and determination. The campaign highlighted the importance of skill development, self-reliance, and economic empowerment, encouraging society to recognize women not just for who they are, but for what they achieve through their capabilities.",
+      "summary": "#HunarSePehchaan (Recognition Through Skills) is an International Women’s Day campaign by the Anil Agarwal Foundation, aligned with the 2024 UN theme “Invest in Women: Accelerate Progress.” The campaign showcases how initiatives like Nand Ghar, TARA, FACOR Sathi Jivika, and Project Sakhi empower women with financial independence and confidence.\nThrough real transformation stories, it emphasizes that access to learning and livelihood opportunities is essential for every woman. Ultimately, the campaign highlights the importance of skill development and economic empowerment, urging society to recognize women for their achievements and capabilities.",
       "whatPrernaDid": "Developed the creative direction for the Hunar Se Pehchaan campaign by creating campaign concepts, moodboards, and visual storytelling frameworks. Produced logo animations and narrative-driven content that showcased the impact of Anil Agarwal Foundation and Nand Ghar's initiatives in women's skill development, empowerment, and community transformation across digital platforms.",
       "impact": "",
       "link": "",
-      "accent": "#0a6f6b",
+      "accent": "#3d0a70",
       "imageFit": "contain",
       "imagePosition": "center center",
-      "imageZoom": "100",
+      "imageZoom": "160",
       "featuredImageFit": "contain",
       "featuredImagePosition": "center center",
       "featuredImageZoom": "100",
       "detailImageFit": "contain",
       "detailImagePosition": "center center",
-      "detailImageZoom": "100",
+      "detailImageZoom": "130",
       "mediaGroupMeta": {
         "initialSketch": {
           "label": "Campaign Ideation",
@@ -395,7 +536,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/b579ab3dcb17957bebee.webp",
+            "src": "assets/uploads/c19590071231b327a682.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -405,17 +546,158 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/d43bae7f93cbb18c44c3.webp",
+            "src": "assets/uploads/9e01df88882aad637a32.webp",
             "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/1c118c23156f849ae8d6.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/85c8df96d8cebede5e16.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9f0084ed3e2d80787d0e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1c6-Q6mWxP5uyh1IcgceX0aNQFs_1zc8I/view?usp=drive_link",
             "description": "",
             "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
         ],
-        "finalOutput": []
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "Logo Reveal",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1u7jTvqtSRe0rh_SGPxu8Q-_pTLW7Cg6B/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1pQtcX3Xo_eD0bRLY8LlH0aoEN05If8Xl/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1kYHoGQxqcissulluqgnJbI37MMy0vE2X/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/fbb6335e4e723e22b5c8.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/5eaa3c409b88dee0b15a.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/ef089033796061235cc4.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1MU4_Id6ZG6VO7nelRRqk055KmA5MqtIx/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/16rtSS2BkbiN_oU19fNhRmXn_WTgUeDLx/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/18-cq_aEK2aUlrUQSwRzZuGHyqwYee4oE/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://drive.google.com/file/d/1L-hHXjhJIXGN7IxUnPOJNxMFSKmv5nBg/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
       },
-      "image": "assets/uploads/5d8271fc193b9248fb5c.png"
+      "image": "assets/uploads/696a7f867dc881583d0d.webp"
     },
     {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
