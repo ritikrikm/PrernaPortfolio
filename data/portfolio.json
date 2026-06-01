@@ -1,28 +1,6 @@
 {
   "experiences": [
     {
-      "id": "msl",
-      "company": "MSL Global",
-      "title": "Executive - Design",
-      "dates": "Dec 2023 - Nov 2024",
-      "location": "Delhi, India",
-      "headline": "Large-scale campaign visuals for nonprofit and foundation clients.",
-      "summary": "Designed high-quality creative assets, motion-ready campaign visuals, brand systems, and social content while collaborating with cross-functional teams.",
-      "impact": "50M+ campaign views, 2x donor conversion lift, 5+ creative awards",
-      "accent": "#087f6f"
-    },
-    {
-      "id": "cultre-boat",
-      "company": "Cultre Boat",
-      "title": "Communications Designer",
-      "dates": "Mar 2023 - Nov 2023",
-      "location": "Delhi, India",
-      "headline": "Social campaigns, brand content, graphics, and video pieces for multiple brands.",
-      "summary": "Created content grids, designed campaigns, wrote copy, and produced visuals for brands across lifestyle, retail, coffee, and fashion.",
-      "impact": "150+ graphics and videos, 6+ brands, 15% engagement lift",
-      "accent": "#ff6542"
-    },
-    {
       "id": "freelance",
       "company": "The Creative Bud",
       "title": "Founder / Creative Entrepreneur",
