@@ -3688,13 +3688,21 @@ async function readFileAsDataUrl(file, options = {}) {
   return readRawFileAsDataUrl(file);
 }
 
+function placementUsesWork(placement) {
+  return placement === "work" || placement === "both";
+}
+
+function placementUsesFeatured(placement) {
+  return placement === "featured" || placement === "both";
+}
+
 function formProject() {
   const placement = document.getElementById("projectPlacement").value;
   return {
     id: document.getElementById("project-id").value || crypto.randomUUID(),
     placement,
-    experienceId: placement === "work" ? document.getElementById("experience").value : "",
-    homeSlot: placement === "featured" ? normalizeFeaturedHomeSlot(document.getElementById("featuredSlot").value) : "",
+    experienceId: placementUsesWork(placement) ? document.getElementById("experience").value : "",
+    homeSlot: placementUsesFeatured(placement) ? normalizeFeaturedHomeSlot(document.getElementById("featuredSlot").value) : "",
     title: document.getElementById("title").value.trim() || "Untitled project",
     category: document.getElementById("category").value,
     mediaType: normalizeMediaType(document.getElementById("mediaType").value),
@@ -3717,10 +3725,24 @@ function formProject() {
 
 function updateProjectPlacementFields() {
   const placement = document.getElementById("projectPlacement")?.value || "featured";
-  const experienceWrap = document.getElementById("experience")?.closest("label");
+  const isWorkProject = placementUsesWork(placement);
+  const isFeaturedProject = placementUsesFeatured(placement);
+  const experienceSelect = document.getElementById("experience");
+  const experienceWrap = document.getElementById("experienceWrap") || experienceSelect?.closest("label");
+  const featuredSlot = document.getElementById("featuredSlot");
   const featuredSlotWrap = document.getElementById("featuredSlotWrap");
-  if (experienceWrap) experienceWrap.hidden = placement !== "work";
-  if (featuredSlotWrap) featuredSlotWrap.hidden = placement !== "featured";
+  if (experienceWrap) experienceWrap.hidden = !isWorkProject;
+  if (experienceSelect) {
+    experienceSelect.required = isWorkProject;
+    experienceSelect.disabled = !isWorkProject;
+    experienceSelect.setAttribute("aria-required", String(isWorkProject));
+    if (!isWorkProject) experienceSelect.value = "";
+  }
+  if (featuredSlotWrap) featuredSlotWrap.hidden = !isFeaturedProject;
+  if (featuredSlot) {
+    featuredSlot.disabled = !isFeaturedProject;
+    if (!isFeaturedProject) featuredSlot.value = "";
+  }
 }
 
 function renderPreview() {
@@ -3748,43 +3770,36 @@ async function handleProjectSave(event) {
     showToast("Please wait for the current asset to finish preparing.");
     return;
   }
+  updateProjectPlacementFields();
   const nextProject = formProject();
-  const oldCollection = document.getElementById("project-collection").value
-    || (state.projects.some((project) => project.id === nextProject.id) ? "work" : "")
-    || (state.portfolioProjects.some((project) => project.id === nextProject.id) ? "portfolio" : "")
-    || (state.featuredProducts.some((project) => project.id === nextProject.id) ? "featured" : "");
-  const nextCollection = nextProject.placement === "work"
-    ? "work"
-    : "featured";
-  const existingProject = oldCollection === "portfolio"
-    ? state.portfolioProjects.find((project) => project.id === nextProject.id)
-    : oldCollection === "featured"
-      ? state.featuredProducts.find((project) => project.id === nextProject.id)
-      : state.projects.find((project) => project.id === nextProject.id);
+  const nextPlacement = nextProject.placement;
+  const existingProject = [
+    ...state.projects,
+    ...state.featuredProducts,
+    ...state.portfolioProjects
+  ].find((project) => project.id === nextProject.id);
   if (existingProject && !nextProject.image && !state.projectImageRemoved) {
     nextProject.image = existingProject.image;
   }
 
+  if (placementUsesWork(nextPlacement) && !nextProject.experienceId) {
+    const experienceSelect = document.getElementById("experience");
+    experienceSelect?.reportValidity?.();
+    showToast("Choose a work experience before saving.");
+    return;
+  }
+
   if (!(await confirmAction("Save this project card?", "Save Project"))) return;
 
-  let nextProjects = oldCollection === "work"
-    ? state.projects.filter((project) => project.id !== nextProject.id)
-    : [...state.projects];
-  let nextPortfolioProjects = oldCollection === "portfolio"
-    ? state.portfolioProjects.filter((project) => project.id !== nextProject.id)
-    : [...state.portfolioProjects];
-  let nextFeaturedProducts = oldCollection === "featured"
-    ? state.featuredProducts.filter((project) => project.id !== nextProject.id)
-    : [...state.featuredProducts];
+  let nextProjects = state.projects.filter((project) => project.id !== nextProject.id);
+  const nextPortfolioProjects = state.portfolioProjects.filter((project) => project.id !== nextProject.id);
+  let nextFeaturedProducts = state.featuredProducts.filter((project) => project.id !== nextProject.id);
 
-  if (nextCollection === "work") {
-    if (!nextProject.experienceId) {
-      alert("Choose a work experience for this work project.");
-      return;
-    }
+  if (placementUsesWork(nextPlacement)) {
     nextProjects = [nextProject, ...nextProjects];
-  } else if (nextCollection === "featured") {
-    nextProject.experienceId = "";
+  }
+
+  if (placementUsesFeatured(nextPlacement)) {
     nextFeaturedProducts = [nextProject, ...nextFeaturedProducts];
     nextFeaturedProducts = applyFeaturedHomeSlotChoice(nextFeaturedProducts, nextProject);
   }
@@ -3863,6 +3878,15 @@ async function handleAdminListAction(event) {
       : state.projects;
   const project = source.find((item) => item.id === row.dataset.id);
   if (!project) return;
+  const pairedWorkProject = state.projects.find((item) => item.id === project.id);
+  const pairedFeaturedProject = state.featuredProducts.find((item) => item.id === project.id);
+  const projectForForm = {
+    ...(pairedFeaturedProject || {}),
+    ...(pairedWorkProject || {}),
+    ...project,
+    experienceId: pairedWorkProject?.experienceId || project.experienceId || "",
+    homeSlot: normalizeFeaturedHomeSlot(pairedFeaturedProject?.homeSlot || project.homeSlot)
+  };
 
   if (button.dataset.action === "delete") {
     if (!(await confirmAction("Delete this draft project?", "Delete"))) return;
@@ -3880,30 +3904,32 @@ async function handleAdminListAction(event) {
     return;
   }
 
-  document.getElementById("project-id").value = project.id;
+  document.getElementById("project-id").value = projectForForm.id;
   document.getElementById("project-collection").value = collection;
-  document.getElementById("projectPlacement").value = collection === "portfolio" ? "featured" : collection;
-  document.getElementById("experience").value = project.experienceId || "";
-  document.getElementById("featuredSlot").value = normalizeFeaturedHomeSlot(project.homeSlot);
-  document.getElementById("title").value = project.title;
-  renderCategoryOptions(project.category);
-  document.getElementById("category").value = project.category;
-  document.getElementById("mediaType").value = normalizeMediaType(project.mediaType);
-  document.getElementById("role").value = project.role;
-  document.getElementById("year").value = project.year;
-  document.getElementById("tools").value = project.tools;
-  document.getElementById("summary").value = project.summary;
-  document.getElementById("whatPrernaDid").value = project.whatPrernaDid || "";
-  document.getElementById("impact").value = project.impact;
-  document.getElementById("link").value = project.link;
-  document.getElementById("accent").value = project.accent || categoryColor(project.category);
-  document.getElementById("imageFit").value = normalizeImageFit(project.imageFit);
-  document.getElementById("imagePosition").value = normalizeImagePosition(project.imagePosition);
-  document.getElementById("imageZoom").value = normalizeImageZoom(project.imageZoom);
-  document.getElementById("image-file-name").textContent = project.image ? "Existing image selected" : "Choose an image";
-  state.previewImage = project.image || "";
+  document.getElementById("projectPlacement").value = pairedWorkProject && pairedFeaturedProject
+    ? "both"
+    : collection === "portfolio" ? "featured" : collection;
+  document.getElementById("experience").value = projectForForm.experienceId || "";
+  document.getElementById("featuredSlot").value = normalizeFeaturedHomeSlot(projectForForm.homeSlot);
+  document.getElementById("title").value = projectForForm.title;
+  renderCategoryOptions(projectForForm.category);
+  document.getElementById("category").value = projectForForm.category;
+  document.getElementById("mediaType").value = normalizeMediaType(projectForForm.mediaType);
+  document.getElementById("role").value = projectForForm.role;
+  document.getElementById("year").value = projectForForm.year;
+  document.getElementById("tools").value = projectForForm.tools;
+  document.getElementById("summary").value = projectForForm.summary;
+  document.getElementById("whatPrernaDid").value = projectForForm.whatPrernaDid || "";
+  document.getElementById("impact").value = projectForForm.impact;
+  document.getElementById("link").value = projectForForm.link;
+  document.getElementById("accent").value = projectForForm.accent || categoryColor(projectForForm.category);
+  document.getElementById("imageFit").value = normalizeImageFit(projectForForm.imageFit);
+  document.getElementById("imagePosition").value = normalizeImagePosition(projectForForm.imagePosition);
+  document.getElementById("imageZoom").value = normalizeImageZoom(projectForForm.imageZoom);
+  document.getElementById("image-file-name").textContent = projectForForm.image ? "Existing image selected" : "Choose an image";
+  state.previewImage = projectForForm.image || "";
   state.projectImageRemoved = false;
-  fillMediaFields(project.mediaGroups || project.mediaItems || [], project.mediaGroupMeta || {});
+  fillMediaFields(projectForForm.mediaGroups || projectForForm.mediaItems || [], projectForForm.mediaGroupMeta || {});
   renderPreview();
   document.getElementById("title").focus();
 }
