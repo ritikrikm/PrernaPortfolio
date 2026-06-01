@@ -1553,6 +1553,11 @@ function featuredRankValue(project = {}) {
   return Number.isFinite(rank) ? rank : Number.POSITIVE_INFINITY;
 }
 
+function featuredHomeSlotValue(project = {}) {
+  const slot = Number.parseInt(normalizeFeaturedHomeSlot(project.homeSlot), 10);
+  return Number.isFinite(slot) ? slot : Number.POSITIVE_INFINITY;
+}
+
 function sortFeaturedProjects(projectsToSort = []) {
   const originalIndex = new Map(state.featuredProducts.map((project, index) => [project.id, index]));
   return [...projectsToSort].sort((first, second) => {
@@ -1564,33 +1569,24 @@ function sortFeaturedProjects(projectsToSort = []) {
 }
 
 function homeFeaturedProjects() {
-  const filteredProducts = sortFeaturedProjects(state.featuredProducts.filter(featuredProductMatchesFilter));
-  const slots = [null, null, null];
-  const usedIds = new Set();
+  const visibleProducts = state.featuredProducts
+    .filter(featuredProductMatchesFilter)
+    .filter((product) => normalizeFeaturedHomeSlot(product.homeSlot) !== "hidden");
+  const originalIndex = new Map(state.featuredProducts.map((project, index) => [project.id, index]));
 
-  filteredProducts.forEach((product) => {
-    const slot = normalizeFeaturedHomeSlot(product.homeSlot);
-    const slotIndex = Number(slot) - 1;
-    if (slotIndex >= 0 && slotIndex < 3 && !slots[slotIndex]) {
-      slots[slotIndex] = product;
-      usedIds.add(product.id);
-    }
-  });
+  return [...visibleProducts]
+    .sort((first, second) => {
+      const firstRank = featuredRankValue(first);
+      const secondRank = featuredRankValue(second);
+      if (firstRank !== secondRank) return firstRank - secondRank;
 
-  const autoProducts = filteredProducts.filter((product) => {
-    const slot = normalizeFeaturedHomeSlot(product.homeSlot);
-    return !usedIds.has(product.id) && slot !== "hidden";
-  });
+      const firstSlot = featuredHomeSlotValue(first);
+      const secondSlot = featuredHomeSlotValue(second);
+      if (firstSlot !== secondSlot) return firstSlot - secondSlot;
 
-  slots.forEach((slot, index) => {
-    if (!slot && autoProducts.length) {
-      const product = autoProducts.shift();
-      slots[index] = product;
-      usedIds.add(product.id);
-    }
-  });
-
-  return slots.filter(Boolean);
+      return (originalIndex.get(first.id) ?? 0) - (originalIndex.get(second.id) ?? 0);
+    })
+    .slice(0, 3);
 }
 
 function homeExperiences() {
