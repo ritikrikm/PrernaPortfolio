@@ -962,13 +962,15 @@ h3 {
   margin-top: 24px;
 }
 
-.featured-view-all {
+.featured-view-all,
+.work-view-all {
   display: flex;
   justify-content: center;
   margin-top: 28px;
 }
 
-.featured-view-all[hidden] {
+.featured-view-all[hidden],
+.work-view-all[hidden] {
   display: none;
 }
 

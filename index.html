@@ -43,8 +43,8 @@
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#/" data-route="/">Home</a>
-        <a href="#/work" data-route="/work" data-home-section="work">Work</a>
         <a href="#/featured-projects" data-route="/featured-projects" data-home-section="featured">Featured Projects</a>
+        <a href="#/work" data-route="/work" data-home-section="work">Work</a>
         <a href="#/about" data-route="/about">About</a>
         <a href="#/contact" data-route="/contact">Contact</a>
       </nav>
@@ -98,6 +98,9 @@
           <h2>Start with work experience, then open the projects inside each role.</h2>
         </div>
         <div id="home-experience-grid" class="experience-grid"></div>
+        <div class="work-view-all" id="work-view-all" hidden>
+          <a class="button ghost" href="#/work"><span aria-hidden="true">↗</span> View All Work Experience</a>
+        </div>
       </section>
     </template>
 
@@ -224,6 +227,24 @@
               <label>
                 Impact
                 <input id="experienceImpact" type="text" required placeholder="150+ assets, 6+ brands, 15% engagement lift">
+              </label>
+              <label>
+                Home page position
+                <select id="experienceHomeSlot">
+                  <option value="">Auto fill home card</option>
+                  <option value="1">Show as home card 1</option>
+                  <option value="2">Show as home card 2</option>
+                  <option value="3">Show as home card 3</option>
+                  <option value="hidden">Keep off home</option>
+                </select>
+              </label>
+              <label>
+                Home visible count
+                <select id="experienceHomeLimit">
+                  <option value="1">Show 1 card</option>
+                  <option value="2">Show 2 cards</option>
+                  <option value="3">Show 3 cards</option>
+                </select>
               </label>
               <label>
                 Accent

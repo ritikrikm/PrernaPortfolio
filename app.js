@@ -128,7 +128,8 @@ const defaultSiteContent = {
     featuredHeadline: "Small, polished project pieces recruiters can scan first.",
     featuredFilters: ["All", "Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Multimedia"],
     workEyebrow: "Work experience",
-    workHeadline: "Start with work experience, then open the projects inside each role."
+    workHeadline: "Start with work experience, then open the projects inside each role.",
+    workVisibleCount: 3
   },
   work: {
     eyebrow: "Work experience",
@@ -249,6 +250,7 @@ const CONTENT_FIELDS = [
   { page: "home", key: "home.featuredFilters", label: "Featured project filters", path: "home.featuredFilters", type: "list", helper: "One filter per line. Use All as the first item." },
   { page: "home", key: "home.workEyebrow", label: "Work section eyebrow", path: "home.workEyebrow" },
   { page: "home", key: "home.workHeadline", label: "Work section headline", path: "home.workHeadline", type: "textarea" },
+  { page: "home", key: "home.workVisibleCount", label: "Work cards visible on home", path: "home.workVisibleCount" },
   { page: "work", key: "work.eyebrow", label: "Work page eyebrow", path: "work.eyebrow" },
   { page: "work", key: "work.headline", label: "Work page headline", path: "work.headline", type: "textarea" },
   { page: "work", key: "work.searchPlaceholder", label: "Work search placeholder", path: "work.searchPlaceholder" },
@@ -1112,11 +1114,28 @@ function normalizeFeaturedHomeSlot(value = "") {
   return ["1", "2", "3", "hidden"].includes(slot) ? slot : "";
 }
 
+function normalizeHomeCardLimit(value = 3) {
+  const count = Number.parseInt(value, 10);
+  if (!Number.isFinite(count)) return 3;
+  return Math.min(3, Math.max(1, count));
+}
+
+function homeExperienceLimit() {
+  return normalizeHomeCardLimit(state.siteContent.home?.workVisibleCount);
+}
+
 function featuredHomeSlotLabel(slot = "") {
   const normalized = normalizeFeaturedHomeSlot(slot);
   if (normalized === "hidden") return "Featured project · hidden from home";
   if (normalized) return `Featured project · home card ${normalized}`;
   return "Featured project · auto home fill";
+}
+
+function experienceHomeSlotLabel(slot = "") {
+  const normalized = normalizeFeaturedHomeSlot(slot);
+  if (normalized === "hidden") return "Home hidden";
+  if (normalized) return `Home card ${normalized}`;
+  return "Auto home fill";
 }
 
 function imageStyle(project) {
@@ -1379,6 +1398,7 @@ function setupHome() {
   const featuredGrid = document.getElementById("home-featured-grid");
   const featuredFilters = document.getElementById("home-featured-filters");
   const featuredViewAll = document.getElementById("featured-view-all");
+  const workViewAll = document.getElementById("work-view-all");
   const featuredBand = document.querySelector(".featured-products-band");
   const typeLine = document.querySelector(".type-line");
 
@@ -1424,7 +1444,11 @@ function setupHome() {
     if (featuredViewAll) featuredViewAll.hidden = true;
   }
 
-  document.getElementById("home-experience-grid").innerHTML = experiences.map(experienceCard).join("");
+  const homeExperienceItems = homeExperiences();
+  document.getElementById("home-experience-grid").innerHTML = homeExperienceItems.length
+    ? homeExperienceItems.map(experienceCard).join("")
+    : `<div class="empty-state"><strong>No work experience cards selected for home yet.</strong></div>`;
+  if (workViewAll) workViewAll.hidden = !experiences.length;
   setupHomeSectionTracking();
 }
 
@@ -1471,6 +1495,36 @@ function homeFeaturedProjects() {
       const product = autoProducts.shift();
       slots[index] = product;
       usedIds.add(product.id);
+    }
+  });
+
+  return slots.filter(Boolean);
+}
+
+function homeExperiences() {
+  const limit = homeExperienceLimit();
+  const slots = Array.from({ length: limit }, () => null);
+  const usedIds = new Set();
+
+  experiences.forEach((experience) => {
+    const slot = normalizeFeaturedHomeSlot(experience.homeSlot);
+    const slotIndex = Number(slot) - 1;
+    if (slotIndex >= 0 && slotIndex < limit && !slots[slotIndex]) {
+      slots[slotIndex] = experience;
+      usedIds.add(experience.id);
+    }
+  });
+
+  const autoExperiences = experiences.filter((experience) => {
+    const slot = normalizeFeaturedHomeSlot(experience.homeSlot);
+    return !usedIds.has(experience.id) && slot !== "hidden";
+  });
+
+  slots.forEach((slot, index) => {
+    if (!slot && autoExperiences.length) {
+      const experience = autoExperiences.shift();
+      slots[index] = experience;
+      usedIds.add(experience.id);
     }
   });
 
@@ -2542,6 +2596,24 @@ function renderExperienceSelect() {
     .join("");
 }
 
+function renderExperienceHomeLimitSelect() {
+  const select = document.getElementById("experienceHomeLimit");
+  if (!select) return;
+  select.value = String(homeExperienceLimit());
+}
+
+function siteContentWithExperienceHomeLimit() {
+  const select = document.getElementById("experienceHomeLimit");
+  const limit = normalizeHomeCardLimit(select?.value || homeExperienceLimit());
+  return {
+    ...state.siteContent,
+    home: {
+      ...state.siteContent.home,
+      workVisibleCount: limit
+    }
+  };
+}
+
 function formExperience() {
   const existingId = document.getElementById("experience-id").value;
   const company = document.getElementById("experienceCompany").value.trim();
@@ -2554,6 +2626,7 @@ function formExperience() {
     headline: document.getElementById("experienceHeadline").value.trim(),
     summary: document.getElementById("experienceSummary").value.trim(),
     impact: document.getElementById("experienceImpact").value.trim(),
+    homeSlot: normalizeFeaturedHomeSlot(document.getElementById("experienceHomeSlot")?.value || ""),
     accent: document.getElementById("experienceAccent").value
   };
 }
@@ -2561,6 +2634,8 @@ function formExperience() {
 function clearExperienceForm() {
   document.getElementById("experience-form").reset();
   document.getElementById("experience-id").value = "";
+  document.getElementById("experienceHomeSlot").value = "";
+  renderExperienceHomeLimitSelect();
   document.getElementById("experienceAccent").value = "#0a6f6b";
 }
 
@@ -2936,7 +3011,7 @@ function adminExperienceRow(experience) {
       <span style="--experience-accent: ${experience.accent}"></span>
       <div>
         <strong>${escapeHtml(experience.company)}</strong>
-        <small>${escapeHtml(experience.title)} · ${count} project${count === 1 ? "" : "s"}</small>
+        <small>${escapeHtml(experience.title)} · ${count} project${count === 1 ? "" : "s"} · ${escapeHtml(experienceHomeSlotLabel(experience.homeSlot))}</small>
         ${isDirty ? renderDirtyBadge() : ""}
       </div>
       <div class="row-actions">
@@ -2958,6 +3033,7 @@ function renderAdminExperienceList() {
 async function handleExperienceSave(event) {
   event.preventDefault();
   const nextExperience = formExperience();
+  const nextSiteContent = siteContentWithExperienceHomeLimit();
   if (!(await confirmAction("Save this experience as a draft?", "Save Experience"))) return;
 
   const nextExperiences = experiences.some((experience) => experience.id === nextExperience.id)
@@ -2969,7 +3045,7 @@ async function handleExperienceSave(event) {
     projects: state.projects,
     portfolioProjects: state.portfolioProjects,
     featuredProducts: state.featuredProducts,
-    siteContent: state.siteContent
+    siteContent: nextSiteContent
   });
   clearExperienceForm();
   renderExperienceSelect();
@@ -3014,6 +3090,8 @@ async function handleAdminExperienceAction(event) {
   document.getElementById("experienceHeadline").value = experience.headline;
   document.getElementById("experienceSummary").value = experience.summary;
   document.getElementById("experienceImpact").value = experience.impact;
+  document.getElementById("experienceHomeSlot").value = normalizeFeaturedHomeSlot(experience.homeSlot);
+  renderExperienceHomeLimitSelect();
   document.getElementById("experienceAccent").value = experience.accent || "#0a6f6b";
   document.getElementById("experienceCompany").focus();
 }
@@ -3594,6 +3672,7 @@ function setupAdmin() {
 
   renderCategoryOptions();
   renderExperienceSelect();
+  renderExperienceHomeLimitSelect();
   renderMediaBuilder();
   renderPreview();
   renderAdminList();
