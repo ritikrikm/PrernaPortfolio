@@ -6,6 +6,8 @@ const PREVIEW_SESSION_KEY = "prerna-portfolio-preview-drafts";
 const LOCAL_ADMIN_PASSWORD = "prerna-admin";
 const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
+const MEDIA_ASSET_MAX_DIMENSION = 1800;
+const MEDIA_ASSET_IMAGE_QUALITY = 0.8;
 const DEFAULT_PROJECT_CATEGORIES = ["Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Campaign Design", "Graphic Design", "Multimedia"];
 const HOME_SECTION_NAV = {
   featured: { selector: "#home-featured-section", route: "/featured-projects" },
@@ -2007,6 +2009,12 @@ function videoEmbedUrl(url = "") {
   if (!safe) return "";
   if (!safe.includes(":") || safe.startsWith("data:video/")) return safe;
   const parsed = new URL(safe);
+  if (parsed.hostname.includes("drive.google.com")) {
+    const pathFileId = parsed.pathname.match(/\/file\/d\/([^/]+)/)?.[1];
+    const queryFileId = parsed.searchParams.get("id");
+    const fileId = pathFileId || queryFileId;
+    return fileId ? `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview` : safe;
+  }
   if (parsed.hostname.includes("youtube.com")) {
     const id = parsed.searchParams.get("v");
     return id ? `https://www.youtube.com/embed/${id}` : safe;
@@ -2599,13 +2607,16 @@ function normalizeMediaBuilderGroups(mediaGroups = {}) {
 
   return MEDIA_GROUPS.reduce((nextGroups, group) => {
     const items = Array.isArray(groups?.[group.id])
-      ? groups[group.id].map((item) => ({
-          type: item.type || "Image",
-          title: item.title || "",
-          src: item.src || item.url || "",
-          videoUrl: item.videoUrl || "",
-          description: item.description || ""
-        }))
+      ? groups[group.id].map((item) => {
+          const src = item.src || item.url || "";
+          return {
+            type: item.type || "Image",
+            title: item.title || "",
+            src: String(src).startsWith("data:video/") ? "" : src,
+            videoUrl: String(item.videoUrl || "").startsWith("data:video/") ? "" : item.videoUrl || "",
+            description: item.description || ""
+          };
+        })
       : [];
     nextGroups[group.id] = items.length ? items : [emptyMediaItem()];
     return nextGroups;
@@ -2664,12 +2675,13 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
       </label>
       <label>
         Video link
-        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" value="${escapeHtml(item.videoUrl || "")}" placeholder="https://youtube.com/...">
+        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" value="${escapeHtml(item.videoUrl || "")}" placeholder="Drive, YouTube, Vimeo, or direct video link">
       </label>
-      <label class="upload-box">
-        <span>Upload image / thumbnail</span>
-        <input id="${mediaInputId("mediaFile", group.id, index)}" type="file" accept="image/*" data-detail-group="${group.id}" data-detail-index="${index}">
-        <strong id="${mediaInputId("mediaFileName", group.id, index)}">${src ? "Existing image selected" : "Choose an image"}</strong>
+      <label class="upload-box asset-drop-zone" data-drop-media="${group.id}" data-drop-media-index="${index}">
+        <span>Drop image / video thumbnail</span>
+        <input id="${mediaInputId("mediaFile", group.id, index)}" type="file" accept="image/*,video/mp4,video/webm,video/ogg" data-detail-group="${group.id}" data-detail-index="${index}">
+        <strong id="${mediaInputId("mediaFileName", group.id, index)}">${src ? "Existing image selected" : "Choose or drop image"}</strong>
+        <small>Videos play from public links.</small>
         <button class="mini-button" type="button" data-clear-media-image="${group.id}" data-clear-media-image-index="${index}">Remove image</button>
       </label>
       <label class="wide">
@@ -2683,7 +2695,8 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
 function renderMediaBuilder(mediaGroups = state.mediaBuilderGroups, mediaGroupMeta = state.mediaBuilderMeta) {
   const builder = document.getElementById("media-builder-fields");
   if (!builder) return;
-  state.detailMediaImages = {};
+  const preservedImages = { ...state.detailMediaImages };
+  state.detailMediaImages = preservedImages;
   state.mediaBuilderGroups = normalizeMediaBuilderGroups(mediaGroups || defaultMediaBuilderGroups());
   state.mediaBuilderMeta = normalizeMediaGroupMeta(mediaGroupMeta || defaultMediaGroupMeta());
 
@@ -2757,7 +2770,7 @@ function clearDetailMediaImage(groupId, index) {
   delete state.detailMediaImages[mediaImageKey(groupId, index)];
   mediaField("mediaUrl", groupId, index).value = "";
   mediaField("mediaFile", groupId, index).value = "";
-  mediaField("mediaFileName", groupId, index).textContent = "Choose an image";
+  mediaField("mediaFileName", groupId, index).textContent = "Choose or drop image";
   renderPreview();
 }
 
@@ -2780,6 +2793,10 @@ function removeDetailMediaItem(groupId, index) {
 }
 
 function addDetailMediaItem(groupId) {
+  if (state.loadingCount) {
+    showToast("Please wait for the current asset to finish preparing.");
+    return;
+  }
   syncMediaBuilderState();
   state.mediaBuilderGroups[groupId] = [
     ...(state.mediaBuilderGroups[groupId] || []),
@@ -2796,20 +2813,52 @@ function fillMediaFields(mediaGroups = {}, mediaGroupMeta = {}) {
   renderMediaBuilder();
 }
 
+async function processDetailMediaFile(file, groupId, index, input) {
+  const fileName = mediaField("mediaFileName", groupId, index);
+  if (!file) {
+    if (fileName) fileName.textContent = "Choose or drop image";
+    return;
+  }
+
+  if (file.type?.startsWith("video/")) {
+    const typeField = mediaField("mediaType", groupId, index);
+    if (typeField) typeField.value = "Video";
+    if (fileName) fileName.textContent = "Paste a public video link";
+    if (input) input.value = "";
+    showToast("Use a public Drive, YouTube, Vimeo, or direct link for videos.");
+    renderPreview();
+    return;
+  }
+
+  if (!file.type?.startsWith("image/")) {
+    if (fileName) fileName.textContent = "Choose or drop image";
+    if (input) input.value = "";
+    showToast("Use an image thumbnail, or paste a public video link.");
+    return;
+  }
+
+  if (fileName) fileName.textContent = file.name;
+  showLoadingBanner("Preparing campaign asset...");
+  try {
+    state.detailMediaImages[mediaImageKey(groupId, index)] = await readFileAsDataUrl(file, {
+      maxDimension: MEDIA_ASSET_MAX_DIMENSION,
+      quality: MEDIA_ASSET_IMAGE_QUALITY
+    });
+    renderPreview();
+  } catch {
+    showToast("Could not prepare this image.");
+  } finally {
+    hideLoadingBanner();
+  }
+}
+
 function setupDetailMediaUploads() {
   document.querySelectorAll("[data-detail-group]").forEach((input) => {
     input.addEventListener("change", async (event) => {
       const groupId = event.target.dataset.detailGroup;
       const index = Number(event.target.dataset.detailIndex);
       const file = event.target.files?.[0];
-      mediaField("mediaFileName", groupId, index).textContent = file ? file.name : "Choose an image";
-      if (file) showLoadingBanner("Preparing campaign asset...");
-      try {
-        state.detailMediaImages[mediaImageKey(groupId, index)] = file ? await readFileAsDataUrl(file) : "";
-        renderPreview();
-      } finally {
-        if (file) hideLoadingBanner();
-      }
+      await processDetailMediaFile(file, groupId, index, event.target);
     });
   });
 }
@@ -2841,6 +2890,30 @@ function setupDetailMediaControls() {
     if (addButton) {
       addDetailMediaItem(addButton.dataset.addMedia);
     }
+  });
+
+  builder.addEventListener("dragover", (event) => {
+    const dropZone = event.target.closest("[data-drop-media]");
+    if (!dropZone) return;
+    event.preventDefault();
+    dropZone.classList.add("is-drag-over");
+  });
+
+  builder.addEventListener("dragleave", (event) => {
+    const dropZone = event.target.closest("[data-drop-media]");
+    if (!dropZone || dropZone.contains(event.relatedTarget)) return;
+    dropZone.classList.remove("is-drag-over");
+  });
+
+  builder.addEventListener("drop", async (event) => {
+    const dropZone = event.target.closest("[data-drop-media]");
+    if (!dropZone) return;
+    event.preventDefault();
+    dropZone.classList.remove("is-drag-over");
+    const groupId = dropZone.dataset.dropMedia;
+    const index = Number(dropZone.dataset.dropMediaIndex);
+    const input = mediaField("mediaFile", groupId, index);
+    await processDetailMediaFile(event.dataTransfer?.files?.[0], groupId, index, input);
   });
 }
 
@@ -3567,8 +3640,10 @@ function readRawFileAsDataUrl(file) {
   });
 }
 
-function compressedImageBlob(file) {
+function compressedImageBlob(file, options = {}) {
   if (!file.type?.startsWith("image/")) return Promise.resolve(null);
+  const maxDimension = options.maxDimension || MAX_UPLOAD_DIMENSION;
+  const quality = options.quality || IMAGE_EXPORT_QUALITY;
 
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -3576,7 +3651,7 @@ function compressedImageBlob(file) {
 
     image.onload = () => {
       URL.revokeObjectURL(objectUrl);
-      const scale = Math.min(1, MAX_UPLOAD_DIMENSION / Math.max(image.width, image.height));
+      const scale = Math.min(1, maxDimension / Math.max(image.width, image.height));
       const width = Math.max(1, Math.round(image.width * scale));
       const height = Math.max(1, Math.round(image.height * scale));
       const canvas = document.createElement("canvas");
@@ -3586,7 +3661,7 @@ function compressedImageBlob(file) {
       context.drawImage(image, 0, 0, width, height);
       canvas.toBlob((blob) => {
         resolve(blob || null);
-      }, "image/webp", IMAGE_EXPORT_QUALITY);
+      }, "image/webp", quality);
     };
 
     image.onerror = () => {
@@ -3598,10 +3673,10 @@ function compressedImageBlob(file) {
   });
 }
 
-async function readFileAsDataUrl(file) {
+async function readFileAsDataUrl(file, options = {}) {
   if (!file) return "";
   try {
-    const blob = await compressedImageBlob(file);
+    const blob = await compressedImageBlob(file, options);
     if (blob && blob.size && (file.size > 450000 || blob.size < file.size * 1.02)) {
       return readRawFileAsDataUrl(blob);
     }
@@ -3667,6 +3742,10 @@ function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
 
 async function handleProjectSave(event) {
   event.preventDefault();
+  if (state.loadingCount) {
+    showToast("Please wait for the current asset to finish preparing.");
+    return;
+  }
   const nextProject = formProject();
   const oldCollection = document.getElementById("project-collection").value
     || (state.projects.some((project) => project.id === nextProject.id) ? "work" : "")
@@ -3717,7 +3796,7 @@ async function handleProjectSave(event) {
       siteContent: state.siteContent
     });
   } catch {
-    alert("The image is still too large for browser storage. Try a smaller web image, then publish so the asset can move into GitHub.");
+    alert("This draft is too large for browser storage. Images are compressed before saving and moved into GitHub assets after publishing, but videos should use public Drive, YouTube, Vimeo, or direct links.");
     return;
   }
 

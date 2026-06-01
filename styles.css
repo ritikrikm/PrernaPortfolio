@@ -2621,6 +2621,19 @@ textarea:focus {
   border-radius: var(--radius);
 }
 
+.upload-box.asset-drop-zone {
+  display: grid;
+  gap: 7px;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.upload-box.asset-drop-zone.is-drag-over {
+  background: #ffe8f3;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(255, 101, 155, 0.16), 5px 5px 0 rgba(22, 18, 15, 0.12);
+  transform: translate(-1px, -1px);
+}
+
 .upload-box input {
   min-height: auto;
   padding: 0;
@@ -2630,6 +2643,11 @@ textarea:focus {
 
 .upload-box strong {
   color: var(--teal-dark);
+}
+
+.upload-box small {
+  color: rgba(22, 18, 15, 0.66);
+  font-weight: 650;
 }
 
 .upload-box .mini-button {
