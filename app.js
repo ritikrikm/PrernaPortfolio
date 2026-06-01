@@ -1256,6 +1256,7 @@ function featuredProjectCard(product) {
     ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product)}">`
     : coverArt(product, "large");
   const previewLabel = product.mediaType === "Video" ? "Play" : "Preview";
+  const impact = product.impact || product.role || "";
 
   return `
     <article class="featured-product-card" data-featured-id="${escapeHtml(product.id)}" role="button" tabindex="0" aria-label="Open ${escapeHtml(product.title)} preview">
@@ -1265,6 +1266,7 @@ function featuredProjectCard(product) {
         <h3>${escapeHtml(product.title)}</h3>
         <p>${escapeHtml(product.summary || "Featured creative project")}</p>
         <div class="tool-row">${toolIcons(product.tools)}</div>
+        ${impact ? `<div class="impact">${escapeHtml(impact)}</div>` : ""}
         <button class="open-work" type="button">${escapeHtml(previewLabel)}</button>
       </div>
     </article>
