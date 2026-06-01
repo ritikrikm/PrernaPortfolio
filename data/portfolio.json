@@ -19,6 +19,165 @@
   ],
   "projects": [
     {
+      "id": "46f01488-2443-43db-a50e-b58831a15a44",
+      "placement": "both",
+      "experienceId": "msl-publicis-groupe",
+      "homeSlot": "1",
+      "featuredRank": "2",
+      "title": "'KhanaKhayaKya' Campaign",
+      "category": "Campaign Design",
+      "categories": [
+        "Campaign Design",
+        "Multimedia",
+        "Social Media"
+      ],
+      "mediaType": "Multimedia",
+      "role": "Designer",
+      "year": "2024",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Indesign",
+      "summary": "#KhaanaKhaayaKya (Did you eat?) was an awareness campaign by the Anil Agarwal Foundation that aimed to address child hunger and malnutrition by encouraging public conversations around nutrition, food security, and the importance of ensuring every child has access to healthy meals.",
+      "whatPrernaDid": "Designed and delivered high-impact visual assets for the campaign, crafting emotionally driven storytelling and awareness-focused creatives that amplified conversations around child nutrition, hunger eradication, and community engagement across digital platforms.",
+      "impact": "50M+ views, 2x Donations",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "contain",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Social Content",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Paid Ads",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/bca02d0efac73c59a3dc.webp",
+            "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
+            "description": "Pre-buzz teaser",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "105"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c434e122ef4ae49e6894.webp",
+            "videoUrl": "https://drive.google.com/file/d/1fO_Q_rn6wEDhFqrTDfjRvginoHVobaRQ/view?usp=drive_link",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "110"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/6d1317bc5d3b782f99d6.webp",
+            "videoUrl": "https://drive.google.com/file/d/10bWxTJUR6EVnYcfe7CviUM6pM3yZujod/view?usp=sharing",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "110"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/b49fc854bf9f6bf6829f.webp",
+            "videoUrl": "https://drive.google.com/file/d/1ZXyeHeqgRfxL0_1L2oYOf9brz7FSqTBU/view?usp=drive_link",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/719275f3f2fb63f0671e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/df60f8480a5f8e10e5af.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/7d0424549565fe287dc8.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/faee0c2ddb562a6b21a0.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/ddcbe9b44d85c8702dc6.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/5961906d102cfdb8186e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/3de461ec612e5e8b06cf.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
+    },
+    {
       "id": "1d3d57f7-4c11-4786-aa4e-bb43f480d71f",
       "placement": "both",
       "experienceId": "msl-publicis-groupe",
@@ -216,165 +375,6 @@
         ]
       },
       "image": "assets/uploads/3f16dbde1089bc0b38f0.webp"
-    },
-    {
-      "id": "46f01488-2443-43db-a50e-b58831a15a44",
-      "placement": "both",
-      "experienceId": "msl-publicis-groupe",
-      "homeSlot": "1",
-      "featuredRank": "2",
-      "title": "'KhanaKhayaKya' Campaign",
-      "category": "Campaign Design",
-      "categories": [
-        "Campaign Design",
-        "Multimedia",
-        "Social Media"
-      ],
-      "mediaType": "Multimedia",
-      "role": "Designer",
-      "year": "2024",
-      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Indesign",
-      "summary": "#KhaanaKhaayaKya (Did you eat?) was an awareness campaign by the Anil Agarwal Foundation that aimed to address child hunger and malnutrition by encouraging public conversations around nutrition, food security, and the importance of ensuring every child has access to healthy meals.",
-      "whatPrernaDid": "Designed and delivered high-impact visual assets for the campaign, crafting emotionally driven storytelling and awareness-focused creatives that amplified conversations around child nutrition, hunger eradication, and community engagement across digital platforms.",
-      "impact": "50M+ views, 2x Donations",
-      "link": "",
-      "accent": "#0a6f6b",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "featuredImageFit": "cover",
-      "featuredImagePosition": "center center",
-      "featuredImageZoom": "100",
-      "detailImageFit": "contain",
-      "detailImagePosition": "center center",
-      "detailImageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Social Content",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Paid Ads",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
-      "mediaGroups": {
-        "initialSketch": [
-          {
-            "type": "Video",
-            "title": "",
-            "src": "assets/uploads/bc131e38f01403bab57c.jpg",
-            "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
-            "description": "Pre-buzz teaser",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "120"
-          },
-          {
-            "type": "Video",
-            "title": "",
-            "src": "",
-            "videoUrl": "https://drive.google.com/file/d/1fO_Q_rn6wEDhFqrTDfjRvginoHVobaRQ/view?usp=drive_link",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Video",
-            "title": "",
-            "src": "",
-            "videoUrl": "https://drive.google.com/file/d/10bWxTJUR6EVnYcfe7CviUM6pM3yZujod/view?usp=sharing",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Video",
-            "title": "",
-            "src": "",
-            "videoUrl": "https://drive.google.com/file/d/1ZXyeHeqgRfxL0_1L2oYOf9brz7FSqTBU/view?usp=drive_link",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/719275f3f2fb63f0671e.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/df60f8480a5f8e10e5af.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/7d0424549565fe287dc8.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/faee0c2ddb562a6b21a0.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          }
-        ],
-        "finalOutput": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/ddcbe9b44d85c8702dc6.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/5961906d102cfdb8186e.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/3de461ec612e5e8b06cf.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          }
-        ]
-      },
-      "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
     }
   ],
   "portfolioProjects": [
@@ -725,37 +725,37 @@
           {
             "type": "Video",
             "title": "",
-            "src": "assets/uploads/bc131e38f01403bab57c.jpg",
+            "src": "assets/uploads/bca02d0efac73c59a3dc.webp",
             "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
             "description": "Pre-buzz teaser",
             "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "120"
+            "imageZoom": "105"
           },
           {
             "type": "Video",
             "title": "",
-            "src": "",
+            "src": "assets/uploads/c434e122ef4ae49e6894.webp",
             "videoUrl": "https://drive.google.com/file/d/1fO_Q_rn6wEDhFqrTDfjRvginoHVobaRQ/view?usp=drive_link",
             "description": "",
             "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "110"
           },
           {
             "type": "Video",
             "title": "",
-            "src": "",
+            "src": "assets/uploads/6d1317bc5d3b782f99d6.webp",
             "videoUrl": "https://drive.google.com/file/d/10bWxTJUR6EVnYcfe7CviUM6pM3yZujod/view?usp=sharing",
             "description": "",
             "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "110"
           },
           {
             "type": "Video",
             "title": "",
-            "src": "",
+            "src": "assets/uploads/b49fc854bf9f6bf6829f.webp",
             "videoUrl": "https://drive.google.com/file/d/1ZXyeHeqgRfxL0_1L2oYOf9brz7FSqTBU/view?usp=drive_link",
             "description": "",
             "imageFit": "contain",
