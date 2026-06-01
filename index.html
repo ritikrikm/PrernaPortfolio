@@ -250,6 +250,33 @@
                 Accent
                 <input id="experienceAccent" type="color" value="#0a6f6b">
               </label>
+              <label class="upload-box wide">
+                <span>Experience card image</span>
+                <input id="experienceImage" type="file" accept="image/*">
+                <strong id="experience-image-file-name">Choose an image</strong>
+                <button class="mini-button" id="clear-experience-image" type="button">Remove image</button>
+              </label>
+              <label>
+                Experience image fit
+                <select id="experienceImageFit">
+                  <option value="cover">Crop to fill card</option>
+                  <option value="contain">Show full image</option>
+                </select>
+              </label>
+              <label>
+                Experience image focus
+                <select id="experienceImagePosition">
+                  <option value="center center">Center</option>
+                  <option value="center top">Top</option>
+                  <option value="center bottom">Bottom</option>
+                  <option value="left center">Left</option>
+                  <option value="right center">Right</option>
+                </select>
+              </label>
+              <label class="wide">
+                Experience card zoom
+                <input id="experienceImageZoom" type="range" min="100" max="160" step="5" value="100">
+              </label>
             </div>
             <div class="form-actions">
               <button class="button primary" type="submit"><span aria-hidden="true">✓</span> Save Experience</button>
@@ -330,7 +357,7 @@
                 <textarea id="summary" name="summary" rows="4" required placeholder="What was the brief, what did you create, and what did it solve?"></textarea>
               </label>
               <label class="wide">
-                What Prerna did
+                What I did
                 <textarea id="whatPrernaDid" name="whatPrernaDid" rows="4" placeholder="Write this like a short case-study note: concepts, layout, retouching, motion, editing, visual system, client coordination, etc."></textarea>
               </label>
               <section class="media-builder wide" aria-label="Campaign media builder">

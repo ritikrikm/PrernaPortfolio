@@ -1,5 +1,6 @@
 const DATA_URL = "data/portfolio.json";
 const DRAFT_STORE_KEY = "prerna-portfolio-draft-v1";
+const DRAFT_STORE_VERSION = 2;
 const ADMIN_SESSION_KEY = "prerna-portfolio-admin-unlocked";
 const ADMIN_PASSWORD_KEY = "prerna-portfolio-admin-password";
 const PREVIEW_SESSION_KEY = "prerna-portfolio-preview-drafts";
@@ -28,44 +29,8 @@ const MEDIA_GROUPS = [
   }
 ];
 
-const defaultExperiences = [
-  {
-    id: "msl",
-    company: "MSL Global",
-    title: "Executive - Design",
-    dates: "Dec 2023 - Nov 2024",
-    location: "Delhi, India",
-    headline: "Large-scale campaign visuals for nonprofit and foundation clients.",
-    summary: "Designed high-quality creative assets, motion-ready campaign visuals, brand systems, and social content while collaborating with cross-functional teams.",
-    impact: "50M+ campaign views, 2x donor conversion lift, 5+ creative awards",
-    accent: "#087f6f"
-  },
-  {
-    id: "cultre-boat",
-    company: "Cultre Boat",
-    title: "Communications Designer",
-    dates: "Mar 2023 - Nov 2023",
-    location: "Delhi, India",
-    headline: "Social campaigns, brand content, graphics, and video pieces for multiple brands.",
-    summary: "Created content grids, designed campaigns, wrote copy, and produced visuals for brands across lifestyle, retail, coffee, and fashion.",
-    impact: "150+ graphics and videos, 6+ brands, 15% engagement lift",
-    accent: "#ff6542"
-  },
-  {
-    id: "freelance",
-    company: "The Creative Bud",
-    title: "Founder / Creative Entrepreneur",
-    dates: "Jun 2018 - Aug 2024",
-    location: "Delhi, India",
-    headline: "Illustration-led creative business with custom products and repeat clients.",
-    summary: "Owned the full creative process from illustration, layout, product design, and packaging to social marketing and client communication.",
-    impact: "500+ repeat clients through Instagram, referrals, and direct orders",
-    accent: "#a348ff"
-  }
-];
-
-let publishedExperiences = defaultExperiences.map((experience) => ({ ...experience }));
-let experiences = publishedExperiences.map((experience) => ({ ...experience }));
+let publishedExperiences = [];
+let experiences = [];
 
 const typewriterWords = [
   "a Graphic Designer",
@@ -296,200 +261,9 @@ const CONTENT_FIELDS = [
   { page: "appearance", key: "appearance.buttonColor", label: "Button color", path: "appearance.buttonColor", type: "color" }
 ];
 
-const sampleProjects = [
-  {
-    id: crypto.randomUUID(),
-    experienceId: "msl",
-    title: "Gates Foundation Campaign Visuals",
-    category: "Campaign Design",
-    mediaType: "Image",
-    role: "Visual Designer",
-    year: "2024",
-    tools: "Photoshop, Illustrator, Figma",
-    summary: "Designed, retouched, and composited campaign visuals for cross-channel nonprofit storytelling while keeping the creative aligned to brand and campaign goals.",
-    impact: "Part of campaign work that contributed to 50M+ views and 2x donor conversion lift",
-    link: "",
-    accent: "#087f6f",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "msl",
-    title: "Anil Agarwal Foundation Motion Stories",
-    category: "Motion Graphics",
-    mediaType: "Video",
-    role: "Motion + Visual Designer",
-    year: "2024",
-    tools: "After Effects, Premiere Pro, Illustrator, Photoshop",
-    summary: "Created animated visual stories and social-first video assets using illustration, motion design, editing, and brand-led storytelling.",
-    impact: "Supported award-winning digital work, including Fulcrum and STAKES recognition",
-    link: "",
-    accent: "#3557ff",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "msl",
-    title: "Brand Guidelines + AI Design Experiments",
-    category: "Branding",
-    mediaType: "Case Study",
-    role: "Graphic Designer",
-    year: "2024",
-    tools: "Figma, Photoshop, Adobe Firefly, Runway",
-    summary: "Explored multiple visual directions, documented brand rules, tested AI-assisted creative workflows, and improved design consistency across campaign assets.",
-    impact: "Improved brand consistency by 25%",
-    link: "",
-    accent: "#ffc94a",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "cultre-boat",
-    title: "Dayal Opticals Social Campaign",
-    category: "Graphic Design",
-    mediaType: "Image",
-    role: "Communications Designer",
-    year: "2023",
-    tools: "Photoshop, Illustrator, Premiere Pro",
-    summary: "Created campaign concepts, social posts, and promotional layouts that matched the brand's personality while staying consistent across the monthly content grid.",
-    impact: "Part of 25-day advance social planning workflow",
-    link: "",
-    accent: "#ff6542",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "cultre-boat",
-    title: "Devan's Coffee Content Grid",
-    category: "Campaign Design",
-    mediaType: "Multimedia",
-    role: "Graphic + Content Designer",
-    year: "2023",
-    tools: "Photoshop, Illustrator, Premiere Pro",
-    summary: "Designed coffee-led social content, copy-led posts, layouts, and video pieces with a warm visual language for digital engagement.",
-    impact: "Contributed to 150+ graphics and videos across brand accounts",
-    link: "",
-    accent: "#7a4b2a",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "cultre-boat",
-    title: "LizPaul Campaign Assets",
-    category: "Video Editing",
-    mediaType: "Video",
-    role: "Video + Graphic Designer",
-    year: "2023",
-    tools: "Premiere Pro, After Effects, Photoshop",
-    summary: "Built visual assets and edited short-form campaign content while balancing brand accuracy, social pacing, and delivery timelines.",
-    impact: "Helped improve engagement by 15%",
-    link: "",
-    accent: "#d946ef",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "freelance",
-    title: "The Creative Bud Brand Identity",
-    category: "Branding",
-    mediaType: "Image",
-    role: "Founder + Illustrator",
-    year: "2018-2024",
-    tools: "Procreate, Illustrator, Photoshop",
-    summary: "Created the visual identity, illustration style, product templates, packaging, and social presence for a handmade personalized gifts brand.",
-    impact: "Built a loyal base of 500+ repeat clients",
-    link: "",
-    accent: "#a348ff",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "freelance",
-    title: "Personalized Illustration Products",
-    category: "Illustration",
-    mediaType: "Image",
-    role: "Illustrator",
-    year: "2018-2024",
-    tools: "Procreate, Photoshop, Instagram",
-    summary: "Designed custom portraits, cards, stationery, calendars, notebooks, and printed products from concept to final customer delivery.",
-    impact: "Managed client briefs, revisions, production, packaging, and fulfillment",
-    link: "",
-    accent: "#ff4fa3",
-    image: ""
-  },
-  {
-    id: crypto.randomUUID(),
-    experienceId: "freelance",
-    title: "Product Photography + Social Content",
-    category: "Graphic Design",
-    mediaType: "Multimedia",
-    role: "Creative Business Owner",
-    year: "2018-2024",
-    tools: "Photography, Photoshop, Illustrator, Instagram",
-    summary: "Produced product photos, social posts, promotional graphics, and launch visuals to market handmade products online.",
-    impact: "Grew the brand through social media, referrals, and direct client communication",
-    link: "",
-    accent: "#f59e0b",
-    image: ""
-  }
-];
-
-const samplePortfolioProjects = [];
-
-let publishedProjects = sampleProjects.map((project) => ({ ...project }));
-let publishedPortfolioProjects = samplePortfolioProjects.map((project) => ({ ...project }));
-const sampleFeaturedProducts = [
-  {
-    id: "featured-custom-illustrations",
-    placement: "featured",
-    homeSlot: "1",
-    title: "Custom Illustration Products",
-    category: "Illustration",
-    mediaType: "Image",
-    role: "Illustrator + Product Designer",
-    year: "2018-2024",
-    tools: "Procreate, Photoshop, Illustrator",
-    summary: "Personalized illustration-led project work for cards, stationery, calendars, and handmade gifts.",
-    impact: "Built from The Creative Bud's client-led project practice",
-    link: "",
-    accent: "#ff4fa3",
-    image: ""
-  },
-  {
-    id: "featured-social-campaigns",
-    placement: "featured",
-    homeSlot: "2",
-    title: "Social Campaign Visuals",
-    category: "Social Media",
-    mediaType: "Image",
-    role: "Graphic Designer",
-    year: "2023-2024",
-    tools: "Photoshop, Illustrator, Premiere Pro",
-    summary: "Designed carousel-ready visuals, layouts, and digital campaign pieces for platform-first storytelling.",
-    impact: "Quick proof of layout, hierarchy, and campaign polish",
-    link: "",
-    accent: "#ff6542",
-    image: ""
-  },
-  {
-    id: "featured-motion-thumbnails",
-    placement: "featured",
-    homeSlot: "3",
-    title: "Motion + Video Thumbnails",
-    category: "Motion Graphics",
-    mediaType: "Multimedia",
-    role: "Motion Designer",
-    year: "2024",
-    tools: "After Effects, Premiere Pro, Photoshop",
-    summary: "Thumbnail and motion-forward visual experiments for video, reels, and animated brand moments.",
-    impact: "Shows multimedia thinking before opening full case studies",
-    link: "",
-    accent: "#3557ff",
-    image: ""
-  }
-];
-
-let publishedFeaturedProducts = sampleFeaturedProducts.map((project) => ({ ...project }));
+let publishedProjects = [];
+let publishedPortfolioProjects = [];
+let publishedFeaturedProducts = [];
 let publishedSiteContent = cloneItems(defaultSiteContent);
 const defaultResume = {
   label: "Download Resume",
@@ -516,6 +290,8 @@ const state = {
   typewriterTimer: null,
   previewImage: "",
   projectImageRemoved: false,
+  experiencePreviewImage: "",
+  experienceImageRemoved: false,
   detailMediaImages: {},
   mediaBuilderGroups: null,
   mediaBuilderMeta: null,
@@ -523,6 +299,8 @@ const state = {
   dataLoaded: false,
   adminPassword: sessionStorage.getItem(ADMIN_PASSWORD_KEY) || "",
   adminData: null,
+  adminDataBaseSignature: "",
+  draftStorageWarning: false,
   pendingHomeSection: "",
   homeSectionScrollHandler: null,
   homeSectionResizeHandler: null,
@@ -793,20 +571,43 @@ function portfolioSnapshot(source = {}) {
   };
 }
 
+function publishedPortfolioSnapshot() {
+  return {
+    experiences: cloneItems(publishedExperiences),
+    projects: cloneItems(publishedProjects),
+    portfolioProjects: cloneItems(publishedPortfolioProjects),
+    featuredProducts: cloneItems(publishedFeaturedProducts),
+    siteContent: normalizeSiteContent(publishedSiteContent),
+    resume: normalizeResume(publishedResume)
+  };
+}
+
+function compactHash(value = "") {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = ((hash << 5) - hash + value.charCodeAt(index)) | 0;
+  }
+  return String(hash);
+}
+
+function publishedPortfolioSignature() {
+  return compactHash(JSON.stringify(publishedPortfolioSnapshot()));
+}
+
 function normalizePortfolioData(data) {
   return {
-    experiences: Array.isArray(data?.experiences) && data.experiences.length
+    experiences: Array.isArray(data?.experiences)
       ? cloneItems(data.experiences)
-      : cloneItems(defaultExperiences),
+      : [],
     projects: Array.isArray(data?.projects)
       ? cloneItems(data.projects)
-      : cloneItems(sampleProjects),
+      : [],
     portfolioProjects: Array.isArray(data?.portfolioProjects)
       ? cloneItems(data.portfolioProjects)
-      : cloneItems(samplePortfolioProjects),
+      : [],
     featuredProducts: Array.isArray(data?.featuredProducts)
       ? cloneItems(data.featuredProducts)
-      : cloneItems(sampleFeaturedProducts),
+      : [],
     siteContent: normalizeSiteContent(data?.siteContent),
     resume: normalizeResume(data?.resume || state?.resume || defaultResume)
   };
@@ -827,10 +628,10 @@ async function loadPublishedPortfolio() {
       publishedResume = data.resume;
     }
   } catch {
-    publishedExperiences = cloneItems(defaultExperiences);
-    publishedProjects = cloneItems(sampleProjects);
-    publishedPortfolioProjects = cloneItems(samplePortfolioProjects);
-    publishedFeaturedProducts = cloneItems(sampleFeaturedProducts);
+    publishedExperiences = [];
+    publishedProjects = [];
+    publishedPortfolioProjects = [];
+    publishedFeaturedProducts = [];
     publishedSiteContent = cloneItems(defaultSiteContent);
     publishedResume = cloneItems(defaultResume);
   }
@@ -849,36 +650,54 @@ function usePublishedPortfolio() {
 }
 
 function loadDraftPortfolio() {
+  const published = publishedPortfolioSnapshot();
+  const baseSignature = publishedPortfolioSignature();
+  if (state.adminData && state.adminDataBaseSignature === baseSignature) return cloneItems(state.adminData);
+  if (state.adminData) {
+    state.adminData = null;
+    state.adminDataBaseSignature = "";
+  }
+
   const stored = localStorage.getItem(DRAFT_STORE_KEY);
   if (!stored) {
-    return portfolioSnapshot({
-      experiences: publishedExperiences,
-      projects: publishedProjects,
-      portfolioProjects: publishedPortfolioProjects,
-      featuredProducts: publishedFeaturedProducts,
-      siteContent: publishedSiteContent,
-      resume: publishedResume
-    });
+    return published;
   }
 
   try {
-    return normalizePortfolioData(JSON.parse(stored));
+    const parsed = JSON.parse(stored);
+    if (
+      parsed?.__draftVersion === DRAFT_STORE_VERSION
+      && parsed?.baseSignature === baseSignature
+      && parsed?.portfolio
+    ) {
+      return normalizePortfolioData(parsed.portfolio);
+    }
+    localStorage.removeItem(DRAFT_STORE_KEY);
+    return published;
   } catch {
-    return portfolioSnapshot({
-      experiences: publishedExperiences,
-      projects: publishedProjects,
-      portfolioProjects: publishedPortfolioProjects,
-      featuredProducts: publishedFeaturedProducts,
-      siteContent: publishedSiteContent,
-      resume: publishedResume
-    });
+    localStorage.removeItem(DRAFT_STORE_KEY);
+    return published;
   }
 }
 
 function saveDraftPortfolio(data) {
   const nextData = normalizePortfolioData(data);
-  localStorage.setItem(DRAFT_STORE_KEY, JSON.stringify(nextData));
+  const baseSignature = publishedPortfolioSignature();
   state.adminData = nextData;
+  state.adminDataBaseSignature = baseSignature;
+  try {
+    localStorage.setItem(DRAFT_STORE_KEY, JSON.stringify({
+      __draftVersion: DRAFT_STORE_VERSION,
+      baseSignature,
+      savedAt: new Date().toISOString(),
+      portfolio: nextData
+    }));
+    state.draftStorageWarning = false;
+  } catch {
+    localStorage.removeItem(DRAFT_STORE_KEY);
+    state.draftStorageWarning = true;
+    showToast("Draft is too large for browser storage, but it is kept in this tab for publishing.");
+  }
   experiences = cloneItems(nextData.experiences);
   state.projects = cloneItems(nextData.projects);
   state.portfolioProjects = cloneItems(nextData.portfolioProjects);
@@ -914,7 +733,7 @@ function routeParts() {
 function currentTemplate() {
   const { name, id } = routeParts();
   if (name === "/experience" && id) return "experience-template";
-  if ((name === "/work-project" || name === "/portfolio-project") && id) return "project-template";
+  if ((name === "/work-project" || name === "/portfolio-project" || name === "/featured-project") && id) return "project-template";
   const templates = {
     "/": "home-template",
     "/work": "work-template",
@@ -958,7 +777,9 @@ function setActiveNav() {
 
   const activeRoute = name === "/experience" || name === "/work-project"
     ? "/work"
-    : name;
+    : name === "/featured-project"
+      ? "/featured-projects"
+      : name;
   document.querySelectorAll(".main-nav a").forEach((link) => {
     link.classList.toggle("active", link.dataset.route === activeRoute);
   });
@@ -1028,12 +849,20 @@ function experienceById(id) {
 }
 
 function projectById(id, collection = "work") {
-  const source = collection === "portfolio" ? state.portfolioProjects : state.projects;
+  const source = collection === "featured"
+    ? state.featuredProducts
+    : collection === "portfolio"
+      ? state.portfolioProjects
+      : state.projects;
   return source.find((project) => project.id === id);
 }
 
 function projectDetailUrl(project, collection = "work") {
-  const route = collection === "work" ? "work-project" : "portfolio-project";
+  const route = collection === "work"
+    ? "work-project"
+    : collection === "featured"
+      ? "featured-project"
+      : "portfolio-project";
   return `#/${route}/${encodeURIComponent(project.id)}`;
 }
 
@@ -1383,15 +1212,15 @@ function primaryMediaItem(project) {
 
 function featuredProjectCard(product) {
   const primaryItem = primaryMediaItem(product);
-  const imageSrc = product.image || primaryItem?.src || primaryItem?.url || "";
+  const imageSrc = product.image || mediaVisualSrc(primaryItem || {});
   const image = imageSrc
     ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product)}">`
     : coverArt(product, "large");
-  const previewLabel = product.mediaType === "Video" ? "Play" : "Preview";
+  const previewLabel = "Open";
   const impact = product.impact || product.role || "";
 
   return `
-    <article class="featured-product-card" data-featured-id="${escapeHtml(product.id)}" role="button" tabindex="0" aria-label="Open ${escapeHtml(product.title)} preview">
+    <article class="featured-product-card" data-featured-id="${escapeHtml(product.id)}" role="button" tabindex="0" aria-label="Open ${escapeHtml(product.title)} campaign page">
       <div class="featured-product-thumb" style="background: ${projectGradient(product)}">${image}</div>
       <div class="featured-product-body">
         <div class="project-meta">${categoryPills(product, "Featured")}</div>
@@ -1407,10 +1236,14 @@ function featuredProjectCard(product) {
 
 function experienceCard(experience) {
   const count = projectsForExperience(experience.id).length;
+  const image = experience.image
+    ? `<img src="${escapeHtml(experience.image)}" alt="${escapeHtml(experience.company)} work experience image" style="${imageStyle(experience)}">`
+    : "";
   return `
     <a class="experience-card" href="#/experience/${experience.id}" style="--experience-accent: ${experience.accent}">
       <span class="experience-number">${String(experiences.indexOf(experience) + 1).padStart(2, "0")}</span>
-      <div class="experience-cover">
+      <div class="experience-cover ${image ? "has-image" : ""}">
+        ${image}
         <span>${escapeHtml(experience.company)}</span>
       </div>
       <div class="experience-body">
@@ -1489,6 +1322,7 @@ async function renderRoute() {
   if (name === "/experience") setupExperienceDetail();
   if (name === "/work-project") setupProjectDetail("work");
   if (name === "/portfolio-project") setupProjectDetail("portfolio");
+  if (name === "/featured-project") setupProjectDetail("featured");
   if (name === "/about") setupAbout();
   if (name === "/contact") setupContact();
   if (name === "/admin" || name === "/studio") setupAdmin();
@@ -1683,21 +1517,10 @@ function handleFeaturedFilter(event) {
   renderHomeFeaturedProjects();
 }
 
-function featuredProductPreviewItem(product) {
-  const primaryItem = primaryMediaItem(product) || {};
-  return {
-    type: product.mediaType === "Video" || primaryItem.type === "Video" ? "Video" : "Image",
-    src: product.image || primaryItem.src || primaryItem.url || "",
-    videoUrl: product.mediaType === "Video" || primaryItem.type === "Video" ? product.link || primaryItem.videoUrl || "" : "",
-    title: primaryItem.title || product.title,
-    description: primaryItem.description || product.summary || product.impact || projectCategoryLabel(product) || "Featured project"
-  };
-}
-
 function openFeaturedProduct(productId) {
   const product = state.featuredProducts.find((item) => item.id === productId);
   if (!product) return;
-  showMediaModal(featuredProductPreviewItem(product), product);
+  window.location.hash = projectDetailUrl(product, "featured").replace("#", "");
 }
 
 function handleFeaturedProductOpen(event) {
@@ -1885,6 +1708,14 @@ function renderResumeCallout() {
 function setupExperienceDetail() {
   const { id } = routeParts();
   const experience = experienceById(id);
+  if (!experience) {
+    document.getElementById("experience-detail").innerHTML = `
+      <section class="empty-state">
+        <strong>Experience not found.</strong>
+      </section>
+    `;
+    return;
+  }
   const projects = projectsForExperience(experience.id);
   const detail = document.getElementById("experience-detail");
 
@@ -1943,6 +1774,13 @@ function fallbackMediaItem(project) {
   };
 }
 
+function mediaImageStyle(item = {}, fallback = {}) {
+  const fit = normalizeImageFit(item.imageFit || fallback.imageFit);
+  const position = normalizeImagePosition(item.imagePosition || fallback.imagePosition);
+  const zoom = normalizeImageZoom(item.imageZoom || fallback.imageZoom);
+  return `object-fit: ${fit}; object-position: ${position}; transform: scale(${zoom / 100});`;
+}
+
 function projectMediaGroups(project) {
   const savedGroups = project.mediaGroups || {};
   const savedMeta = project.mediaGroupMeta || {};
@@ -1972,12 +1810,57 @@ function projectMediaGroups(project) {
   });
 }
 
-function campaignMediaFrame(item, project) {
+function googleDriveFileId(url = "") {
+  const safe = safeVideoSrc(url);
+  if (!safe || !safe.includes(":") || safe.startsWith("data:video/")) return "";
+  try {
+    const parsed = new URL(safe);
+    if (!parsed.hostname.includes("drive.google.com")) return "";
+    return parsed.pathname.match(/\/file\/d\/([^/]+)/)?.[1]
+      || parsed.searchParams.get("id")
+      || "";
+  } catch {
+    return "";
+  }
+}
+
+function videoThumbnailUrl(url = "") {
+  const safe = safeVideoSrc(url);
+  if (!safe || !safe.includes(":") || safe.startsWith("data:video/")) return "";
+  try {
+    const parsed = new URL(safe);
+    if (parsed.hostname.includes("drive.google.com")) {
+      const fileId = googleDriveFileId(safe);
+      return fileId ? `https://drive.google.com/thumbnail?id=${encodeURIComponent(fileId)}&sz=w1200` : "";
+    }
+    if (parsed.hostname.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      return id ? `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg` : "";
+    }
+    if (parsed.hostname.includes("youtu.be")) {
+      const id = parsed.pathname.split("/").filter(Boolean)[0];
+      return id ? `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg` : "";
+    }
+  } catch {
+    return "";
+  }
+  return "";
+}
+
+function mediaVisualSrc(item = {}) {
   const type = item.type || "Image";
   const imageSrc = safeMediaSrc(item.src || item.url || "");
+  if (imageSrc) return imageSrc;
+  if (type !== "Video") return "";
+  return videoThumbnailUrl(item.videoUrl || item.url || "");
+}
+
+function campaignMediaFrame(item, project) {
+  const type = item.type || "Image";
+  const imageSrc = mediaVisualSrc(item);
   const videoUrl = safeVideoSrc(item.videoUrl || (type === "Video" ? item.url : ""));
   const visual = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}" style="${mediaImageStyle(item, project)}">`
     : coverArt(project, "large");
 
   if (type === "Video" && videoUrl) {
@@ -2072,7 +1955,7 @@ function setupProjectDetail(collection) {
 
     <section class="campaign-info-grid">
       <article class="campaign-info-card">
-        <p class="eyebrow">What Prerna Did</p>
+        <p class="eyebrow">What I Did</p>
         <p>${escapeHtml(project.whatPrernaDid || project.summary || "Project details coming soon.")}</p>
       </article>
       <article class="campaign-info-card">
@@ -2604,11 +2487,15 @@ function syncDraftAfterPublish(scope, published) {
     state.featuredProducts = cloneItems(published.featuredProducts);
     state.siteContent = normalizeSiteContent(published.siteContent);
     state.resume = normalizeResume(published.resume);
+    state.adminData = null;
+    state.adminDataBaseSignature = "";
     localStorage.removeItem(DRAFT_STORE_KEY);
     applySiteContent();
   }
 
   if (!portfolioContentDirty() && !siteContentDirty() && !resumeDirty()) {
+    state.adminData = null;
+    state.adminDataBaseSignature = "";
     localStorage.removeItem(DRAFT_STORE_KEY);
   }
 }
@@ -2732,6 +2619,10 @@ function siteContentWithExperienceHomeLimit() {
 function formExperience() {
   const existingId = document.getElementById("experience-id").value;
   const company = document.getElementById("experienceCompany").value.trim();
+  const existingExperience = experiences.find((experience) => experience.id === existingId);
+  const image = state.experienceImageRemoved
+    ? ""
+    : state.experiencePreviewImage || existingExperience?.image || "";
   return {
     id: existingId || uniqueExperienceId(company),
     company,
@@ -2742,7 +2633,11 @@ function formExperience() {
     summary: document.getElementById("experienceSummary").value.trim(),
     impact: document.getElementById("experienceImpact").value.trim(),
     homeSlot: normalizeFeaturedHomeSlot(document.getElementById("experienceHomeSlot")?.value || ""),
-    accent: document.getElementById("experienceAccent").value
+    accent: document.getElementById("experienceAccent").value,
+    image,
+    imageFit: document.getElementById("experienceImageFit")?.value || "cover",
+    imagePosition: document.getElementById("experienceImagePosition")?.value || "center center",
+    imageZoom: document.getElementById("experienceImageZoom")?.value || "100"
   };
 }
 
@@ -2752,6 +2647,12 @@ function clearExperienceForm() {
   document.getElementById("experienceHomeSlot").value = "";
   renderExperienceHomeLimitSelect();
   document.getElementById("experienceAccent").value = "#0a6f6b";
+  document.getElementById("experienceImageFit").value = "cover";
+  document.getElementById("experienceImagePosition").value = "center center";
+  document.getElementById("experienceImageZoom").value = "100";
+  document.getElementById("experience-image-file-name").textContent = "Choose an image";
+  state.experiencePreviewImage = "";
+  state.experienceImageRemoved = false;
 }
 
 function mediaInputId(field, groupId, index) {
@@ -2774,8 +2675,31 @@ function mediaImageKey(groupId, index) {
   return `${groupId}-${index}`;
 }
 
+function imagePositionOptions(selectedValue = "center center") {
+  const options = [
+    ["center center", "Center"],
+    ["center top", "Top"],
+    ["center bottom", "Bottom"],
+    ["left center", "Left"],
+    ["right center", "Right"]
+  ];
+  const selected = normalizeImagePosition(selectedValue);
+  return options
+    .map(([value, label]) => `<option value="${value}"${value === selected ? " selected" : ""}>${label}</option>`)
+    .join("");
+}
+
 function emptyMediaItem() {
-  return { type: "Image", title: "", src: "", videoUrl: "", description: "" };
+  return {
+    type: "Image",
+    title: "",
+    src: "",
+    videoUrl: "",
+    description: "",
+    imageFit: "cover",
+    imagePosition: "center center",
+    imageZoom: "100"
+  };
 }
 
 function defaultMediaBuilderGroups() {
@@ -2806,7 +2730,10 @@ function normalizeMediaBuilderGroups(mediaGroups = {}) {
             title: item.title || "",
             src: String(src).startsWith("data:video/") ? "" : src,
             videoUrl: String(item.videoUrl || "").startsWith("data:video/") ? "" : item.videoUrl || "",
-            description: item.description || ""
+            description: item.description || "",
+            imageFit: normalizeImageFit(item.imageFit),
+            imagePosition: normalizeImagePosition(item.imagePosition),
+            imageZoom: normalizeImageZoom(item.imageZoom)
           };
         })
       : [];
@@ -2876,6 +2803,23 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
         <small>Videos play from public links.</small>
         <button class="mini-button" type="button" data-clear-media-image="${group.id}" data-clear-media-image-index="${index}">Remove image</button>
       </label>
+      <label>
+        Asset image fit
+        <select id="${mediaInputId("mediaImageFit", group.id, index)}">
+          <option value="cover"${normalizeImageFit(item.imageFit) === "cover" ? " selected" : ""}>Crop to fill card</option>
+          <option value="contain"${normalizeImageFit(item.imageFit) === "contain" ? " selected" : ""}>Show full image</option>
+        </select>
+      </label>
+      <label>
+        Asset image focus
+        <select id="${mediaInputId("mediaImagePosition", group.id, index)}">
+          ${imagePositionOptions(item.imagePosition)}
+        </select>
+      </label>
+      <label class="wide">
+        Asset card zoom
+        <input id="${mediaInputId("mediaImageZoom", group.id, index)}" type="range" min="100" max="160" step="5" value="${escapeHtml(normalizeImageZoom(item.imageZoom))}">
+      </label>
       <label class="wide">
         Asset text
         <textarea id="${mediaInputId("mediaDescription", group.id, index)}" rows="3" placeholder="Optional text below this photo/video card.">${escapeHtml(item.description || "")}</textarea>
@@ -2933,7 +2877,10 @@ function currentMediaGroupsFromFields(includeEmpty = false) {
       const videoUrl = mediaField("mediaVideoUrl", group.id, index).value.trim();
       const description = mediaField("mediaDescription", group.id, index).value.trim();
       const src = state.detailMediaImages[mediaImageKey(group.id, index)] || url;
-      const item = { type, title, src, videoUrl, description };
+      const imageFit = mediaField("mediaImageFit", group.id, index)?.value || "cover";
+      const imagePosition = mediaField("mediaImagePosition", group.id, index)?.value || "center center";
+      const imageZoom = mediaField("mediaImageZoom", group.id, index)?.value || "100";
+      const item = { type, title, src, videoUrl, description, imageFit, imagePosition, imageZoom };
 
       if (!includeEmpty && !hasMediaContent(item)) return null;
       return item;
@@ -3118,6 +3065,14 @@ function clearProjectImage() {
   renderPreview();
 }
 
+function clearExperienceImage() {
+  const imageInput = document.getElementById("experienceImage");
+  if (imageInput) imageInput.value = "";
+  state.experiencePreviewImage = "";
+  state.experienceImageRemoved = true;
+  document.getElementById("experience-image-file-name").textContent = "No image selected";
+}
+
 function adminExperienceRow(experience) {
   const count = projectsForExperience(experience.id).length;
   const isDirty = experienceDirty(experience);
@@ -3208,6 +3163,12 @@ async function handleAdminExperienceAction(event) {
   document.getElementById("experienceHomeSlot").value = normalizeFeaturedHomeSlot(experience.homeSlot);
   renderExperienceHomeLimitSelect();
   document.getElementById("experienceAccent").value = experience.accent || "#0a6f6b";
+  document.getElementById("experienceImageFit").value = normalizeImageFit(experience.imageFit);
+  document.getElementById("experienceImagePosition").value = normalizeImagePosition(experience.imagePosition);
+  document.getElementById("experienceImageZoom").value = normalizeImageZoom(experience.imageZoom);
+  document.getElementById("experience-image-file-name").textContent = experience.image ? "Existing image selected" : "Choose an image";
+  state.experiencePreviewImage = experience.image || "";
+  state.experienceImageRemoved = false;
   document.getElementById("experienceCompany").focus();
 }
 
@@ -3779,6 +3740,8 @@ function setupAdmin() {
   applySiteContent();
   state.previewImage = "";
   state.projectImageRemoved = false;
+  state.experiencePreviewImage = "";
+  state.experienceImageRemoved = false;
   state.detailMediaImages = {};
   state.mediaBuilderGroups = defaultMediaBuilderGroups();
   state.mediaBuilderMeta = defaultMediaGroupMeta();
@@ -3799,6 +3762,18 @@ function setupAdmin() {
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
   document.getElementById("clear-experience-form").addEventListener("click", clearExperienceForm);
   document.getElementById("admin-experience-list").addEventListener("click", handleAdminExperienceAction);
+  document.getElementById("clear-experience-image").addEventListener("click", clearExperienceImage);
+  document.getElementById("experienceImage").addEventListener("change", async (event) => {
+    const file = event.target.files?.[0];
+    document.getElementById("experience-image-file-name").textContent = file ? file.name : "Choose an image";
+    if (file) showLoadingBanner("Preparing experience image...");
+    try {
+      state.experiencePreviewImage = file ? await readFileAsDataUrl(file) : "";
+      state.experienceImageRemoved = false;
+    } finally {
+      if (file) hideLoadingBanner();
+    }
+  });
   setupCategoryBuilderControls();
   setupDetailMediaControls();
   form.addEventListener("input", renderPreview);
@@ -3942,14 +3917,39 @@ function updateProjectPlacementFields() {
   }
 }
 
+function adminCampaignPreview(project) {
+  const groups = projectMediaGroups(project);
+  const hasAssets = groups.some((group) => group.items.length);
+  return `
+    <section class="admin-campaign-preview">
+      <div class="board-topline">
+        <strong>Campaign Page Preview</strong>
+        <small>${escapeHtml(project.title || "Untitled project")}</small>
+      </div>
+      <div class="campaign-info-card">
+        <p class="eyebrow">What I Did</p>
+        <p>${escapeHtml(project.whatPrernaDid || project.summary || "Project details coming soon.")}</p>
+      </div>
+      ${hasAssets
+        ? groups.map((group) => campaignMediaGroup(group, project)).join("")
+        : `<div class="empty-state"><strong>No campaign assets added yet.</strong></div>`
+      }
+    </section>
+  `;
+}
+
 function renderPreview() {
   const preview = document.getElementById("admin-preview");
   if (!preview) return;
   updateProjectPlacementFields();
   const project = formProject();
-  preview.innerHTML = project.placement === "featured"
+  const cardPreview = project.placement === "featured"
     ? featuredProjectCard(project)
     : projectCard(project, "work");
+  preview.innerHTML = `
+    ${cardPreview}
+    ${adminCampaignPreview(project)}
+  `;
 }
 
 function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
