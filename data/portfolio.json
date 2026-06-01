@@ -79,7 +79,7 @@
             "description": "",
             "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "110"
+            "imageZoom": "115"
           },
           {
             "type": "Video",
@@ -89,7 +89,7 @@
             "description": "",
             "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "110"
+            "imageZoom": "115"
           },
           {
             "type": "Video",
@@ -740,7 +740,7 @@
             "description": "",
             "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "110"
+            "imageZoom": "115"
           },
           {
             "type": "Video",
@@ -750,7 +750,7 @@
             "description": "",
             "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "110"
+            "imageZoom": "115"
           },
           {
             "type": "Video",
