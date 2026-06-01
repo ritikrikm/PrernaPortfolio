@@ -53,12 +53,12 @@
           {
             "type": "Video",
             "title": "",
-            "src": "",
+            "src": "assets/uploads/bc131e38f01403bab57c.jpg",
             "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
             "description": "Pre-buzz teaser",
-            "imageFit": "contain",
+            "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "120"
           },
           {
             "type": "Video",
@@ -349,12 +349,12 @@
           {
             "type": "Video",
             "title": "",
-            "src": "",
+            "src": "assets/uploads/bc131e38f01403bab57c.jpg",
             "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
             "description": "Pre-buzz teaser",
-            "imageFit": "contain",
+            "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "120"
           },
           {
             "type": "Video",
