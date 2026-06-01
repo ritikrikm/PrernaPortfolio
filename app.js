@@ -1087,6 +1087,12 @@ function imageStyle(project) {
   return `object-fit: ${fit}; object-position: ${position}; transform: scale(${zoom / 100});`;
 }
 
+function imageMarkup(imageSrc, title, style = "") {
+  return imageSrc
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(title)}" style="${style}">`
+    : "";
+}
+
 function mediaIcon(mediaType = "") {
   const icons = {
     Image: "□",
@@ -1193,11 +1199,13 @@ function projectCard(project, collection = "work") {
         </div>
         <h3>${escapeHtml(project.title)}</h3>
         <p>${escapeHtml(project.summary)}</p>
-        <div class="tool-row">${toolIcons(project.tools)}</div>
-        <div class="impact">${escapeHtml(project.impact || project.role || "Design project")}</div>
-        <div class="project-actions">
-          <a class="open-work" href="${projectDetailUrl(project, collection)}" data-open-project="${escapeHtml(project.id)}">Open</a>
-          ${link && !isVideo ? `<a class="project-link" href="${link}" target="_blank" rel="noreferrer">Visit link ↗</a>` : ""}
+        <div class="project-footer">
+          <div class="tool-row">${toolIcons(project.tools)}</div>
+          <div class="impact">${escapeHtml(project.impact || project.role || "Design project")}</div>
+          <div class="project-actions">
+            <a class="open-work" href="${projectDetailUrl(project, collection)}" data-open-project="${escapeHtml(project.id)}">Open</a>
+            ${link && !isVideo ? `<a class="project-link" href="${link}" target="_blank" rel="noreferrer">Visit link ↗</a>` : ""}
+          </div>
         </div>
       </div>
     </article>
@@ -1226,9 +1234,11 @@ function featuredProjectCard(product) {
         <div class="project-meta">${categoryPills(product, "Featured")}</div>
         <h3>${escapeHtml(product.title)}</h3>
         <p>${escapeHtml(product.summary || "Featured creative project")}</p>
-        <div class="tool-row">${toolIcons(product.tools)}</div>
-        ${impact ? `<div class="impact">${escapeHtml(impact)}</div>` : ""}
-        <button class="open-work" type="button">${escapeHtml(previewLabel)}</button>
+        <div class="project-footer">
+          <div class="tool-row">${toolIcons(product.tools)}</div>
+          ${impact ? `<div class="impact">${escapeHtml(impact)}</div>` : ""}
+          <button class="open-work" type="button">${escapeHtml(previewLabel)}</button>
+        </div>
       </div>
     </article>
   `;
@@ -1705,6 +1715,20 @@ function renderResumeCallout() {
   updateResumeLinks();
 }
 
+function experienceHeroAside(experience, projectCount = 0) {
+  const image = imageMarkup(
+    experience.image || "",
+    `${experience.company} experience thumbnail`,
+    imageStyle(experience)
+  );
+  return `
+    <aside class="hero-media-card ${image ? "has-image" : ""}">
+      ${image || `<strong>${escapeHtml(experience.impact || experience.company)}</strong>`}
+      <span>${projectCount} selected project${projectCount === 1 ? "" : "s"}</span>
+    </aside>
+  `;
+}
+
 function setupExperienceDetail() {
   const { id } = routeParts();
   const experience = experienceById(id);
@@ -1727,10 +1751,7 @@ function setupExperienceDetail() {
         <h2>${escapeHtml(experience.title)}</h2>
         <p>${escapeHtml(experience.summary)}</p>
       </div>
-      <aside>
-        <strong>${escapeHtml(experience.impact)}</strong>
-        <span>${projects.length} selected project${projects.length === 1 ? "" : "s"}</span>
-      </aside>
+      ${experienceHeroAside(experience, projects.length)}
     </section>
   `;
 
@@ -1913,6 +1934,22 @@ function campaignMediaGroup(group, project) {
   `;
 }
 
+function projectHeroAside(project) {
+  const primaryItem = primaryMediaItem(project) || {};
+  const imageSrc = project.image || mediaVisualSrc(primaryItem);
+  const image = imageMarkup(
+    imageSrc,
+    `${project.title} project thumbnail`,
+    imageSrc === project.image ? imageStyle(project) : mediaImageStyle(primaryItem, project)
+  );
+  return `
+    <aside class="hero-media-card project-hero-media ${image ? "has-image" : ""}">
+      ${image || coverArt(project, "large")}
+      <span>${escapeHtml(project.mediaType || "Campaign")}</span>
+    </aside>
+  `;
+}
+
 function setupProjectDetail(collection) {
   const { id } = routeParts();
   const project = projectById(id, collection);
@@ -1947,10 +1984,7 @@ function setupProjectDetail(collection) {
         <h2>${escapeHtml(project.role || "Campaign project")}</h2>
         <p>${escapeHtml(project.summary)}</p>
       </div>
-      <aside>
-        <strong>${escapeHtml(project.impact || "Selected design campaign")}</strong>
-        <span>${escapeHtml(project.mediaType || "Campaign")}</span>
-      </aside>
+      ${projectHeroAside(project)}
     </section>
 
     <section class="campaign-info-grid">
@@ -2641,6 +2675,29 @@ function formExperience() {
   };
 }
 
+function renderExperiencePreview() {
+  const target = document.getElementById("experience-card-preview");
+  if (!target) return;
+  const experience = formExperience();
+  const image = imageMarkup(
+    experience.image,
+    `${experience.company || "Experience"} card preview`,
+    imageStyle(experience)
+  );
+  target.innerHTML = `
+    <article class="experience-preview-card" style="--experience-accent: ${escapeHtml(experience.accent || "#0a6f6b")}">
+      <div class="experience-preview-cover ${image ? "has-image" : ""}">
+        ${image || `<span>${escapeHtml(experience.company || "Experience")}</span>`}
+      </div>
+      <div>
+        <p class="eyebrow">Experience Card Preview</p>
+        <strong>${escapeHtml(experience.company || "Company name")}</strong>
+        <small>${escapeHtml(experience.title || "Role")} · ${escapeHtml(experienceHomeSlotLabel(experience.homeSlot))}</small>
+      </div>
+    </article>
+  `;
+}
+
 function clearExperienceForm() {
   document.getElementById("experience-form").reset();
   document.getElementById("experience-id").value = "";
@@ -2653,6 +2710,7 @@ function clearExperienceForm() {
   document.getElementById("experience-image-file-name").textContent = "Choose an image";
   state.experiencePreviewImage = "";
   state.experienceImageRemoved = false;
+  renderExperiencePreview();
 }
 
 function mediaInputId(field, groupId, index) {
@@ -3071,6 +3129,7 @@ function clearExperienceImage() {
   state.experiencePreviewImage = "";
   state.experienceImageRemoved = true;
   document.getElementById("experience-image-file-name").textContent = "No image selected";
+  renderExperiencePreview();
 }
 
 function adminExperienceRow(experience) {
@@ -3106,9 +3165,10 @@ async function handleExperienceSave(event) {
   const nextSiteContent = siteContentWithExperienceHomeLimit();
   if (!(await confirmAction("Save this experience as a draft?", "Save Experience"))) return;
 
-  const nextExperiences = experiences.some((experience) => experience.id === nextExperience.id)
+  let nextExperiences = experiences.some((experience) => experience.id === nextExperience.id)
     ? experiences.map((experience) => (experience.id === nextExperience.id ? nextExperience : experience))
     : [...experiences, nextExperience];
+  nextExperiences = applyExperienceHomeSlotChoice(nextExperiences, nextExperience);
 
   saveDraftPortfolio({
     experiences: nextExperiences,
@@ -3169,6 +3229,7 @@ async function handleAdminExperienceAction(event) {
   document.getElementById("experience-image-file-name").textContent = experience.image ? "Existing image selected" : "Choose an image";
   state.experiencePreviewImage = experience.image || "";
   state.experienceImageRemoved = false;
+  renderExperiencePreview();
   document.getElementById("experienceCompany").focus();
 }
 
@@ -3751,6 +3812,7 @@ function setupAdmin() {
   renderCategoryOptions();
   renderExperienceSelect();
   renderExperienceHomeLimitSelect();
+  renderExperiencePreview();
   renderMediaBuilder();
   renderPreview();
   renderAdminList();
@@ -3760,6 +3822,8 @@ function setupAdmin() {
   setupResumeAdmin();
 
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
+  document.getElementById("experience-form").addEventListener("input", renderExperiencePreview);
+  document.getElementById("experience-form").addEventListener("change", renderExperiencePreview);
   document.getElementById("clear-experience-form").addEventListener("click", clearExperienceForm);
   document.getElementById("admin-experience-list").addEventListener("click", handleAdminExperienceAction);
   document.getElementById("clear-experience-image").addEventListener("click", clearExperienceImage);
@@ -3770,6 +3834,7 @@ function setupAdmin() {
     try {
       state.experiencePreviewImage = file ? await readFileAsDataUrl(file) : "";
       state.experienceImageRemoved = false;
+      renderExperiencePreview();
     } finally {
       if (file) hideLoadingBanner();
     }
@@ -3958,6 +4023,15 @@ function applyFeaturedHomeSlotChoice(featuredProducts, activeProject) {
   return featuredProducts.map((project) => {
     if (project.id === activeProject.id || normalizeFeaturedHomeSlot(project.homeSlot) !== slot) return project;
     return { ...project, homeSlot: "" };
+  });
+}
+
+function applyExperienceHomeSlotChoice(experienceItems, activeExperience) {
+  const slot = normalizeFeaturedHomeSlot(activeExperience.homeSlot);
+  if (!["1", "2", "3"].includes(slot)) return experienceItems;
+  return experienceItems.map((experience) => {
+    if (experience.id === activeExperience.id || normalizeFeaturedHomeSlot(experience.homeSlot) !== slot) return experience;
+    return { ...experience, homeSlot: "" };
   });
 }
 
