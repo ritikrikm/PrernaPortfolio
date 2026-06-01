@@ -2529,6 +2529,31 @@ h3 {
   background: #fff4f2;
 }
 
+.mini-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.category-builder {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid rgba(22, 18, 15, 0.16);
+  border-radius: var(--radius);
+}
+
+.category-builder-list {
+  display: grid;
+  gap: 10px;
+}
+
+.category-row {
+  grid-template-columns: minmax(120px, 0.7fr) minmax(180px, 1fr) auto;
+  align-items: end;
+}
+
 .admin-experience-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3038,6 +3063,10 @@ textarea:focus {
   }
 
   .content-field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .category-row {
     grid-template-columns: 1fr;
   }
 

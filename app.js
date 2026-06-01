@@ -1056,6 +1056,43 @@ function categoryColor(category) {
   return colors[category] || "#087f6f";
 }
 
+function normalizeProjectCategories(values = [], fallback = "") {
+  const source = Array.isArray(values) ? values : [values];
+  const categories = source
+    .map((category) => String(category || "").trim())
+    .filter(Boolean);
+  if (fallback) categories.unshift(String(fallback).trim());
+  const uniqueCategories = [];
+  categories.forEach((category) => {
+    if (category && !uniqueCategories.includes(category)) uniqueCategories.push(category);
+  });
+  return uniqueCategories.length ? uniqueCategories : [DEFAULT_PROJECT_CATEGORIES[0]];
+}
+
+function projectCategoriesFor(project = {}) {
+  return normalizeProjectCategories(project.categories, project.category);
+}
+
+function projectPrimaryCategory(project = {}) {
+  return projectCategoriesFor(project)[0] || project.category || DEFAULT_PROJECT_CATEGORIES[0];
+}
+
+function projectCategoryLabel(project = {}) {
+  return projectCategoriesFor(project).join(" + ");
+}
+
+function projectHasCategory(project = {}, category = "") {
+  if (category === "All") return true;
+  return projectCategoriesFor(project).includes(category);
+}
+
+function categoryPills(project = {}, fallback = "Project") {
+  const categories = projectCategoriesFor(project);
+  return categories.length
+    ? categories.map((category) => `<span class="pill">${escapeHtml(category)}</span>`).join("")
+    : `<span class="pill">${escapeHtml(fallback)}</span>`;
+}
+
 function normalizeMediaType(value = "") {
   if (value === "Mixed Media") return "Multimedia";
   return value || "Image";
@@ -1069,22 +1106,98 @@ function projectCategories() {
     ...state.projects,
     ...state.portfolioProjects,
     ...state.featuredProducts
-  ].map((project) => project.category).filter(Boolean);
+  ].flatMap(projectCategoriesFor).filter(Boolean);
   return [...new Set([...DEFAULT_PROJECT_CATEGORIES, ...featuredFilters, ...usedCategories])];
 }
 
-function renderCategoryOptions(selectedValue = "") {
+function currentProjectCategorySelections() {
+  const primary = document.getElementById("category")?.value || "";
+  const extras = Array.from(document.querySelectorAll("[data-extra-category]"))
+    .map((select) => select.value);
+  return normalizeProjectCategories([primary, ...extras]);
+}
+
+function categorySelectOptions(selectedValue = "") {
+  return projectCategories()
+    .map((category) => `<option${category === selectedValue ? " selected" : ""}>${escapeHtml(category)}</option>`)
+    .join("");
+}
+
+function renderCategoryBuilder(selectedCategories = currentProjectCategorySelections()) {
+  const builder = document.getElementById("category-builder");
+  if (!builder) return;
+  const categories = projectCategories();
+  const normalized = normalizeProjectCategories(selectedCategories);
+  const extras = normalized.slice(1);
+  const canAdd = normalized.length < categories.length;
+
+  builder.innerHTML = `
+    <div class="category-builder-list">
+      ${extras.map((category, index) => `
+        <label class="category-row">
+          Category ${index + 2}
+          <select data-extra-category data-category-index="${index + 1}">
+            ${categorySelectOptions(category)}
+          </select>
+          <button class="mini-button danger" type="button" data-remove-category="${index + 1}">Remove</button>
+        </label>
+      `).join("")}
+    </div>
+    <button class="mini-button" type="button" data-add-category ${canAdd ? "" : "disabled"}>+ Add category</button>
+  `;
+}
+
+function renderCategoryOptions(selectedValue = "", selectedCategories = null) {
   const select = document.getElementById("category");
   if (!select) return;
   const categories = projectCategories();
   const selected = categories.includes(selectedValue) ? selectedValue : categories[0];
-  select.innerHTML = categories
-    .map((category) => `<option${category === selected ? " selected" : ""}>${escapeHtml(category)}</option>`)
-    .join("");
+  const categoryList = selectedCategories
+    ? normalizeProjectCategories(selectedCategories, selected)
+    : normalizeProjectCategories(currentProjectCategorySelections(), selected);
+  select.innerHTML = categorySelectOptions(selected);
+  renderCategoryBuilder(categoryList);
+}
+
+function setupCategoryBuilderControls() {
+  const categorySelect = document.getElementById("category");
+  const builder = document.getElementById("category-builder");
+  if (!categorySelect || !builder) return;
+
+  categorySelect.addEventListener("change", () => {
+    renderCategoryBuilder(currentProjectCategorySelections());
+    renderPreview();
+  });
+
+  builder.addEventListener("change", (event) => {
+    if (!event.target.closest("[data-extra-category]")) return;
+    renderCategoryBuilder(currentProjectCategorySelections());
+    renderPreview();
+  });
+
+  builder.addEventListener("click", (event) => {
+    const removeButton = event.target.closest("[data-remove-category]");
+    if (removeButton) {
+      const selections = currentProjectCategorySelections();
+      selections.splice(Number(removeButton.dataset.removeCategory), 1);
+      renderCategoryBuilder(selections);
+      renderPreview();
+      return;
+    }
+
+    const addButton = event.target.closest("[data-add-category]");
+    if (!addButton) return;
+    const selections = currentProjectCategorySelections();
+    const nextCategory = projectCategories().find((category) => !selections.includes(category));
+    if (!nextCategory) return;
+    selections.push(nextCategory);
+    renderCategoryBuilder(selections);
+    renderPreview();
+  });
 }
 
 function projectGradient(project) {
-  const accent = project.accent || categoryColor(project.category);
+  const accent = project.accent || categoryColor(projectPrimaryCategory(project));
   return `linear-gradient(135deg, ${accent}, #111827)`;
 }
 
@@ -1217,7 +1330,7 @@ function softwareCards(tools = "") {
 
 function coverArt(project, size = "large") {
   const titleWords = project.title.split(" ").slice(0, 5).join(" ");
-  const accent = project.accent || categoryColor(project.category);
+  const accent = project.accent || categoryColor(projectPrimaryCategory(project));
 
   return `
     <div class="cover-art ${size}" style="--cover-accent: ${accent};">
@@ -1226,7 +1339,7 @@ function coverArt(project, size = "large") {
       <span class="cover-dot dot-two"></span>
       <span class="cover-line line-one"></span>
       <span class="cover-line line-two"></span>
-      <span class="cover-tag">${escapeHtml(normalizeMediaType(project.mediaType) || project.category)}</span>
+      <span class="cover-tag">${escapeHtml(normalizeMediaType(project.mediaType) || projectPrimaryCategory(project))}</span>
       <strong>${escapeHtml(titleWords)}</strong>
       <em>${escapeHtml(project.year || "Project")}</em>
     </div>
@@ -1245,7 +1358,7 @@ function projectCard(project, collection = "work") {
       <div class="project-thumb" style="background: ${projectGradient(project)}">${image}</div>
       <div class="project-body">
         <div class="project-meta">
-          <span class="pill">${escapeHtml(project.category)}</span>
+          ${categoryPills(project)}
           <span class="pill">${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</span>
           ${project.year ? `<span class="pill">${escapeHtml(project.year)}</span>` : ""}
         </div>
@@ -1281,7 +1394,7 @@ function featuredProjectCard(product) {
     <article class="featured-product-card" data-featured-id="${escapeHtml(product.id)}" role="button" tabindex="0" aria-label="Open ${escapeHtml(product.title)} preview">
       <div class="featured-product-thumb" style="background: ${projectGradient(product)}">${image}</div>
       <div class="featured-product-body">
-        <span class="pill">${escapeHtml(product.category || "Featured")}</span>
+        <div class="project-meta">${categoryPills(product, "Featured")}</div>
         <h3>${escapeHtml(product.title)}</h3>
         <p>${escapeHtml(product.summary || "Featured creative project")}</p>
         <div class="tool-row">${toolIcons(product.tools)}</div>
@@ -1329,7 +1442,7 @@ function adminRow(project, collection = "work") {
       <div class="admin-row-thumb" style="background: ${projectGradient(project)}">${image}</div>
       <div>
         <strong>${escapeHtml(project.title)}</strong>
-        <small>${escapeHtml(source)} · ${escapeHtml(project.category)} · ${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</small>
+        <small>${escapeHtml(source)} · ${escapeHtml(projectCategoryLabel(project))} · ${escapeHtml(normalizeMediaType(project.mediaType) || "Work")}</small>
         ${isDirty ? renderDirtyBadge() : ""}
       </div>
       <div class="row-actions">
@@ -1453,22 +1566,24 @@ function setupHome() {
 }
 
 function featuredFilters() {
-  const filters = Array.isArray(state.siteContent.home?.featuredFilters) && state.siteContent.home.featuredFilters.length
+  const configuredFilters = Array.isArray(state.siteContent.home?.featuredFilters) && state.siteContent.home.featuredFilters.length
     ? state.siteContent.home.featuredFilters
     : defaultSiteContent.home.featuredFilters;
+  const usedFeaturedCategories = state.featuredProducts.flatMap(projectCategoriesFor);
+  const filters = [...new Set([...configuredFilters, ...usedFeaturedCategories].filter(Boolean))];
   return filters.includes("All") ? filters : ["All", ...filters];
 }
 
 function featuredProductMatchesFilter(product) {
-  return state.featuredFilter === "All" || product.category === state.featuredFilter;
+  return projectHasCategory(product, state.featuredFilter);
 }
 
 function featuredProjectMatchesPageFilter(project) {
   if (state.featuredPageFilter === "All") return true;
   if (state.featuredPageFilter === "Social Media") {
-    return ["Social Media", "Campaign Design", "Graphic Design"].includes(project.category);
+    return projectCategoriesFor(project).some((category) => ["Social Media", "Campaign Design", "Graphic Design"].includes(category));
   }
-  return project.category === state.featuredPageFilter;
+  return projectHasCategory(project, state.featuredPageFilter);
 }
 
 function homeFeaturedProjects() {
@@ -1575,7 +1690,7 @@ function featuredProductPreviewItem(product) {
     src: product.image || primaryItem.src || primaryItem.url || "",
     videoUrl: product.mediaType === "Video" || primaryItem.type === "Video" ? product.link || primaryItem.videoUrl || "" : "",
     title: primaryItem.title || product.title,
-    description: primaryItem.description || product.summary || product.impact || product.category || "Featured project"
+    description: primaryItem.description || product.summary || product.impact || projectCategoryLabel(product) || "Featured project"
   };
 }
 
@@ -1665,7 +1780,7 @@ function filteredFeaturedPageProjects() {
     const categoryMatch = featuredProjectMatchesPageFilter(project);
     const text = [
       project.title,
-      project.category,
+      projectCategoryLabel(project),
       project.mediaType,
       project.role,
       project.tools,
@@ -1935,10 +2050,10 @@ function setupProjectDetail(collection) {
   const backText = experience ? `Back to ${experience.company}` : "Back to Featured Projects";
   const eyebrow = [
     experience?.company || "Featured Project",
-    project.category,
+    projectCategoryLabel(project),
     project.year
   ].filter(Boolean).join(" · ");
-  const heroAccent = project.accent || experience?.accent || categoryColor(project.category);
+  const heroAccent = project.accent || experience?.accent || categoryColor(projectPrimaryCategory(project));
 
   detail.innerHTML = `
     <a class="back-link" href="${backHref}">← ${escapeHtml(backText)}</a>
@@ -1991,7 +2106,7 @@ function setupProjectDetail(collection) {
 }
 
 function renderFilters(projects) {
-  const categories = ["All", ...new Set(projects.map((project) => project.category))];
+  const categories = ["All", ...new Set(projects.flatMap(projectCategoriesFor))];
   const filterGroup = document.getElementById("filter-group");
   filterGroup.innerHTML = categories
     .map((category) => `
@@ -2012,10 +2127,10 @@ function renderFilters(projects) {
 
 function filteredProjects(projects) {
   return projects.filter((project) => {
-    const categoryMatch = state.filter === "All" || project.category === state.filter;
+    const categoryMatch = projectHasCategory(project, state.filter);
     const text = [
       project.title,
-      project.category,
+      projectCategoryLabel(project),
       project.mediaType,
       project.role,
       project.tools,
@@ -2120,7 +2235,7 @@ function showMediaModal(item, project) {
       </div>
       <div class="lightbox-caption">
         <strong>${escapeHtml(item.title || project.title)}</strong>
-        <span>${escapeHtml(item.description || `${project.category} · ${project.year || "Project"}`)}</span>
+        <span>${escapeHtml(item.description || `${projectCategoryLabel(project)} · ${project.year || "Project"}`)}</span>
       </div>
     </div>
   `;
@@ -3684,6 +3799,7 @@ function setupAdmin() {
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
   document.getElementById("clear-experience-form").addEventListener("click", clearExperienceForm);
   document.getElementById("admin-experience-list").addEventListener("click", handleAdminExperienceAction);
+  setupCategoryBuilderControls();
   setupDetailMediaControls();
   form.addEventListener("input", renderPreview);
   form.addEventListener("change", renderPreview);
@@ -3777,13 +3893,15 @@ function placementUsesFeatured(placement) {
 
 function formProject() {
   const placement = document.getElementById("projectPlacement").value;
+  const categories = currentProjectCategorySelections();
   return {
     id: document.getElementById("project-id").value || crypto.randomUUID(),
     placement,
     experienceId: placementUsesWork(placement) ? document.getElementById("experience").value : "",
     homeSlot: placementUsesFeatured(placement) ? normalizeFeaturedHomeSlot(document.getElementById("featuredSlot").value) : "",
     title: document.getElementById("title").value.trim() || "Untitled project",
-    category: document.getElementById("category").value,
+    category: categories[0],
+    categories,
     mediaType: normalizeMediaType(document.getElementById("mediaType").value),
     role: document.getElementById("role").value.trim(),
     year: document.getElementById("year").value.trim(),
@@ -3909,7 +4027,7 @@ function clearForm() {
   document.getElementById("project-collection").value = "";
   document.getElementById("projectPlacement").value = "featured";
   document.getElementById("featuredSlot").value = "";
-  renderCategoryOptions();
+  renderCategoryOptions(DEFAULT_PROJECT_CATEGORIES[0], [DEFAULT_PROJECT_CATEGORIES[0]]);
   document.getElementById("accent").value = "#0a6f6b";
   document.getElementById("imageFit").value = "cover";
   document.getElementById("imagePosition").value = "center center";
@@ -3991,8 +4109,8 @@ async function handleAdminListAction(event) {
   document.getElementById("experience").value = projectForForm.experienceId || "";
   document.getElementById("featuredSlot").value = normalizeFeaturedHomeSlot(projectForForm.homeSlot);
   document.getElementById("title").value = projectForForm.title;
-  renderCategoryOptions(projectForForm.category);
-  document.getElementById("category").value = projectForForm.category;
+  const selectedCategories = projectCategoriesFor(projectForForm);
+  renderCategoryOptions(selectedCategories[0], selectedCategories);
   document.getElementById("mediaType").value = normalizeMediaType(projectForForm.mediaType);
   document.getElementById("role").value = projectForForm.role;
   document.getElementById("year").value = projectForForm.year;
@@ -4001,7 +4119,7 @@ async function handleAdminListAction(event) {
   document.getElementById("whatPrernaDid").value = projectForForm.whatPrernaDid || "";
   document.getElementById("impact").value = projectForForm.impact;
   document.getElementById("link").value = projectForForm.link;
-  document.getElementById("accent").value = projectForForm.accent || categoryColor(projectForForm.category);
+  document.getElementById("accent").value = projectForForm.accent || categoryColor(projectPrimaryCategory(projectForForm));
   document.getElementById("imageFit").value = normalizeImageFit(projectForForm.imageFit);
   document.getElementById("imagePosition").value = normalizeImagePosition(projectForForm.imagePosition);
   document.getElementById("imageZoom").value = normalizeImageZoom(projectForForm.imageZoom);
