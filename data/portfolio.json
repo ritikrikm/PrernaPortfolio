@@ -15,46 +15,6 @@
   ],
   "projects": [
     {
-      "id": "1d3d57f7-4c11-4786-aa4e-bb43f480d71f",
-      "placement": "both",
-      "experienceId": "msl-publicis-groupe",
-      "homeSlot": "",
-      "title": "'HunarSePehchaan' Campaign",
-      "category": "Campaign Design",
-      "categories": [
-        "Campaign Design",
-        "Social Media",
-        "Multimedia"
-      ],
-      "mediaType": "Multimedia",
-      "role": "Designer",
-      "year": "2024",
-      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
-      "summary": "#HunarSePehchaan (Recognition Through Skills) was an International Women’s Day campaign by the Anil Agarwal Foundation that celebrated women whose identities are shaped by their talent, skills, and determination. The campaign highlighted the importance of skill development, self-reliance, and economic empowerment, encouraging society to recognize women not just for who they are, but for what they achieve through their capabilities.\n\nBackground:\nThrough the skill development initiatives for women at Nand Ghar, CSR Projects at Vedanta Foundation, and CSR Projects at Vedanta Business Units (TARA, FACOR Sathi Jivika, Project Sakhi) etc, Vedanta and Anil Agarwal Foundation are creating opportunities for self-reliance and independence. They are creating sustainable livelihoods and driving a positive change in the communities. These initiatives also align with this year’s UN theme for International Women’s Day, ‘Invest in Women: Accelerate Progress,’ which highlights investing in women to create equal opportunities as an important step to achieve gender equality.\n\nInsight:\nBeyond income, the women who have gained skills from these initiatives have also gained more confidence and feel more respected in the community. They are known for the work that they’re doing. Their skills have given them an identity. \n\nMessaging:\nThe messaging will highlight the role of skill development and financial independence in women’s empowerment. Through human-interest stories, data, and user interactions, we will emphasize on the importance of creating access to upgrading women’s knowledge as the first step to creating better livelihoods and enabling them to lead more fulfilling lives.",
-      "whatPrernaDid": "Developed the creative direction for the Hunar Se Pehchaan campaign by creating campaign concepts, moodboards, and visual storytelling frameworks. Produced logo animations and narrative-driven content that showcased the impact of Anil Agarwal Foundation and Nand Ghar's initiatives in women's skill development, empowerment, and community transformation across digital platforms.",
-      "impact": "",
-      "link": "",
-      "accent": "#0a6f6b",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Campaign Ideation",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Final Output",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
-      "mediaGroups": {
-        "initialSketch": [],
-        "finalOutput": []
-      },
-      "image": ""
-    },
-    {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
       "placement": "both",
       "experienceId": "msl-publicis-groupe",
@@ -95,56 +55,80 @@
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
-            "description": "Pre-buzz teaser"
+            "description": "Pre-buzz teaser",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Video",
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/1fO_Q_rn6wEDhFqrTDfjRvginoHVobaRQ/view?usp=drive_link",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Video",
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/10bWxTJUR6EVnYcfe7CviUM6pM3yZujod/view?usp=sharing",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Video",
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/1ZXyeHeqgRfxL0_1L2oYOf9brz7FSqTBU/view?usp=drive_link",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/719275f3f2fb63f0671e.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/df60f8480a5f8e10e5af.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/7d0424549565fe287dc8.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/faee0c2ddb562a6b21a0.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           }
         ],
         "finalOutput": [
@@ -153,25 +137,74 @@
             "title": "",
             "src": "assets/uploads/ddcbe9b44d85c8702dc6.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/5961906d102cfdb8186e.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/3de461ec612e5e8b06cf.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           }
         ]
       },
       "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
+    },
+    {
+      "id": "1d3d57f7-4c11-4786-aa4e-bb43f480d71f",
+      "placement": "both",
+      "experienceId": "msl-publicis-groupe",
+      "homeSlot": "",
+      "title": "'HunarSePehchaan' Campaign",
+      "category": "Campaign Design",
+      "categories": [
+        "Campaign Design",
+        "Social Media",
+        "Multimedia"
+      ],
+      "mediaType": "Multimedia",
+      "role": "Designer",
+      "year": "2024",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
+      "summary": "#HunarSePehchaan (Recognition Through Skills) was an International Women’s Day campaign by the Anil Agarwal Foundation that celebrated women whose identities are shaped by their talent, skills, and determination. The campaign highlighted the importance of skill development, self-reliance, and economic empowerment, encouraging society to recognize women not just for who they are, but for what they achieve through their capabilities.\n\nBackground:\nThrough the skill development initiatives for women at Nand Ghar, CSR Projects at Vedanta Foundation, and CSR Projects at Vedanta Business Units (TARA, FACOR Sathi Jivika, Project Sakhi) etc, Vedanta and Anil Agarwal Foundation are creating opportunities for self-reliance and independence. They are creating sustainable livelihoods and driving a positive change in the communities. These initiatives also align with this year’s UN theme for International Women’s Day, ‘Invest in Women: Accelerate Progress,’ which highlights investing in women to create equal opportunities as an important step to achieve gender equality.\n\nInsight:\nBeyond income, the women who have gained skills from these initiatives have also gained more confidence and feel more respected in the community. They are known for the work that they’re doing. Their skills have given them an identity. \n\nMessaging:\nThe messaging will highlight the role of skill development and financial independence in women’s empowerment. Through human-interest stories, data, and user interactions, we will emphasize on the importance of creating access to upgrading women’s knowledge as the first step to creating better livelihoods and enabling them to lead more fulfilling lives.",
+      "whatPrernaDid": "Developed the creative direction for the Hunar Se Pehchaan campaign by creating campaign concepts, moodboards, and visual storytelling frameworks. Produced logo animations and narrative-driven content that showcased the impact of Anil Agarwal Foundation and Nand Ghar's initiatives in women's skill development, empowerment, and community transformation across digital platforms.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Campaign Ideation",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [],
+        "finalOutput": []
+      },
+      "image": ""
     }
   ],
   "portfolioProjects": [
@@ -278,46 +311,6 @@
   ],
   "featuredProducts": [
     {
-      "id": "1d3d57f7-4c11-4786-aa4e-bb43f480d71f",
-      "placement": "both",
-      "experienceId": "msl-publicis-groupe",
-      "homeSlot": "",
-      "title": "'HunarSePehchaan' Campaign",
-      "category": "Campaign Design",
-      "categories": [
-        "Campaign Design",
-        "Social Media",
-        "Multimedia"
-      ],
-      "mediaType": "Multimedia",
-      "role": "Designer",
-      "year": "2024",
-      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
-      "summary": "#HunarSePehchaan (Recognition Through Skills) was an International Women’s Day campaign by the Anil Agarwal Foundation that celebrated women whose identities are shaped by their talent, skills, and determination. The campaign highlighted the importance of skill development, self-reliance, and economic empowerment, encouraging society to recognize women not just for who they are, but for what they achieve through their capabilities.\n\nBackground:\nThrough the skill development initiatives for women at Nand Ghar, CSR Projects at Vedanta Foundation, and CSR Projects at Vedanta Business Units (TARA, FACOR Sathi Jivika, Project Sakhi) etc, Vedanta and Anil Agarwal Foundation are creating opportunities for self-reliance and independence. They are creating sustainable livelihoods and driving a positive change in the communities. These initiatives also align with this year’s UN theme for International Women’s Day, ‘Invest in Women: Accelerate Progress,’ which highlights investing in women to create equal opportunities as an important step to achieve gender equality.\n\nInsight:\nBeyond income, the women who have gained skills from these initiatives have also gained more confidence and feel more respected in the community. They are known for the work that they’re doing. Their skills have given them an identity. \n\nMessaging:\nThe messaging will highlight the role of skill development and financial independence in women’s empowerment. Through human-interest stories, data, and user interactions, we will emphasize on the importance of creating access to upgrading women’s knowledge as the first step to creating better livelihoods and enabling them to lead more fulfilling lives.",
-      "whatPrernaDid": "Developed the creative direction for the Hunar Se Pehchaan campaign by creating campaign concepts, moodboards, and visual storytelling frameworks. Produced logo animations and narrative-driven content that showcased the impact of Anil Agarwal Foundation and Nand Ghar's initiatives in women's skill development, empowerment, and community transformation across digital platforms.",
-      "impact": "",
-      "link": "",
-      "accent": "#0a6f6b",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Campaign Ideation",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Final Output",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
-      "mediaGroups": {
-        "initialSketch": [],
-        "finalOutput": []
-      },
-      "image": ""
-    },
-    {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
       "placement": "both",
       "experienceId": "msl-publicis-groupe",
@@ -358,56 +351,80 @@
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/1PNgA5CgL3j_ayNlLeSzgu3wB_h55Xfjv/view?usp=drive_link",
-            "description": "Pre-buzz teaser"
+            "description": "Pre-buzz teaser",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Video",
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/1fO_Q_rn6wEDhFqrTDfjRvginoHVobaRQ/view?usp=drive_link",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Video",
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/10bWxTJUR6EVnYcfe7CviUM6pM3yZujod/view?usp=sharing",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Video",
             "title": "",
             "src": "",
             "videoUrl": "https://drive.google.com/file/d/1ZXyeHeqgRfxL0_1L2oYOf9brz7FSqTBU/view?usp=drive_link",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/719275f3f2fb63f0671e.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/df60f8480a5f8e10e5af.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/7d0424549565fe287dc8.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/faee0c2ddb562a6b21a0.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           }
         ],
         "finalOutput": [
@@ -416,25 +433,74 @@
             "title": "",
             "src": "assets/uploads/ddcbe9b44d85c8702dc6.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/5961906d102cfdb8186e.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           },
           {
             "type": "Image",
             "title": "",
             "src": "assets/uploads/3de461ec612e5e8b06cf.webp",
             "videoUrl": "",
-            "description": ""
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           }
         ]
       },
       "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
+    },
+    {
+      "id": "1d3d57f7-4c11-4786-aa4e-bb43f480d71f",
+      "placement": "both",
+      "experienceId": "msl-publicis-groupe",
+      "homeSlot": "",
+      "title": "'HunarSePehchaan' Campaign",
+      "category": "Campaign Design",
+      "categories": [
+        "Campaign Design",
+        "Social Media",
+        "Multimedia"
+      ],
+      "mediaType": "Multimedia",
+      "role": "Designer",
+      "year": "2024",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
+      "summary": "#HunarSePehchaan (Recognition Through Skills) was an International Women’s Day campaign by the Anil Agarwal Foundation that celebrated women whose identities are shaped by their talent, skills, and determination. The campaign highlighted the importance of skill development, self-reliance, and economic empowerment, encouraging society to recognize women not just for who they are, but for what they achieve through their capabilities.\n\nBackground:\nThrough the skill development initiatives for women at Nand Ghar, CSR Projects at Vedanta Foundation, and CSR Projects at Vedanta Business Units (TARA, FACOR Sathi Jivika, Project Sakhi) etc, Vedanta and Anil Agarwal Foundation are creating opportunities for self-reliance and independence. They are creating sustainable livelihoods and driving a positive change in the communities. These initiatives also align with this year’s UN theme for International Women’s Day, ‘Invest in Women: Accelerate Progress,’ which highlights investing in women to create equal opportunities as an important step to achieve gender equality.\n\nInsight:\nBeyond income, the women who have gained skills from these initiatives have also gained more confidence and feel more respected in the community. They are known for the work that they’re doing. Their skills have given them an identity. \n\nMessaging:\nThe messaging will highlight the role of skill development and financial independence in women’s empowerment. Through human-interest stories, data, and user interactions, we will emphasize on the importance of creating access to upgrading women’s knowledge as the first step to creating better livelihoods and enabling them to lead more fulfilling lives.",
+      "whatPrernaDid": "Developed the creative direction for the Hunar Se Pehchaan campaign by creating campaign concepts, moodboards, and visual storytelling frameworks. Produced logo animations and narrative-driven content that showcased the impact of Anil Agarwal Foundation and Nand Ghar's initiatives in women's skill development, empowerment, and community transformation across digital platforms.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Campaign Ideation",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [],
+        "finalOutput": []
+      },
+      "image": ""
     }
   ],
   "siteContent": {
