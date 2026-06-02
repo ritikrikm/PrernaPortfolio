@@ -1765,6 +1765,12 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
 }
 
+.campaign-media-grid.is-multiple .campaign-media-card {
+  width: fit-content;
+  max-width: 100%;
+  justify-self: center;
+}
+
 .campaign-media-card {
   display: flex;
   min-width: 0;
@@ -1832,16 +1838,21 @@ h3 {
 
 .campaign-media-frame.has-image:not(.is-video) {
   aspect-ratio: auto;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 .campaign-media-frame.has-image:not(.is-video) img {
+  width: auto;
+  max-width: 100%;
   height: auto;
   max-height: min(76vh, 760px);
   object-fit: contain;
 }
 
 .campaign-media-grid.is-multiple .campaign-media-frame.has-image:not(.is-video) img {
-  max-height: 520px;
+  max-height: min(72vh, 720px);
 }
 
 .campaign-media-frame img {
