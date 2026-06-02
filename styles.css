@@ -1559,6 +1559,48 @@ h3 {
   font-weight: 900;
 }
 
+.brand-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.brand-icon-letter text {
+  fill: currentColor;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.brand-icon-figma {
+  width: 21px;
+  height: 31px;
+}
+
+.brand-icon-instagram {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.brand-icon-camera {
+  fill: none;
+  stroke: currentColor;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.brand-icon-procreate {
+  fill: currentColor;
+}
+
+.tool-logo-fallback {
+  line-height: 1;
+}
+
 .pill {
   padding: 6px 9px;
   color: var(--ink);
@@ -1689,6 +1731,16 @@ h3 {
   font-weight: 900;
 }
 
+.software-logo .brand-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.software-logo .brand-icon-figma {
+  width: 22px;
+  height: 33px;
+}
+
 .software-card strong {
   line-height: 1.15;
 }
@@ -1725,7 +1777,31 @@ h3 {
 
 .tool-figma .software-logo,
 .tool-figma.tool-icon {
-  background: linear-gradient(135deg, #f24e1e, #a259ff 45%, #1abcfe);
+  background: #fff;
+}
+
+.tool-adobe-firefly .software-logo,
+.tool-adobe-firefly.tool-icon {
+  color: #fff9c7;
+  background: linear-gradient(135deg, #3b0764, #7c3aed 55%, #f59e0b);
+}
+
+.tool-runway .software-logo,
+.tool-runway.tool-icon {
+  color: #e8fff2;
+  background: #111827;
+}
+
+.tool-instagram .software-logo,
+.tool-instagram.tool-icon {
+  color: #fff;
+  background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af 75%, #515bd4);
+}
+
+.tool-photography .software-logo,
+.tool-photography.tool-icon {
+  color: #fef3c7;
+  background: #1f2937;
 }
 
 .tool-procreate .software-logo,

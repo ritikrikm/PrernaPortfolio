@@ -1226,21 +1226,48 @@ function isVideoProject(project) {
   return (project.mediaType || "").toLowerCase() === "video";
 }
 
+const TOOL_LOGOS = {
+  "after effects": `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Ae</text></svg>`,
+  firefly: `<svg class="brand-icon brand-icon-firefly" viewBox="0 0 44 44" aria-hidden="true"><path d="M22 7l3.8 10.2L36 21l-10.2 3.8L22 35l-3.8-10.2L8 21l10.2-3.8L22 7z"/><path d="M33 6l1.4 3.6L38 11l-3.6 1.4L33 16l-1.4-3.6L28 11l3.6-1.4L33 6z"/></svg>`,
+  figma: `<svg class="brand-icon brand-icon-figma" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5C19 23.253 23.253 19 28.5 19S38 23.253 38 28.5 33.747 38 28.5 38 19 33.747 19 28.5z"/><path fill="#0ACF83" d="M0 47.5C0 42.253 4.253 38 9.5 38H19v9.5C19 52.747 14.747 57 9.5 57S0 52.747 0 47.5z"/><path fill="#FF7262" d="M19 0v19h9.5C33.747 19 38 14.747 38 9.5S33.747 0 28.5 0H19z"/><path fill="#F24E1E" d="M0 9.5C0 14.747 4.253 19 9.5 19H19V0H9.5C4.253 0 0 4.253 0 9.5z"/><path fill="#A259FF" d="M0 28.5C0 33.747 4.253 38 9.5 38H19V19H9.5C4.253 19 0 23.253 0 28.5z"/></svg>`,
+  illustrator: `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Ai</text></svg>`,
+  indesign: `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Id</text></svg>`,
+  instagram: `<svg class="brand-icon brand-icon-instagram" viewBox="0 0 44 44" aria-hidden="true"><rect x="10" y="10" width="24" height="24" rx="7"/><circle cx="22" cy="22" r="6"/><circle cx="29" cy="15" r="2"/></svg>`,
+  photography: `<svg class="brand-icon brand-icon-camera" viewBox="0 0 44 44" aria-hidden="true"><path d="M13 16h5l2-3h8l2 3h4a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4h3z"/><circle cx="22" cy="26" r="7"/></svg>`,
+  photoshop: `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Ps</text></svg>`,
+  "premiere pro": `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Pr</text></svg>`,
+  procreate: `<svg class="brand-icon brand-icon-procreate" viewBox="0 0 44 44" aria-hidden="true"><path d="M8 31c6-10 11-17 24-23-5 12-12 19-23 25l-1-2z"/><path d="M11 34c5 3 14 2 20-4 6-6 8-15 4-20-1 8-7 20-24 24z"/></svg>`,
+  runway: `<svg class="brand-icon brand-icon-runway" viewBox="0 0 44 44" aria-hidden="true"><path d="M10 12h13c7 0 11 4 11 10s-4 10-11 10H10V12zm8 7v7h5c3 0 5-1 5-3.5S26 19 23 19h-5z"/></svg>`
+};
+
+function normalizeToolName(tool = "") {
+  const clean = tool
+    .toLowerCase()
+    .replace(/\badobe\b/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (clean === "premiere pro" || clean === "premiere") return "premiere pro";
+  if (clean === "after effects" || clean === "after effect") return "after effects";
+  if (clean === "in design") return "indesign";
+  return clean;
+}
+
 function toolAbbreviation(tool) {
   const known = {
-    Photoshop: "Ps",
-    Illustrator: "Ai",
-    InDesign: "Id",
-    "After Effects": "Ae",
-    "Premiere Pro": "Pr",
-    Figma: "Fi",
-    Procreate: "Pc",
-    "Adobe Firefly": "Af",
-    Runway: "Ru",
-    Photography: "Ph",
-    Instagram: "Ig"
+    photoshop: "Ps",
+    illustrator: "Ai",
+    indesign: "Id",
+    "after effects": "Ae",
+    "premiere pro": "Pr",
+    figma: "Fi",
+    procreate: "Pc",
+    firefly: "Af",
+    runway: "Ru",
+    photography: "Ph",
+    instagram: "Ig"
   };
-  return known[tool] || tool.slice(0, 2);
+  return known[normalizeToolName(tool)] || tool.slice(0, 2);
 }
 
 function toolList(tools = "") {
@@ -1254,12 +1281,17 @@ function toolClass(tool = "") {
   return tool.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "tool";
 }
 
+function toolLogoMarkup(tool = "") {
+  return TOOL_LOGOS[normalizeToolName(tool)]
+    || `<span class="tool-logo-fallback">${escapeHtml(toolAbbreviation(tool))}</span>`;
+}
+
 function toolIcons(tools = "") {
   return toolList(tools)
     .slice(0, 6)
     .map((tool) => `
       <span class="tool-icon tool-${escapeHtml(toolClass(tool))}" title="${escapeHtml(tool)}" aria-label="${escapeHtml(tool)}">
-        ${escapeHtml(toolAbbreviation(tool))}
+        ${toolLogoMarkup(tool)}
       </span>
     `)
     .join("");
@@ -1274,7 +1306,7 @@ function softwareCards(tools = "") {
   return toolsUsed
     .map((tool) => `
       <article class="software-card tool-${escapeHtml(toolClass(tool))}">
-        <span class="software-logo">${escapeHtml(toolAbbreviation(tool))}</span>
+        <span class="software-logo">${toolLogoMarkup(tool)}</span>
         <strong>${escapeHtml(tool)}</strong>
       </article>
     `)
