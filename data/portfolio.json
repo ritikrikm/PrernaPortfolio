@@ -68,7 +68,7 @@
       "detailImageZoom": "100",
       "mediaGroupMeta": {
         "initialSketch": {
-          "label": "Devan's Coffee",
+          "label": "Social Content",
           "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
         },
         "finalOutput": {
@@ -126,7 +126,7 @@
             "src": "assets/uploads/494bb075f016b499eeee.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "contain",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "105"
           },
@@ -136,9 +136,9 @@
             "src": "assets/uploads/29d8874fe9f262cd208a.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "contain",
+            "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "105"
           }
         ]
       },
@@ -995,7 +995,7 @@
       "detailImageZoom": "100",
       "mediaGroupMeta": {
         "initialSketch": {
-          "label": "Devan's Coffee",
+          "label": "Social Content",
           "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
         },
         "finalOutput": {
@@ -1053,7 +1053,7 @@
             "src": "assets/uploads/494bb075f016b499eeee.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "contain",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "105"
           },
@@ -1063,9 +1063,9 @@
             "src": "assets/uploads/29d8874fe9f262cd208a.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "contain",
+            "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "105"
           }
         ]
       },
