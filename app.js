@@ -4,6 +4,7 @@ const DRAFT_STORE_VERSION = 2;
 const ADMIN_SESSION_KEY = "prerna-portfolio-admin-unlocked";
 const ADMIN_PASSWORD_KEY = "prerna-portfolio-admin-password";
 const PREVIEW_SESSION_KEY = "prerna-portfolio-preview-drafts";
+const THEME_STORE_KEY = "prerna-portfolio-theme";
 const LOCAL_ADMIN_PASSWORD = "prerna-admin";
 const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
@@ -374,6 +375,50 @@ function setText(selector, value, key = "") {
     if (color) element.style.color = color;
     else element.style.removeProperty("color");
   }
+}
+
+function storedTheme() {
+  try {
+    return localStorage.getItem(THEME_STORE_KEY) === "night" ? "night" : "day";
+  } catch {
+    return "day";
+  }
+}
+
+function persistTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORE_KEY, theme);
+  } catch {
+    // Theme still applies for the current page if browser storage is unavailable.
+  }
+}
+
+function syncThemeToggle(theme = storedTheme()) {
+  const button = document.getElementById("theme-toggle");
+  if (!button) return;
+  const isNight = theme === "night";
+  button.setAttribute("aria-pressed", String(isNight));
+  button.setAttribute("aria-label", isNight ? "Switch to day mode" : "Switch to night mode");
+  button.title = isNight ? "Switch to day mode" : "Switch to night mode";
+}
+
+function applyTheme(theme = storedTheme()) {
+  const nextTheme = theme === "night" ? "night" : "day";
+  document.body.classList.toggle("theme-night", nextTheme === "night");
+  document.body.dataset.theme = nextTheme;
+  syncThemeToggle(nextTheme);
+}
+
+function setupThemeToggle() {
+  const button = document.getElementById("theme-toggle");
+  if (!button || button.dataset.themeReady === "true") return;
+  button.dataset.themeReady = "true";
+  button.addEventListener("click", () => {
+    const nextTheme = document.body.classList.contains("theme-night") ? "day" : "night";
+    persistTheme(nextTheme);
+    applyTheme(nextTheme);
+  });
+  applyTheme(storedTheme());
 }
 
 function updateResumeLinks() {
@@ -4676,5 +4721,6 @@ document.addEventListener("click", (event) => {
   renderRoute();
 });
 
+setupThemeToggle();
 window.addEventListener("hashchange", renderRoute);
 renderRoute();

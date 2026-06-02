@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaigns.">
     <title>Prerna Sharma | Graphic Designer</title>
-    <link rel="stylesheet" href="styles.css?v=software-icons">
+    <link rel="stylesheet" href="styles.css?v=night-mode-admin-fix">
   </head>
   <body>
     <a class="skip-link" href="#app">Skip to site</a>
@@ -41,13 +41,22 @@
         </span>
       </a>
 
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="#/" data-route="/">Home</a>
-        <a href="#/featured-projects" data-route="/featured-projects" data-home-section="featured">Featured Projects</a>
-        <a href="#/work" data-route="/work" data-home-section="work">Work</a>
-        <a href="#/about" data-route="/about">About</a>
-        <a href="#/contact" data-route="/contact">Contact</a>
-      </nav>
+      <div class="header-actions">
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#/" data-route="/">Home</a>
+          <a href="#/featured-projects" data-route="/featured-projects" data-home-section="featured">Featured Projects</a>
+          <a href="#/work" data-route="/work" data-home-section="work">Work</a>
+          <a href="#/about" data-route="/about">About</a>
+          <a href="#/contact" data-route="/contact">Contact</a>
+        </nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to night mode" title="Switch to night mode">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-sun"></span>
+            <span class="theme-toggle-moon"></span>
+          </span>
+          <span class="theme-toggle-knob" aria-hidden="true"></span>
+        </button>
+      </div>
     </header>
 
     <main id="app" class="app-shell" tabindex="-1"></main>
@@ -670,6 +679,6 @@
       </section>
     </template>
 
-    <script src="app.js?v=project-detail-perf"></script>
+    <script src="app.js?v=night-mode-admin-fix"></script>
   </body>
 </html>
