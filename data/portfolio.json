@@ -38,6 +38,94 @@
   ],
   "projects": [
     {
+      "id": "c0380b20-5735-4db9-9c7a-c6bcd495265f",
+      "placement": "both",
+      "experienceId": "cultreboat",
+      "homeSlot": "hidden",
+      "featuredRank": "",
+      "title": "The Monk World",
+      "category": "Social Media",
+      "categories": [
+        "Social Media",
+        "Graphic Design"
+      ],
+      "mediaType": "Multimedia",
+      "role": "",
+      "year": "2023",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
+      "summary": "The Monk World is a premium eyewear brand that blends luxury, craftsmanship, and individuality through limited-edition optical frames and sunglasses. The brand aims to position eyewear as a statement of personal style rather than just a functional accessory, emphasizing exclusivity, design, and self-expression.",
+      "whatPrernaDid": "For The Monk World, I conceptualized and designed social media content that showcased the brand's premium eyewear collections, craftsmanship, and philosophy of individuality. Through storytelling-led creatives and visually cohesive feed designs, the content reinforced the brand's luxury positioning and unique identity.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Social Media grid",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/a6110466d5edd7e858bc.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/aed3f3fdd9d3a735a45f.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/5e193345f0f55b8c0b5c.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/e287f3a2d9aa1dbc4948.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/cd6a3266c94c89397692.webp"
+    },
+    {
       "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
       "placement": "both",
       "experienceId": "cultreboat",
@@ -963,6 +1051,94 @@
         ]
       },
       "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
+    },
+    {
+      "id": "c0380b20-5735-4db9-9c7a-c6bcd495265f",
+      "placement": "both",
+      "experienceId": "cultreboat",
+      "homeSlot": "hidden",
+      "featuredRank": "",
+      "title": "The Monk World",
+      "category": "Social Media",
+      "categories": [
+        "Social Media",
+        "Graphic Design"
+      ],
+      "mediaType": "Multimedia",
+      "role": "",
+      "year": "2023",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
+      "summary": "The Monk World is a premium eyewear brand that blends luxury, craftsmanship, and individuality through limited-edition optical frames and sunglasses. The brand aims to position eyewear as a statement of personal style rather than just a functional accessory, emphasizing exclusivity, design, and self-expression.",
+      "whatPrernaDid": "For The Monk World, I conceptualized and designed social media content that showcased the brand's premium eyewear collections, craftsmanship, and philosophy of individuality. Through storytelling-led creatives and visually cohesive feed designs, the content reinforced the brand's luxury positioning and unique identity.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Social Media grid",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/a6110466d5edd7e858bc.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/aed3f3fdd9d3a735a45f.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/5e193345f0f55b8c0b5c.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/e287f3a2d9aa1dbc4948.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/cd6a3266c94c89397692.webp"
     },
     {
       "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
