@@ -84,7 +84,7 @@
             "src": "assets/uploads/16e4f1a6afd0eb5c0200.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           },
@@ -94,7 +94,7 @@
             "src": "assets/uploads/8651dbf78278fd2c513c.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           },
@@ -104,7 +104,7 @@
             "src": "assets/uploads/99bceeacb80271d2ff80.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -116,9 +116,9 @@
             "src": "assets/uploads/494bb075f016b499eeee.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "105"
           },
           {
             "type": "Image",
@@ -126,7 +126,7 @@
             "src": "assets/uploads/29d8874fe9f262cd208a.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -1001,7 +1001,7 @@
             "src": "assets/uploads/16e4f1a6afd0eb5c0200.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           },
@@ -1011,7 +1011,7 @@
             "src": "assets/uploads/8651dbf78278fd2c513c.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           },
@@ -1021,7 +1021,7 @@
             "src": "assets/uploads/99bceeacb80271d2ff80.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -1033,9 +1033,9 @@
             "src": "assets/uploads/494bb075f016b499eeee.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
-            "imageZoom": "100"
+            "imageZoom": "105"
           },
           {
             "type": "Image",
@@ -1043,7 +1043,7 @@
             "src": "assets/uploads/29d8874fe9f262cd208a.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
