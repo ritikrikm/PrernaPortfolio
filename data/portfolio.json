@@ -624,7 +624,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/1c2b1b4367a2330aa6c8.png",
+            "src": "assets/uploads/1c2b1b4367a2330aa6c8-1800.png",
             "videoUrl": "https://www.youtube.com/watch?v=hjygIpwTNH4&pp=ugUHEgVlbi1JTg%3D%3D",
             "description": "video"
           }
@@ -1053,6 +1053,177 @@
       "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
     },
     {
+      "id": "3d87439e-8a5a-4501-b7aa-99d20a1d31f1",
+      "placement": "featured",
+      "experienceId": "",
+      "homeSlot": "3",
+      "featuredRank": "3",
+      "title": "The Creative Bud",
+      "category": "Branding",
+      "categories": [
+        "Branding",
+        "Social Media",
+        "Graphic Design",
+        "Illustration",
+        "Multimedia"
+      ],
+      "mediaType": "Multimedia",
+      "role": "Entrepreneur",
+      "year": "-",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Procreate",
+      "summary": "The Creative Bud was an independent art and design brand built around original illustrations and handcrafted products. The brand aimed to transform everyday stationery and lifestyle items into meaningful, artist-driven experiences through storytelling, creativity, and thoughtful design. By combining traditional craftsmanship with contemporary illustration, The Creative Bud fostered a community that valued creativity, self-expression, and unique handmade products.",
+      "whatPrernaDid": "Founded and managed The Creative Bud, overseeing brand strategy, product design, illustration, social media marketing, content creation, packaging design, and customer engagement. Developed original artwork and handcrafted product collections while building a loyal community through storytelling-led branding and digital content.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Initial Sketches",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/457887ca0c13d8697572.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/45dcb19daaedce41bd22.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8ae253c04768d264dde8.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/d8249c6480f7d0e52a52.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/083ccbddb524888335a0.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/915632433d2f30bdad4b.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/9c5daa617b22492c8db5.webp",
+            "videoUrl": "https://drive.google.com/file/d/1maRoXVqu83StC70V8-qy5HdEnMDJH_Wt/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/54db956e810ad754fbe1.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0bda363f1e5e02a1036f.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/54c14fc758741665d137.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/004feaa8d5bd8e655fbf.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/522f58cafa50c0edd538.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/59545f74e6a682d41a7d.webp"
+    },
+    {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
       "experienceId": "cultreboat",
@@ -1266,7 +1437,7 @@
     },
     "home": {
       "eyebrow": "Graphic design work",
-      "headline": "Design work that moves from brief to brand, campaign, and motion.",
+      "headline": "Hi! I am Prerna Sharma!",
       "typewriterPrefix": "I am",
       "typewriterWords": [
         "a Graphic Designer",
@@ -1275,26 +1446,26 @@
         "a Visual Storyteller",
         "a Creative Maker"
       ],
-      "summary": "A recruiter-friendly project showcase for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
+      "summary": "I specialize in visual design, branding, social media, Art direction, illustration, and digital storytelling.",
       "primaryAction": "View Experience",
       "secondaryAction": "Contact",
       "quickScanEyebrow": "Quick scan",
       "quickScan": [
         {
           "label": "Best fit",
-          "text": "Graphic Designer, Multimedia Designer, Motion Designer"
+          "text": "Graphic Designer, Multimedia Designer, Art Director, Illustrator"
         },
         {
           "label": "Experience",
-          "text": "2 years professional + 6 years creative business"
+          "text": "2 years professional + 6 years creative entrepreneurial "
         },
         {
           "label": "Strength",
-          "text": "Campaign visuals, brand consistency, social content, motion"
+          "text": "Visual Design, Research and Conceptualization, Campaigns brand identity, social content."
         },
         {
           "label": "Tools",
-          "text": "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
+          "text": "Photoshop, Illustrator, Premiere Pro, After Effects,  InDesign, Figma, Procreate"
         }
       ],
       "featuredEyebrow": "Featured projects",

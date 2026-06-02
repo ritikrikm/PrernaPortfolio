@@ -4,6 +4,7 @@ const DRAFT_STORE_VERSION = 2;
 const ADMIN_SESSION_KEY = "prerna-portfolio-admin-unlocked";
 const ADMIN_PASSWORD_KEY = "prerna-portfolio-admin-password";
 const PREVIEW_SESSION_KEY = "prerna-portfolio-preview-drafts";
+const THEME_STORE_KEY = "prerna-portfolio-theme";
 const LOCAL_ADMIN_PASSWORD = "prerna-admin";
 const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
@@ -374,6 +375,50 @@ function setText(selector, value, key = "") {
     if (color) element.style.color = color;
     else element.style.removeProperty("color");
   }
+}
+
+function storedTheme() {
+  try {
+    return localStorage.getItem(THEME_STORE_KEY) === "night" ? "night" : "day";
+  } catch {
+    return "day";
+  }
+}
+
+function persistTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORE_KEY, theme);
+  } catch {
+    // Theme still applies for the current page if browser storage is unavailable.
+  }
+}
+
+function syncThemeToggle(theme = storedTheme()) {
+  const button = document.getElementById("theme-toggle");
+  if (!button) return;
+  const isNight = theme === "night";
+  button.setAttribute("aria-pressed", String(isNight));
+  button.setAttribute("aria-label", isNight ? "Switch to day mode" : "Switch to night mode");
+  button.title = isNight ? "Switch to day mode" : "Switch to night mode";
+}
+
+function applyTheme(theme = storedTheme()) {
+  const nextTheme = theme === "night" ? "night" : "day";
+  document.body.classList.toggle("theme-night", nextTheme === "night");
+  document.body.dataset.theme = nextTheme;
+  syncThemeToggle(nextTheme);
+}
+
+function setupThemeToggle() {
+  const button = document.getElementById("theme-toggle");
+  if (!button || button.dataset.themeReady === "true") return;
+  button.dataset.themeReady = "true";
+  button.addEventListener("click", () => {
+    const nextTheme = document.body.classList.contains("theme-night") ? "day" : "night";
+    persistTheme(nextTheme);
+    applyTheme(nextTheme);
+  });
+  applyTheme(storedTheme());
 }
 
 function updateResumeLinks() {
@@ -1180,9 +1225,12 @@ function imageStyle(project, variant = "default") {
   return `object-fit: ${fit}; object-position: ${position}; transform: scale(${zoom / 100});`;
 }
 
-function imageMarkup(imageSrc, title, style = "") {
+function imageMarkup(imageSrc, title, style = "", options = {}) {
+  const loading = options.loading || "lazy";
+  const fetchPriority = options.fetchPriority ? ` fetchpriority="${escapeHtml(options.fetchPriority)}"` : "";
+  const styleAttribute = style ? ` style="${style}"` : "";
   return imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(title)}" style="${style}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(title)}"${styleAttribute} loading="${escapeHtml(loading)}" decoding="async"${fetchPriority}>`
     : "";
 }
 
@@ -1226,21 +1274,48 @@ function isVideoProject(project) {
   return (project.mediaType || "").toLowerCase() === "video";
 }
 
+const TOOL_LOGOS = {
+  "after effects": `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Ae</text></svg>`,
+  firefly: `<svg class="brand-icon brand-icon-firefly" viewBox="0 0 44 44" aria-hidden="true"><path d="M22 7l3.8 10.2L36 21l-10.2 3.8L22 35l-3.8-10.2L8 21l10.2-3.8L22 7z"/><path d="M33 6l1.4 3.6L38 11l-3.6 1.4L33 16l-1.4-3.6L28 11l3.6-1.4L33 6z"/></svg>`,
+  figma: `<svg class="brand-icon brand-icon-figma" viewBox="0 0 38 57" aria-hidden="true"><path fill="#1ABCFE" d="M19 28.5C19 23.253 23.253 19 28.5 19S38 23.253 38 28.5 33.747 38 28.5 38 19 33.747 19 28.5z"/><path fill="#0ACF83" d="M0 47.5C0 42.253 4.253 38 9.5 38H19v9.5C19 52.747 14.747 57 9.5 57S0 52.747 0 47.5z"/><path fill="#FF7262" d="M19 0v19h9.5C33.747 19 38 14.747 38 9.5S33.747 0 28.5 0H19z"/><path fill="#F24E1E" d="M0 9.5C0 14.747 4.253 19 9.5 19H19V0H9.5C4.253 0 0 4.253 0 9.5z"/><path fill="#A259FF" d="M0 28.5C0 33.747 4.253 38 9.5 38H19V19H9.5C4.253 19 0 23.253 0 28.5z"/></svg>`,
+  illustrator: `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Ai</text></svg>`,
+  indesign: `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Id</text></svg>`,
+  instagram: `<svg class="brand-icon brand-icon-instagram" viewBox="0 0 44 44" aria-hidden="true"><rect x="10" y="10" width="24" height="24" rx="7"/><circle cx="22" cy="22" r="6"/><circle cx="29" cy="15" r="2"/></svg>`,
+  photography: `<svg class="brand-icon brand-icon-camera" viewBox="0 0 44 44" aria-hidden="true"><path d="M13 16h5l2-3h8l2 3h4a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4h3z"/><circle cx="22" cy="26" r="7"/></svg>`,
+  photoshop: `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Ps</text></svg>`,
+  "premiere pro": `<svg class="brand-icon brand-icon-letter" viewBox="0 0 44 44" aria-hidden="true"><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle">Pr</text></svg>`,
+  procreate: `<svg class="brand-icon brand-icon-procreate" viewBox="0 0 44 44" aria-hidden="true"><path d="M8 31c6-10 11-17 24-23-5 12-12 19-23 25l-1-2z"/><path d="M11 34c5 3 14 2 20-4 6-6 8-15 4-20-1 8-7 20-24 24z"/></svg>`,
+  runway: `<svg class="brand-icon brand-icon-runway" viewBox="0 0 44 44" aria-hidden="true"><path d="M10 12h13c7 0 11 4 11 10s-4 10-11 10H10V12zm8 7v7h5c3 0 5-1 5-3.5S26 19 23 19h-5z"/></svg>`
+};
+
+function normalizeToolName(tool = "") {
+  const clean = tool
+    .toLowerCase()
+    .replace(/\badobe\b/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (clean === "premiere pro" || clean === "premiere") return "premiere pro";
+  if (clean === "after effects" || clean === "after effect") return "after effects";
+  if (clean === "in design") return "indesign";
+  return clean;
+}
+
 function toolAbbreviation(tool) {
   const known = {
-    Photoshop: "Ps",
-    Illustrator: "Ai",
-    InDesign: "Id",
-    "After Effects": "Ae",
-    "Premiere Pro": "Pr",
-    Figma: "Fi",
-    Procreate: "Pc",
-    "Adobe Firefly": "Af",
-    Runway: "Ru",
-    Photography: "Ph",
-    Instagram: "Ig"
+    photoshop: "Ps",
+    illustrator: "Ai",
+    indesign: "Id",
+    "after effects": "Ae",
+    "premiere pro": "Pr",
+    figma: "Fi",
+    procreate: "Pc",
+    firefly: "Af",
+    runway: "Ru",
+    photography: "Ph",
+    instagram: "Ig"
   };
-  return known[tool] || tool.slice(0, 2);
+  return known[normalizeToolName(tool)] || tool.slice(0, 2);
 }
 
 function toolList(tools = "") {
@@ -1254,12 +1329,17 @@ function toolClass(tool = "") {
   return tool.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "tool";
 }
 
+function toolLogoMarkup(tool = "") {
+  return TOOL_LOGOS[normalizeToolName(tool)]
+    || `<span class="tool-logo-fallback">${escapeHtml(toolAbbreviation(tool))}</span>`;
+}
+
 function toolIcons(tools = "") {
   return toolList(tools)
     .slice(0, 6)
     .map((tool) => `
       <span class="tool-icon tool-${escapeHtml(toolClass(tool))}" title="${escapeHtml(tool)}" aria-label="${escapeHtml(tool)}">
-        ${escapeHtml(toolAbbreviation(tool))}
+        ${toolLogoMarkup(tool)}
       </span>
     `)
     .join("");
@@ -1274,7 +1354,7 @@ function softwareCards(tools = "") {
   return toolsUsed
     .map((tool) => `
       <article class="software-card tool-${escapeHtml(toolClass(tool))}">
-        <span class="software-logo">${escapeHtml(toolAbbreviation(tool))}</span>
+        <span class="software-logo">${toolLogoMarkup(tool)}</span>
         <strong>${escapeHtml(tool)}</strong>
       </article>
     `)
@@ -1303,7 +1383,7 @@ function projectCard(project, collection = "work") {
   const link = safeUrl(project.link);
   const isVideo = isVideoProject(project);
   const image = project.image
-    ? `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)} project image" style="${imageStyle(project)}">`
+    ? `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)} project image" style="${imageStyle(project)}" loading="lazy" decoding="async">`
     : coverArt(project, "large");
 
   return `
@@ -1340,7 +1420,7 @@ function featuredProjectCard(product) {
   const primaryItem = primaryMediaItem(product);
   const imageSrc = product.image || mediaVisualSrc(primaryItem || {});
   const image = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product, "featured")}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product, "featured")}" loading="lazy" decoding="async">`
     : coverArt(product, "large");
   const previewLabel = "Open";
   const impact = product.impact || product.role || "";
@@ -1365,7 +1445,7 @@ function featuredProjectCard(product) {
 function experienceCard(experience) {
   const count = projectsForExperience(experience.id).length;
   const image = experience.image
-    ? `<img src="${escapeHtml(experience.image)}" alt="${escapeHtml(experience.company)} work experience image" style="${imageStyle(experience)}">`
+    ? `<img src="${escapeHtml(experience.image)}" alt="${escapeHtml(experience.company)} work experience image" style="${imageStyle(experience)}" loading="lazy" decoding="async">`
     : "";
   return `
     <a class="experience-card" href="#/experience/${experience.id}" style="--experience-accent: ${experience.accent}">
@@ -1390,7 +1470,7 @@ function experienceCard(experience) {
 
 function adminRow(project, collection = "work") {
   const experience = experiences.find((item) => item.id === project.experienceId);
-  const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}">` : "";
+  const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}" loading="lazy" decoding="async">` : "";
   const isDirty = projectDirty(project, collection);
   const source = collection === "featured"
     ? `${featuredRankLabel(project.featuredRank)} · ${featuredHomeSlotLabel(project.homeSlot)}`
@@ -1824,7 +1904,7 @@ function setupContact() {
 function resumePreviewMarkup(resume = state.resume) {
   const normalized = normalizeResume(resume);
   if (normalized.previewImage) {
-    return `<img src="${escapeHtml(normalized.previewImage)}" alt="Resume first page preview">`;
+    return `<img src="${escapeHtml(normalized.previewImage)}" alt="Resume first page preview" loading="lazy" decoding="async">`;
   }
   return `
     <div class="resume-placeholder">
@@ -2010,7 +2090,7 @@ function campaignMediaFrame(item, project) {
   const imageSrc = mediaVisualSrc(item);
   const videoUrl = safeVideoSrc(item.videoUrl || (type === "Video" ? item.url : ""));
   const visual = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}" style="${mediaImageStyle(item, project)}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}" style="${mediaImageStyle(item, project)}" loading="lazy" decoding="async">`
     : coverArt(project, "large");
   const frameClass = `campaign-media-frame ${imageSrc ? "has-image" : ""}`;
 
@@ -2070,7 +2150,8 @@ function projectHeroAside(project) {
   const image = imageMarkup(
     imageSrc,
     `${project.title} project thumbnail`,
-    imageStyle(project, "detail")
+    imageStyle(project, "detail"),
+    { loading: "eager", fetchPriority: "high" }
   );
   return `
     <aside class="hero-media-card project-hero-media ${image ? "has-image" : ""}">
@@ -2104,6 +2185,7 @@ function setupProjectDetail(collection) {
     project.year
   ].filter(Boolean).join(" · ");
   const heroAccent = project.accent || experience?.accent || categoryColor(projectPrimaryCategory(project));
+  const projectRole = project.role?.trim();
 
   detail.innerHTML = `
     <a class="back-link" href="${backHref}">← ${escapeHtml(backText)}</a>
@@ -2111,7 +2193,7 @@ function setupProjectDetail(collection) {
       <div>
         <p class="eyebrow">${escapeHtml(eyebrow)}</p>
         <h1>${breakableHtml(project.title)}</h1>
-        <h2>${breakableHtml(project.role || "Campaign project")}</h2>
+        ${projectRole ? `<h2>${breakableHtml(projectRole)}</h2>` : ""}
         <p>${escapeHtml(project.summary)}</p>
       </div>
       ${projectHeroAside(project)}
@@ -2261,7 +2343,7 @@ function mediaPreviewMarkup(item, project) {
   }
 
   if (imageSrc) {
-    return `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)} full preview">`;
+    return `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)} full preview" decoding="async">`;
   }
 
   return coverArt(project, "large");
@@ -4639,5 +4721,6 @@ document.addEventListener("click", (event) => {
   renderRoute();
 });
 
+setupThemeToggle();
 window.addEventListener("hashchange", renderRoute);
 renderRoute();
