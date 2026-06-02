@@ -38,6 +38,113 @@
   ],
   "projects": [
     {
+      "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
+      "placement": "both",
+      "experienceId": "cultreboat",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Devan's Coffee",
+      "category": "Social Media",
+      "categories": [
+        "Social Media"
+      ],
+      "mediaType": "Multimedia",
+      "role": "",
+      "year": "2023",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Figma",
+      "summary": "Devan's Coffee is a heritage coffee and tea brand known for its rich legacy and premium products. The objective was to strengthen the brand's digital presence by creating visually cohesive and engaging content that reflected its craftsmanship, quality, and authentic coffee culture.",
+      "whatPrernaDid": "For Devan's Coffee, I developed content strategies, designed social media creatives and aesthetic feed layouts, and created storytelling-led content that highlighted the brand's heritage, products, and coffee culture while maintaining a consistent visual identity across digital platforms.",
+      "impact": "",
+      "link": "",
+      "accent": "#3d0900",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Social Content",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Stories",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/16e4f1a6afd0eb5c0200.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8651dbf78278fd2c513c.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/99bceeacb80271d2ff80.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b1d025c6cfc889295f31.webp",
+            "videoUrl": "",
+            "description": "Social Media grid",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/494bb075f016b499eeee.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "105"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/29d8874fe9f262cd208a.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "105"
+          }
+        ]
+      },
+      "image": "assets/uploads/3a8370496de5785c9682.webp"
+    },
+    {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
       "experienceId": "cultreboat",
@@ -124,113 +231,6 @@
         ]
       },
       "image": "assets/uploads/cd6a3266c94c89397692.webp"
-    },
-    {
-      "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
-      "placement": "both",
-      "experienceId": "cultreboat",
-      "homeSlot": "",
-      "featuredRank": "",
-      "title": "Social Media creatives",
-      "category": "Social Media",
-      "categories": [
-        "Social Media"
-      ],
-      "mediaType": "Multimedia",
-      "role": "",
-      "year": "2023",
-      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Figma",
-      "summary": "Devan's Coffee is a heritage coffee and tea brand known for its rich legacy and premium products. The objective was to strengthen the brand's digital presence by creating visually cohesive and engaging content that reflected its craftsmanship, quality, and authentic coffee culture.",
-      "whatPrernaDid": "For Devan's Coffee, I developed content strategies, designed social media creatives and aesthetic feed layouts, and created storytelling-led content that highlighted the brand's heritage, products, and coffee culture while maintaining a consistent visual identity across digital platforms.",
-      "impact": "",
-      "link": "",
-      "accent": "#3d0900",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "featuredImageFit": "contain",
-      "featuredImagePosition": "center center",
-      "featuredImageZoom": "100",
-      "detailImageFit": "cover",
-      "detailImagePosition": "center center",
-      "detailImageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Social Content",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Stories",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
-      "mediaGroups": {
-        "initialSketch": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/16e4f1a6afd0eb5c0200.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/8651dbf78278fd2c513c.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/99bceeacb80271d2ff80.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/b1d025c6cfc889295f31.webp",
-            "videoUrl": "",
-            "description": "Social Media grid",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          }
-        ],
-        "finalOutput": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/494bb075f016b499eeee.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "105"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/29d8874fe9f262cd208a.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "105"
-          }
-        ]
-      },
-      "image": "assets/uploads/995bab5496f0d15e2bb8.webp"
     },
     {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
@@ -1146,7 +1146,7 @@
       "experienceId": "cultreboat",
       "homeSlot": "",
       "featuredRank": "",
-      "title": "Social Media creatives",
+      "title": "Devan's Coffee",
       "category": "Social Media",
       "categories": [
         "Social Media"
@@ -1163,7 +1163,7 @@
       "imageFit": "cover",
       "imagePosition": "center center",
       "imageZoom": "100",
-      "featuredImageFit": "contain",
+      "featuredImageFit": "cover",
       "featuredImagePosition": "center center",
       "featuredImageZoom": "100",
       "detailImageFit": "cover",
@@ -1245,7 +1245,7 @@
           }
         ]
       },
-      "image": "assets/uploads/995bab5496f0d15e2bb8.webp"
+      "image": "assets/uploads/3a8370496de5785c9682.webp"
     }
   ],
   "siteContent": {
