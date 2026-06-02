@@ -38,12 +38,12 @@
   ],
   "projects": [
     {
-      "id": "c0380b20-5735-4db9-9c7a-c6bcd495265f",
+      "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
       "experienceId": "cultreboat",
-      "homeSlot": "hidden",
+      "homeSlot": "",
       "featuredRank": "",
-      "title": "The Monk World",
+      "title": "The Monk world",
       "category": "Social Media",
       "categories": [
         "Social Media",
@@ -57,7 +57,7 @@
       "whatPrernaDid": "For The Monk World, I conceptualized and designed social media content that showcased the brand's premium eyewear collections, craftsmanship, and philosophy of individuality. Through storytelling-led creatives and visually cohesive feed designs, the content reinforced the brand's luxury positioning and unique identity.",
       "impact": "",
       "link": "",
-      "accent": "#0a6f6b",
+      "accent": "#2b291d",
       "imageFit": "cover",
       "imagePosition": "center center",
       "imageZoom": "100",
@@ -69,11 +69,11 @@
       "detailImageZoom": "100",
       "mediaGroupMeta": {
         "initialSketch": {
-          "label": "Social Media grid",
+          "label": "Social Grid",
           "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
         },
         "finalOutput": {
-          "label": "Final Output",
+          "label": "Social Content",
           "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
         }
       },
@@ -85,7 +85,7 @@
             "src": "assets/uploads/a6110466d5edd7e858bc.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -1053,12 +1053,12 @@
       "image": "assets/uploads/5c84250fe6fbe9218e30.webp"
     },
     {
-      "id": "c0380b20-5735-4db9-9c7a-c6bcd495265f",
+      "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
       "experienceId": "cultreboat",
-      "homeSlot": "hidden",
+      "homeSlot": "",
       "featuredRank": "",
-      "title": "The Monk World",
+      "title": "The Monk world",
       "category": "Social Media",
       "categories": [
         "Social Media",
@@ -1072,7 +1072,7 @@
       "whatPrernaDid": "For The Monk World, I conceptualized and designed social media content that showcased the brand's premium eyewear collections, craftsmanship, and philosophy of individuality. Through storytelling-led creatives and visually cohesive feed designs, the content reinforced the brand's luxury positioning and unique identity.",
       "impact": "",
       "link": "",
-      "accent": "#0a6f6b",
+      "accent": "#2b291d",
       "imageFit": "cover",
       "imagePosition": "center center",
       "imageZoom": "100",
@@ -1084,11 +1084,11 @@
       "detailImageZoom": "100",
       "mediaGroupMeta": {
         "initialSketch": {
-          "label": "Social Media grid",
+          "label": "Social Grid",
           "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
         },
         "finalOutput": {
-          "label": "Final Output",
+          "label": "Social Content",
           "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
         }
       },
@@ -1100,7 +1100,7 @@
             "src": "assets/uploads/a6110466d5edd7e858bc.webp",
             "videoUrl": "",
             "description": "",
-            "imageFit": "cover",
+            "imageFit": "contain",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
