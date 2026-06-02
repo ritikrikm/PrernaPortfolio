@@ -1180,9 +1180,12 @@ function imageStyle(project, variant = "default") {
   return `object-fit: ${fit}; object-position: ${position}; transform: scale(${zoom / 100});`;
 }
 
-function imageMarkup(imageSrc, title, style = "") {
+function imageMarkup(imageSrc, title, style = "", options = {}) {
+  const loading = options.loading || "lazy";
+  const fetchPriority = options.fetchPriority ? ` fetchpriority="${escapeHtml(options.fetchPriority)}"` : "";
+  const styleAttribute = style ? ` style="${style}"` : "";
   return imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(title)}" style="${style}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(title)}"${styleAttribute} loading="${escapeHtml(loading)}" decoding="async"${fetchPriority}>`
     : "";
 }
 
@@ -1335,7 +1338,7 @@ function projectCard(project, collection = "work") {
   const link = safeUrl(project.link);
   const isVideo = isVideoProject(project);
   const image = project.image
-    ? `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)} project image" style="${imageStyle(project)}">`
+    ? `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)} project image" style="${imageStyle(project)}" loading="lazy" decoding="async">`
     : coverArt(project, "large");
 
   return `
@@ -1372,7 +1375,7 @@ function featuredProjectCard(product) {
   const primaryItem = primaryMediaItem(product);
   const imageSrc = product.image || mediaVisualSrc(primaryItem || {});
   const image = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product, "featured")}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title)} project image" style="${imageStyle(product, "featured")}" loading="lazy" decoding="async">`
     : coverArt(product, "large");
   const previewLabel = "Open";
   const impact = product.impact || product.role || "";
@@ -1397,7 +1400,7 @@ function featuredProjectCard(product) {
 function experienceCard(experience) {
   const count = projectsForExperience(experience.id).length;
   const image = experience.image
-    ? `<img src="${escapeHtml(experience.image)}" alt="${escapeHtml(experience.company)} work experience image" style="${imageStyle(experience)}">`
+    ? `<img src="${escapeHtml(experience.image)}" alt="${escapeHtml(experience.company)} work experience image" style="${imageStyle(experience)}" loading="lazy" decoding="async">`
     : "";
   return `
     <a class="experience-card" href="#/experience/${experience.id}" style="--experience-accent: ${experience.accent}">
@@ -1422,7 +1425,7 @@ function experienceCard(experience) {
 
 function adminRow(project, collection = "work") {
   const experience = experiences.find((item) => item.id === project.experienceId);
-  const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}">` : "";
+  const image = project.image ? `<img src="${escapeHtml(project.image)}" alt="" style="${imageStyle(project)}" loading="lazy" decoding="async">` : "";
   const isDirty = projectDirty(project, collection);
   const source = collection === "featured"
     ? `${featuredRankLabel(project.featuredRank)} · ${featuredHomeSlotLabel(project.homeSlot)}`
@@ -1856,7 +1859,7 @@ function setupContact() {
 function resumePreviewMarkup(resume = state.resume) {
   const normalized = normalizeResume(resume);
   if (normalized.previewImage) {
-    return `<img src="${escapeHtml(normalized.previewImage)}" alt="Resume first page preview">`;
+    return `<img src="${escapeHtml(normalized.previewImage)}" alt="Resume first page preview" loading="lazy" decoding="async">`;
   }
   return `
     <div class="resume-placeholder">
@@ -2042,7 +2045,7 @@ function campaignMediaFrame(item, project) {
   const imageSrc = mediaVisualSrc(item);
   const videoUrl = safeVideoSrc(item.videoUrl || (type === "Video" ? item.url : ""));
   const visual = imageSrc
-    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}" style="${mediaImageStyle(item, project)}">`
+    ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)}" style="${mediaImageStyle(item, project)}" loading="lazy" decoding="async">`
     : coverArt(project, "large");
   const frameClass = `campaign-media-frame ${imageSrc ? "has-image" : ""}`;
 
@@ -2102,7 +2105,8 @@ function projectHeroAside(project) {
   const image = imageMarkup(
     imageSrc,
     `${project.title} project thumbnail`,
-    imageStyle(project, "detail")
+    imageStyle(project, "detail"),
+    { loading: "eager", fetchPriority: "high" }
   );
   return `
     <aside class="hero-media-card project-hero-media ${image ? "has-image" : ""}">
@@ -2136,6 +2140,7 @@ function setupProjectDetail(collection) {
     project.year
   ].filter(Boolean).join(" · ");
   const heroAccent = project.accent || experience?.accent || categoryColor(projectPrimaryCategory(project));
+  const projectRole = project.role?.trim();
 
   detail.innerHTML = `
     <a class="back-link" href="${backHref}">← ${escapeHtml(backText)}</a>
@@ -2143,7 +2148,7 @@ function setupProjectDetail(collection) {
       <div>
         <p class="eyebrow">${escapeHtml(eyebrow)}</p>
         <h1>${breakableHtml(project.title)}</h1>
-        <h2>${breakableHtml(project.role || "Campaign project")}</h2>
+        ${projectRole ? `<h2>${breakableHtml(projectRole)}</h2>` : ""}
         <p>${escapeHtml(project.summary)}</p>
       </div>
       ${projectHeroAside(project)}
@@ -2293,7 +2298,7 @@ function mediaPreviewMarkup(item, project) {
   }
 
   if (imageSrc) {
-    return `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)} full preview">`;
+    return `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(item.title || project.title)} full preview" decoding="async">`;
   }
 
   return coverArt(project, "large");
