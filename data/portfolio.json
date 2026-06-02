@@ -1160,14 +1160,14 @@
             "imageZoom": "100"
           },
           {
-            "type": "Image",
+            "type": "Video",
             "title": "",
             "src": "assets/uploads/9c5daa617b22492c8db5.webp",
             "videoUrl": "https://drive.google.com/file/d/1maRoXVqu83StC70V8-qy5HdEnMDJH_Wt/view?usp=drive_link",
             "description": "",
             "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "105"
+            "imageZoom": "100"
           },
           {
             "type": "Image",
@@ -1437,7 +1437,7 @@
     },
     "home": {
       "eyebrow": "Graphic design work",
-      "headline": "Design work that moves from brief to brand, campaign, and motion.",
+      "headline": "Hi! I am Prerna Sharma!",
       "typewriterPrefix": "I am",
       "typewriterWords": [
         "a Graphic Designer",
@@ -1446,26 +1446,26 @@
         "a Visual Storyteller",
         "a Creative Maker"
       ],
-      "summary": "A recruiter-friendly project showcase for Prerna Sharma, focused on visual design, brand systems, social campaigns, motion graphics, illustration, and digital storytelling.",
+      "summary": "I specialize in visual design, branding, social media, Art direction, illustration, and digital storytelling.",
       "primaryAction": "View Experience",
       "secondaryAction": "Contact",
       "quickScanEyebrow": "Quick scan",
       "quickScan": [
         {
           "label": "Best fit",
-          "text": "Graphic Designer, Multimedia Designer, Motion Designer"
+          "text": "Graphic Designer, Multimedia Designer, Art Director, Illustrator"
         },
         {
           "label": "Experience",
-          "text": "2 years professional + 6 years creative business"
+          "text": "2 years professional + 6 years creative entrepreneurial "
         },
         {
           "label": "Strength",
-          "text": "Campaign visuals, brand consistency, social content, motion"
+          "text": "Visual Design, Research and Conceptualization, Campaigns brand identity, social content."
         },
         {
           "label": "Tools",
-          "text": "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Figma"
+          "text": "Photoshop, Illustrator, Premiere Pro, After Effects,  InDesign, Figma, Procreate"
         }
       ],
       "featuredEyebrow": "Featured projects",
