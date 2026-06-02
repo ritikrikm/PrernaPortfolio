@@ -1,10 +1,12 @@
+const PUBLISH_TARGET_BRANCH = "testing";
+
 module.exports = function handler(req, res) {
   const {
     ADMIN_PASSWORD,
     GITHUB_TOKEN,
     GITHUB_OWNER,
     GITHUB_REPO,
-    GITHUB_BRANCH = "main",
+    GITHUB_BRANCH = "",
     GITHUB_FILE_PATH = "data/portfolio.json"
   } = process.env;
 
@@ -26,7 +28,8 @@ module.exports = function handler(req, res) {
     },
     githubOwner: valueStatus(GITHUB_OWNER),
     githubRepo: valueStatus(GITHUB_REPO),
-    githubBranch: valueStatus(GITHUB_BRANCH),
+    githubBranch: valueStatus(PUBLISH_TARGET_BRANCH),
+    githubBranchEnv: valueStatus(GITHUB_BRANCH),
     githubFilePath: valueStatus(GITHUB_FILE_PATH)
   });
 };

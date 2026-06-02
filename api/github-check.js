@@ -4,6 +4,7 @@ const githubHeaders = (token) => ({
   "User-Agent": "prerna-portfolio-publisher",
   "X-GitHub-Api-Version": "2022-11-28"
 });
+const PUBLISH_TARGET_BRANCH = "testing";
 
 async function githubProbe(url, headers) {
   const response = await fetch(url, { headers });
@@ -24,7 +25,7 @@ module.exports = async function handler(req, res) {
     GITHUB_TOKEN,
     GITHUB_OWNER,
     GITHUB_REPO,
-    GITHUB_BRANCH = "main",
+    GITHUB_BRANCH = "",
     GITHUB_FILE_PATH = "data/portfolio.json"
   } = process.env;
 
@@ -36,7 +37,8 @@ module.exports = async function handler(req, res) {
   const headers = githubHeaders(GITHUB_TOKEN);
   const owner = encodeURIComponent(GITHUB_OWNER.trim());
   const repo = encodeURIComponent(GITHUB_REPO.trim());
-  const branch = encodeURIComponent(GITHUB_BRANCH.trim());
+  const targetBranch = PUBLISH_TARGET_BRANCH;
+  const branch = encodeURIComponent(targetBranch);
   const path = encodeURIComponent(GITHUB_FILE_PATH.trim()).replaceAll("%2F", "/");
   const apiBase = `https://api.github.com/repos/${owner}/${repo}`;
 
@@ -51,7 +53,8 @@ module.exports = async function handler(req, res) {
       requested: {
         owner: GITHUB_OWNER.trim(),
         repo: GITHUB_REPO.trim(),
-        branch: GITHUB_BRANCH.trim(),
+        branch: targetBranch,
+        envBranch: GITHUB_BRANCH.trim(),
         filePath: GITHUB_FILE_PATH.trim()
       },
       token: {

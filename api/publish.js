@@ -9,6 +9,7 @@ const githubHeaders = (token) => ({
 });
 const RESUME_FILE_PATH = "assets/resume/prerna-sharma-resume.pdf";
 const RESUME_PREVIEW_PATH = "assets/resume/prerna-sharma-resume-preview.webp";
+const PUBLISH_TARGET_BRANCH = "testing";
 
 function readBody(req) {
   if (req.body && typeof req.body === "object") return Promise.resolve(req.body);
@@ -43,7 +44,7 @@ function validatePortfolio(portfolio) {
 
 function githubErrorMessage(status, fallback = "GitHub publish failed.") {
   if (status === 404) {
-    return "GitHub repo or file was not found. Check GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH, GITHUB_FILE_PATH, and make sure GITHUB_TOKEN has Contents read/write access to this repo.";
+    return "GitHub repo or file was not found. This testing build publishes to the testing branch. Check GITHUB_OWNER, GITHUB_REPO, GITHUB_FILE_PATH, and make sure GITHUB_TOKEN has Contents read/write access to this repo.";
   }
   if (status === 401 || status === 403) {
     return "GitHub token is not authorized. Create a fresh token with Contents read/write access to this repo and update GITHUB_TOKEN in Vercel.";
@@ -227,7 +228,6 @@ module.exports = async function handler(req, res) {
     GITHUB_TOKEN,
     GITHUB_OWNER,
     GITHUB_REPO,
-    GITHUB_BRANCH = "main",
     GITHUB_FILE_PATH = "data/portfolio.json"
   } = process.env;
 
@@ -248,13 +248,14 @@ module.exports = async function handler(req, res) {
       return;
     }
 
+    const publishBranch = PUBLISH_TARGET_BRANCH;
     const path = encodeGithubPath(GITHUB_FILE_PATH);
-    const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
+    const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${publishBranch}`;
     const headers = githubHeaders(GITHUB_TOKEN);
     const github = {
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
-      branch: GITHUB_BRANCH,
+      branch: publishBranch,
       headers
     };
     const assetStats = { uploaded: 0, reused: 0, updated: 0 };
@@ -283,7 +284,7 @@ module.exports = async function handler(req, res) {
       method: "PUT",
       headers,
       body: JSON.stringify({
-        branch: GITHUB_BRANCH,
+        branch: publishBranch,
         message: "Update site content",
         content,
         sha
@@ -301,6 +302,7 @@ module.exports = async function handler(req, res) {
     res.status(200).json({
       ok: true,
       commitUrl: result.commit?.html_url || "",
+      branch: publishBranch,
       assetCount: assetStats.uploaded,
       updatedAssetCount: assetStats.updated,
       reusedAssetCount: assetStats.reused

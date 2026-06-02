@@ -11,7 +11,7 @@ ADMIN_PASSWORD=<your-admin-password>
 GITHUB_TOKEN=<fresh GitHub token>
 GITHUB_OWNER=ritikrikm
 GITHUB_REPO=PrernaPortfolio
-GITHUB_BRANCH=main
+GITHUB_BRANCH=testing
 GITHUB_FILE_PATH=data/portfolio.json
 ```
 
@@ -31,4 +31,4 @@ Then open:
 http://localhost:8766/index.html#/featured-projects
 ```
 
-On production, admin login uses the Vercel `ADMIN_PASSWORD` environment variable.
+On this testing branch, the publish API is pinned to the `testing` branch so admin testing does not update `main`.
