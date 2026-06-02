@@ -56,7 +56,7 @@
       "whatPrernaDid": "For Devan's Coffee, I developed content strategies, designed social media creatives and aesthetic feed layouts, and created storytelling-led content that highlighted the brand's heritage, products, and coffee culture while maintaining a consistent visual identity across digital platforms.",
       "impact": "",
       "link": "",
-      "accent": "#3f0303",
+      "accent": "#3d0900",
       "imageFit": "cover",
       "imagePosition": "center center",
       "imageZoom": "100",
@@ -105,6 +105,16 @@
             "videoUrl": "",
             "description": "",
             "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b1d025c6cfc889295f31.webp",
+            "videoUrl": "",
+            "description": "Social Media grid",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -973,7 +983,7 @@
       "whatPrernaDid": "For Devan's Coffee, I developed content strategies, designed social media creatives and aesthetic feed layouts, and created storytelling-led content that highlighted the brand's heritage, products, and coffee culture while maintaining a consistent visual identity across digital platforms.",
       "impact": "",
       "link": "",
-      "accent": "#3f0303",
+      "accent": "#3d0900",
       "imageFit": "cover",
       "imagePosition": "center center",
       "imageZoom": "100",
@@ -1022,6 +1032,16 @@
             "videoUrl": "",
             "description": "",
             "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b1d025c6cfc889295f31.webp",
+            "videoUrl": "",
+            "description": "Social Media grid",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
