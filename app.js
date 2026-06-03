@@ -23,6 +23,8 @@ const MONTH_LOOKUP = MONTH_NAMES.reduce((lookup, month, index) => {
   return lookup;
 }, {});
 const EXPERIENCE_DATE_PATTERN = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) - ((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4})|Present)$/;
+const DATE_PICKER_MIN_YEAR = 2010;
+const DATE_PICKER_MAX_YEAR = new Date().getFullYear() + 4;
 const DEFAULT_PROJECT_CATEGORIES = ["Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Campaign Design", "Graphic Design", "Multimedia"];
 const HOME_SECTION_NAV = {
   featured: { selector: "#home-featured-section", route: "/featured-projects" },
@@ -537,6 +539,128 @@ function parseExperienceDateRange(value = "") {
   };
 }
 
+function experienceDateElements() {
+  return {
+    field: document.getElementById("experienceDateField"),
+    datesField: document.getElementById("experienceDates"),
+    popover: document.getElementById("experienceDatePopover"),
+    startPicker: document.getElementById("experienceStartMonth"),
+    endPicker: document.getElementById("experienceEndMonth"),
+    currentRole: document.getElementById("experienceCurrentRole"),
+    startTarget: document.getElementById("experienceStartTarget"),
+    endTarget: document.getElementById("experienceEndTarget"),
+    startLabel: document.getElementById("experienceStartLabel"),
+    endLabel: document.getElementById("experienceEndLabel"),
+    yearLabel: document.getElementById("experiencePickerYear"),
+    monthGrid: document.getElementById("experienceMonthGrid")
+  };
+}
+
+function monthInputYear(value = "") {
+  const match = String(value).match(/^([0-9]{4})-[0-9]{2}$/);
+  return match ? Number(match[1]) : null;
+}
+
+function clampDatePickerYear(year) {
+  const parsed = Number(year);
+  if (!Number.isFinite(parsed)) return new Date().getFullYear();
+  return Math.min(DATE_PICKER_MAX_YEAR, Math.max(DATE_PICKER_MIN_YEAR, parsed));
+}
+
+function experiencePickerYear(elements = experienceDateElements()) {
+  const activeTarget = elements.popover?.dataset.activeTarget || "start";
+  return clampDatePickerYear(
+    elements.popover?.dataset.year
+    || (activeTarget === "end" ? monthInputYear(elements.endPicker?.value) : monthInputYear(elements.startPicker?.value))
+    || monthInputYear(elements.startPicker?.value)
+    || monthInputYear(elements.endPicker?.value)
+    || new Date().getFullYear()
+  );
+}
+
+function setExperiencePickerTarget(target = "start") {
+  const elements = experienceDateElements();
+  if (!elements.popover) return;
+  const nextTarget = target === "end" ? "end" : "start";
+  elements.popover.dataset.activeTarget = nextTarget;
+  elements.startTarget?.classList.toggle("is-active", nextTarget === "start");
+  elements.endTarget?.classList.toggle("is-active", nextTarget === "end");
+  renderExperienceDatePicker();
+}
+
+function setExperiencePickerYear(year) {
+  const elements = experienceDateElements();
+  if (!elements.popover) return;
+  elements.popover.dataset.year = String(clampDatePickerYear(year));
+  renderExperienceDatePicker();
+}
+
+function renderExperienceDatePicker() {
+  const elements = experienceDateElements();
+  if (!elements.popover || !elements.monthGrid) return;
+  const year = experiencePickerYear(elements);
+  const activeTarget = elements.popover.dataset.activeTarget || "start";
+  const startLabel = monthInputToLabel(elements.startPicker?.value || "");
+  const endLabel = elements.currentRole?.checked ? "Present" : monthInputToLabel(elements.endPicker?.value || "");
+  elements.popover.dataset.year = String(year);
+  if (elements.startLabel) elements.startLabel.textContent = startLabel || "Pick month";
+  if (elements.endLabel) elements.endLabel.textContent = endLabel || "Pick month";
+  if (elements.yearLabel) elements.yearLabel.textContent = String(year);
+  elements.startTarget?.classList.toggle("is-active", activeTarget === "start");
+  elements.endTarget?.classList.toggle("is-active", activeTarget === "end");
+  if (elements.endTarget) elements.endTarget.disabled = Boolean(elements.currentRole?.checked);
+
+  elements.monthGrid.innerHTML = MONTH_NAMES.map((month, index) => {
+    const monthValue = `${year}-${String(index + 1).padStart(2, "0")}`;
+    const isStart = elements.startPicker?.value === monthValue;
+    const isEnd = !elements.currentRole?.checked && elements.endPicker?.value === monthValue;
+    const isActive = (activeTarget === "start" && isStart) || (activeTarget === "end" && isEnd);
+    return `
+      <button class="month-tile ${isStart ? "is-start" : ""} ${isEnd ? "is-end" : ""} ${isActive ? "is-active" : ""}" type="button" data-month-value="${monthValue}">
+        <span>${escapeHtml(month)}</span>
+        <small>${escapeHtml(String(year))}</small>
+      </button>
+    `;
+  }).join("");
+}
+
+function openExperienceDatePicker(target = "") {
+  const elements = experienceDateElements();
+  if (!elements.popover || !elements.datesField) return;
+  setExperienceDatePickersFromValue(elements.datesField.value);
+  elements.popover.hidden = false;
+  elements.datesField.setAttribute("aria-expanded", "true");
+  if (target) elements.popover.dataset.activeTarget = target === "end" ? "end" : "start";
+  if (!elements.popover.dataset.activeTarget) elements.popover.dataset.activeTarget = "start";
+  elements.popover.dataset.year = String(experiencePickerYear(elements));
+  renderExperienceDatePicker();
+}
+
+function closeExperienceDatePicker() {
+  const elements = experienceDateElements();
+  if (!elements.popover || !elements.datesField) return;
+  elements.popover.hidden = true;
+  elements.datesField.setAttribute("aria-expanded", "false");
+}
+
+function chooseExperienceMonth(monthValue) {
+  const elements = experienceDateElements();
+  if (!elements.startPicker || !elements.endPicker || !elements.currentRole || !elements.popover) return;
+  const target = elements.popover.dataset.activeTarget || "start";
+  if (target === "end") {
+    elements.currentRole.checked = false;
+    elements.endPicker.disabled = false;
+    elements.endPicker.value = monthValue;
+  } else {
+    elements.startPicker.value = monthValue;
+    if (!elements.currentRole.checked) {
+      elements.popover.dataset.activeTarget = "end";
+    }
+  }
+  syncExperienceDatesFromPickers();
+  renderExperienceDatePicker();
+}
+
 function setExperienceDatePickersFromValue(value = "") {
   const startPicker = document.getElementById("experienceStartMonth");
   const endPicker = document.getElementById("experienceEndMonth");
@@ -554,6 +678,7 @@ function setExperienceDatePickersFromValue(value = "") {
   currentRole.checked = parsed.isPresent;
   endPicker.disabled = parsed.isPresent;
   endPicker.value = parsed.isPresent ? "" : monthLabelToInput(parsed.endLabel);
+  renderExperienceDatePicker();
 }
 
 function syncExperienceDatesFromPickers() {
@@ -569,6 +694,7 @@ function syncExperienceDatesFromPickers() {
   if (startLabel && endLabel) datesField.value = `${startLabel} - ${endLabel}`;
   validateExperienceDates();
   renderExperiencePreview();
+  renderExperienceDatePicker();
 }
 
 function validateExperienceDates() {
@@ -593,20 +719,72 @@ function validateExperienceDates() {
 }
 
 function setupExperienceDateControls() {
-  const datesField = document.getElementById("experienceDates");
-  const startPicker = document.getElementById("experienceStartMonth");
-  const endPicker = document.getElementById("experienceEndMonth");
-  const currentRole = document.getElementById("experienceCurrentRole");
-  if (!datesField || !startPicker || !endPicker || !currentRole || datesField.dataset.dateReady === "true") return;
+  const {
+    field,
+    datesField,
+    popover,
+    startPicker,
+    endPicker,
+    currentRole,
+    startTarget,
+    endTarget,
+    monthGrid
+  } = experienceDateElements();
+  if (!datesField || !startPicker || !endPicker || !currentRole || !popover || datesField.dataset.dateReady === "true") return;
   datesField.dataset.dateReady = "true";
+  datesField.setAttribute("autocomplete", "off");
+  datesField.setAttribute("aria-haspopup", "dialog");
+  datesField.setAttribute("aria-expanded", "false");
+  popover.addEventListener("click", (event) => event.stopPropagation());
+  popover.addEventListener("pointerdown", (event) => event.stopPropagation());
+  datesField.addEventListener("focus", () => openExperienceDatePicker());
+  datesField.addEventListener("click", () => openExperienceDatePicker());
+  datesField.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown" || event.key === "Enter") {
+      event.preventDefault();
+      openExperienceDatePicker();
+    }
+    if (event.key === "Escape") closeExperienceDatePicker();
+  });
   datesField.addEventListener("input", () => {
     setExperienceDatePickersFromValue(datesField.value);
     validateExperienceDates();
   });
   startPicker.addEventListener("change", syncExperienceDatesFromPickers);
   endPicker.addEventListener("change", syncExperienceDatesFromPickers);
-  currentRole.addEventListener("change", syncExperienceDatesFromPickers);
+  currentRole.addEventListener("change", () => {
+    if (currentRole.checked) popover.dataset.activeTarget = "start";
+    syncExperienceDatesFromPickers();
+  });
+  startTarget?.addEventListener("click", () => {
+    openExperienceDatePicker("start");
+    setExperiencePickerTarget("start");
+  });
+  endTarget?.addEventListener("click", () => {
+    currentRole.checked = false;
+    endPicker.disabled = false;
+    openExperienceDatePicker("end");
+    setExperiencePickerTarget("end");
+    syncExperienceDatesFromPickers();
+  });
+  document.getElementById("experiencePrevYear")?.addEventListener("click", () => {
+    setExperiencePickerYear(experiencePickerYear() - 1);
+  });
+  document.getElementById("experienceNextYear")?.addEventListener("click", () => {
+    setExperiencePickerYear(experiencePickerYear() + 1);
+  });
+  document.getElementById("experienceDateClose")?.addEventListener("click", closeExperienceDatePicker);
+  monthGrid?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-month-value]");
+    if (!button) return;
+    chooseExperienceMonth(button.dataset.monthValue);
+  });
+  document.addEventListener("click", (event) => {
+    if (popover.hidden || field?.contains(event.target)) return;
+    closeExperienceDatePicker();
+  });
   setExperienceDatePickersFromValue(datesField.value);
+  renderExperienceDatePicker();
 }
 
 function normalizeResume(data = {}) {
@@ -4948,6 +5126,7 @@ async function handleAdminListAction(event) {
     homeSlot: normalizeFeaturedHomeSlot(pairedFeaturedProject?.homeSlot || project.homeSlot),
     featuredRank: normalizeFeaturedRank(pairedFeaturedProject?.featuredRank || project.featuredRank)
   };
+  clearValidationUi(document.getElementById("project-form"));
 
   if (button.dataset.action === "delete") {
     if (!(await confirmAction("Delete this draft project?", "Delete"))) return;
