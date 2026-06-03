@@ -1120,7 +1120,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/8ae253c04768d264dde8.webp",
+            "src": "assets/uploads/91d88cd2b7f7ce52f878.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1130,7 +1130,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/d8249c6480f7d0e52a52.webp",
+            "src": "assets/uploads/395ab72aaa40f051cf39.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1140,7 +1140,47 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/083ccbddb524888335a0.webp",
+            "src": "assets/uploads/c663c323380f9ef0f38e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9b4510fca1358629b394.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/bbb847273872504dd132.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0dad8911f4e3ce563e27.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/13c1cd268f49adb1057b.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1229,7 +1269,7 @@
       "experienceId": "",
       "homeSlot": "",
       "featuredRank": "",
-      "title": "Avanti Nagral",
+      "title": "Music Videos",
       "category": "Video Editing",
       "categories": [
         "Video Editing"
