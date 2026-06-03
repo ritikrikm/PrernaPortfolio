@@ -1224,6 +1224,62 @@
       "image": "assets/uploads/59545f74e6a682d41a7d.webp"
     },
     {
+      "id": "5105d37f-b84e-46eb-b9e8-366f28d531c6",
+      "placement": "featured",
+      "experienceId": "",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Avanti Nagral",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing"
+      ],
+      "mediaType": "Video",
+      "role": "Freelance Designer",
+      "year": "",
+      "tools": "Photoshop, Premiere pro, After Effects",
+      "summary": ".",
+      "whatPrernaDid": ".",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Music Videos",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "",
+            "videoUrl": "https://www.youtube.com/watch?v=iP_9CQ_TKbU",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": []
+      },
+      "image": ""
+    },
+    {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
       "experienceId": "cultreboat",
@@ -1421,12 +1477,12 @@
   ],
   "siteContent": {
     "global": {
-      "metaTitle": "Prerna Sharma | Graphic Designer",
+      "metaTitle": "Prerna Sharma | Multimedia Designer",
       "metaDescription": "Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
       "skipLink": "Skip to site",
       "brandSymbol": "PS",
       "brandName": "Prerna Sharma",
-      "brandSubtitle": "Graphic Designer + Motion Artist",
+      "brandSubtitle": "Multimedia Visual Designer",
       "nav": {
         "home": "Home",
         "work": "Work",
