@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaigns.">
     <title>Prerna Sharma | Graphic Designer</title>
-    <link rel="stylesheet" href="styles.css?v=admin-validation-testing">
+    <link rel="stylesheet" href="styles.css?v=date-picker-validation">
   </head>
   <body>
     <a class="skip-link" href="#app">Skip to site</a>
@@ -217,22 +217,38 @@
                 Role <span class="required-mark" aria-hidden="true">*</span>
                 <input id="experienceTitle" type="text" required minlength="2" maxlength="90" placeholder="Executive - Design">
               </label>
-              <label>
+              <label class="date-range-field" id="experienceDateField">
                 Dates <span class="required-mark" aria-hidden="true">*</span>
                 <input id="experienceDates" type="text" required pattern="^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} - ((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4}|Present)$" placeholder="Dec 2023 - Nov 2024">
-                <small class="field-hint">Use the month pickers below, or type like Dec 2023 - Nov 2024.</small>
-              </label>
-              <label>
-                Start month
-                <input id="experienceStartMonth" type="month">
-              </label>
-              <label>
-                End month
-                <input id="experienceEndMonth" type="month">
-              </label>
-              <label class="inline-check">
-                <input id="experienceCurrentRole" type="checkbox">
-                Current role / end date is Present
+                <small class="field-hint">Click to pick the start and end month-year, or type like Dec 2023 - Nov 2024.</small>
+                <div class="date-range-popover" id="experienceDatePopover" hidden>
+                  <div class="date-picker-head">
+                    <strong>Select dates</strong>
+                    <button class="mini-button" id="experienceDateClose" type="button">Done</button>
+                  </div>
+                  <div class="date-picker-targets" role="group" aria-label="Choose start or end date">
+                    <button class="date-target is-active" id="experienceStartTarget" type="button" data-date-target="start">
+                      <span>Start</span>
+                      <strong id="experienceStartLabel">Pick month</strong>
+                    </button>
+                    <button class="date-target" id="experienceEndTarget" type="button" data-date-target="end">
+                      <span>End</span>
+                      <strong id="experienceEndLabel">Pick month</strong>
+                    </button>
+                  </div>
+                  <div class="date-picker-year-row">
+                    <button class="mini-button" id="experiencePrevYear" type="button" aria-label="Previous year">‹</button>
+                    <strong id="experiencePickerYear">2024</strong>
+                    <button class="mini-button" id="experienceNextYear" type="button" aria-label="Next year">›</button>
+                  </div>
+                  <div class="month-tile-grid" id="experienceMonthGrid" aria-label="Month choices"></div>
+                  <label class="inline-check date-present-toggle">
+                    <input id="experienceCurrentRole" type="checkbox">
+                    Current role / end date is Present
+                  </label>
+                </div>
+                <input id="experienceStartMonth" class="date-shadow-input" type="month" tabindex="-1" aria-hidden="true">
+                <input id="experienceEndMonth" class="date-shadow-input" type="month" tabindex="-1" aria-hidden="true">
               </label>
               <label>
                 Location <span class="required-mark" aria-hidden="true">*</span>
@@ -696,6 +712,6 @@
       </section>
     </template>
 
-    <script src="app.js?v=admin-validation-testing"></script>
+    <script src="app.js?v=date-picker-validation"></script>
   </body>
 </html>
