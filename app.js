@@ -10,6 +10,19 @@ const MAX_UPLOAD_DIMENSION = 2200;
 const IMAGE_EXPORT_QUALITY = 0.86;
 const MEDIA_ASSET_MAX_DIMENSION = 1800;
 const MEDIA_ASSET_IMAGE_QUALITY = 0.8;
+const IMAGE_UPLOAD_MIN_BYTES = 1024;
+const IMAGE_UPLOAD_MAX_BYTES = 100 * 1024 * 1024;
+const RESUME_PDF_MAX_BYTES = 10 * 1024 * 1024;
+const ALLOWED_IMAGE_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+const ALLOWED_IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp", "gif"]);
+const ALLOWED_VIDEO_MIME_TYPES = new Set(["video/mp4", "video/webm", "video/ogg"]);
+const ALLOWED_VIDEO_EXTENSIONS = new Set(["mp4", "webm", "ogv", "ogg"]);
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_LOOKUP = MONTH_NAMES.reduce((lookup, month, index) => {
+  lookup[month] = index;
+  return lookup;
+}, {});
+const EXPERIENCE_DATE_PATTERN = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) - ((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4})|Present)$/;
 const DEFAULT_PROJECT_CATEGORIES = ["Branding", "Social Media", "Video Editing", "Motion Graphics", "Illustration", "Campaign Design", "Graphic Design", "Multimedia"];
 const HOME_SECTION_NAV = {
   featured: { selector: "#home-featured-section", route: "/featured-projects" },
@@ -344,6 +357,256 @@ function safeAssetHref(value = "") {
   if (/^assets\/[a-z0-9/_\-.]+$/i.test(value)) return value;
   if (/^data:application\/pdf;base64,/i.test(value)) return value;
   return safeUrl(value);
+}
+
+function formatBytes(bytes = 0) {
+  if (!Number.isFinite(bytes)) return "0 B";
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(bytes >= 10 * 1024 * 1024 ? 0 : 1)} MB`;
+  if (bytes >= 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${bytes} B`;
+}
+
+function fileExtension(file = {}) {
+  return String(file.name || "").split(".").pop().toLowerCase();
+}
+
+function fileMatches(file, mimeTypes, extensions) {
+  const mime = String(file?.type || "").toLowerCase();
+  const extension = fileExtension(file);
+  return (mime && mimeTypes.has(mime)) || (extension && extensions.has(extension));
+}
+
+function validateImageFile(file, label = "Image") {
+  if (!file) return "";
+  if (!fileMatches(file, ALLOWED_IMAGE_MIME_TYPES, ALLOWED_IMAGE_EXTENSIONS)) {
+    return `${label} must be JPG, PNG, WebP, or GIF.`;
+  }
+  if (file.size < IMAGE_UPLOAD_MIN_BYTES) {
+    return `${label} is too small. Minimum size is ${formatBytes(IMAGE_UPLOAD_MIN_BYTES)}.`;
+  }
+  if (file.size > IMAGE_UPLOAD_MAX_BYTES) {
+    return `${label} is too large. Maximum size is ${formatBytes(IMAGE_UPLOAD_MAX_BYTES)}.`;
+  }
+  return "";
+}
+
+function validateVideoAssetFile(file) {
+  if (!file) return "";
+  if (!fileMatches(file, ALLOWED_VIDEO_MIME_TYPES, ALLOWED_VIDEO_EXTENSIONS)) {
+    return "Video assets must be MP4, WebM, or OGG. Paste a public video link after selecting Video.";
+  }
+  if (file.size > IMAGE_UPLOAD_MAX_BYTES) {
+    return `Video file is too large. Maximum test upload size is ${formatBytes(IMAGE_UPLOAD_MAX_BYTES)}; use a public link instead.`;
+  }
+  return "";
+}
+
+function validateResumePdfFile(file) {
+  if (!file) return "";
+  const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name || "");
+  if (!isPdf) return "Resume must be a PDF file.";
+  if (file.size > RESUME_PDF_MAX_BYTES) return `Resume PDF is too large. Maximum size is ${formatBytes(RESUME_PDF_MAX_BYTES)}.`;
+  return "";
+}
+
+function validImageSource(value = "") {
+  const source = String(value || "").trim();
+  return !source
+    || source.startsWith("data:image/")
+    || /^assets\/[a-z0-9/_\-.]+$/i.test(source)
+    || Boolean(safeUrl(source));
+}
+
+function controlErrorKey(control) {
+  return control.id || control.name || control.getAttribute("aria-label") || "field";
+}
+
+function fieldWrapper(control) {
+  return control?.closest("label") || control?.closest(".media-fieldset") || control?.closest(".form-subsection") || control?.parentElement;
+}
+
+function renderControlError(control, message = "") {
+  if (!control) return;
+  const wrapper = fieldWrapper(control);
+  if (!wrapper) return;
+  const key = controlErrorKey(control);
+  let error = Array.from(wrapper.querySelectorAll(".field-error")).find((item) => item.dataset.errorFor === key);
+  if (message) {
+    if (!error) {
+      error = document.createElement("small");
+      error.className = "field-error";
+      error.dataset.errorFor = key;
+      wrapper.append(error);
+    }
+    error.textContent = message;
+    error.hidden = false;
+  } else if (error) {
+    error.textContent = "";
+    error.hidden = true;
+  }
+  const hasError = Array.from(wrapper.querySelectorAll(".field-error")).some((item) => !item.hidden && item.textContent.trim());
+  wrapper.classList.toggle("has-field-error", hasError);
+}
+
+function setControlError(control, message = "") {
+  if (!control) return;
+  control.setCustomValidity?.(message || "");
+  renderControlError(control, message);
+}
+
+function clearControlError(control) {
+  setControlError(control, "");
+}
+
+function clearValidationUi(root = document) {
+  root.querySelectorAll("input, select, textarea").forEach((control) => {
+    control.setCustomValidity?.("");
+    renderControlError(control, "");
+  });
+}
+
+function syncFormValidationUi(form) {
+  form.querySelectorAll("input, select, textarea").forEach((control) => {
+    renderControlError(control, control.validity.valid ? "" : control.validationMessage);
+  });
+}
+
+function reportFormValidation(form, fallbackMessage) {
+  syncFormValidationUi(form);
+  const firstInvalid = form.querySelector(":invalid");
+  if (firstInvalid) {
+    firstInvalid.focus({ preventScroll: false });
+    firstInvalid.reportValidity?.();
+  }
+  showToast(fallbackMessage);
+}
+
+function validateNativeForm(form, fallbackMessage) {
+  if (form.checkValidity()) {
+    syncFormValidationUi(form);
+    return true;
+  }
+  reportFormValidation(form, fallbackMessage);
+  return false;
+}
+
+function setupInlineValidation(form) {
+  if (!form || form.dataset.validationReady === "true") return;
+  form.dataset.validationReady = "true";
+  const refresh = (event) => {
+    const control = event.target.closest?.("input, select, textarea");
+    if (!control || !form.contains(control)) return;
+    if (control.validity?.customError) control.setCustomValidity("");
+    if (control.id === "experienceDates") validateExperienceDates();
+    else renderControlError(control, control.validity.valid ? "" : control.validationMessage);
+  };
+  form.addEventListener("input", refresh);
+  form.addEventListener("change", refresh);
+  form.addEventListener("invalid", (event) => {
+    renderControlError(event.target, event.target.validationMessage);
+  }, true);
+}
+
+function monthInputToLabel(value = "") {
+  const match = String(value).match(/^([0-9]{4})-([0-9]{2})$/);
+  if (!match) return "";
+  const monthIndex = Number(match[2]) - 1;
+  if (monthIndex < 0 || monthIndex > 11) return "";
+  return `${MONTH_NAMES[monthIndex]} ${match[1]}`;
+}
+
+function monthLabelToInput(value = "") {
+  const match = String(value).trim().match(/^([A-Z][a-z]{2}) ([0-9]{4})$/);
+  if (!match || !(match[1] in MONTH_LOOKUP)) return "";
+  return `${match[2]}-${String(MONTH_LOOKUP[match[1]] + 1).padStart(2, "0")}`;
+}
+
+function comparableMonth(label = "") {
+  const match = String(label).trim().match(/^([A-Z][a-z]{2}) ([0-9]{4})$/);
+  if (!match || !(match[1] in MONTH_LOOKUP)) return null;
+  return Number(match[2]) * 12 + MONTH_LOOKUP[match[1]];
+}
+
+function parseExperienceDateRange(value = "") {
+  const match = String(value).trim().match(EXPERIENCE_DATE_PATTERN);
+  if (!match) return null;
+  return {
+    startLabel: `${match[1]} ${match[2]}`,
+    endLabel: match[3],
+    isPresent: match[3] === "Present"
+  };
+}
+
+function setExperienceDatePickersFromValue(value = "") {
+  const startPicker = document.getElementById("experienceStartMonth");
+  const endPicker = document.getElementById("experienceEndMonth");
+  const currentRole = document.getElementById("experienceCurrentRole");
+  if (!startPicker || !endPicker || !currentRole) return;
+  const parsed = parseExperienceDateRange(value);
+  if (!parsed) {
+    startPicker.value = "";
+    endPicker.value = "";
+    currentRole.checked = false;
+    endPicker.disabled = false;
+    return;
+  }
+  startPicker.value = monthLabelToInput(parsed.startLabel);
+  currentRole.checked = parsed.isPresent;
+  endPicker.disabled = parsed.isPresent;
+  endPicker.value = parsed.isPresent ? "" : monthLabelToInput(parsed.endLabel);
+}
+
+function syncExperienceDatesFromPickers() {
+  const datesField = document.getElementById("experienceDates");
+  const startPicker = document.getElementById("experienceStartMonth");
+  const endPicker = document.getElementById("experienceEndMonth");
+  const currentRole = document.getElementById("experienceCurrentRole");
+  if (!datesField || !startPicker || !endPicker || !currentRole) return;
+  const startLabel = monthInputToLabel(startPicker.value);
+  const endLabel = currentRole.checked ? "Present" : monthInputToLabel(endPicker.value);
+  endPicker.disabled = currentRole.checked;
+  if (currentRole.checked) endPicker.value = "";
+  if (startLabel && endLabel) datesField.value = `${startLabel} - ${endLabel}`;
+  validateExperienceDates();
+  renderExperiencePreview();
+}
+
+function validateExperienceDates() {
+  const datesField = document.getElementById("experienceDates");
+  if (!datesField) return true;
+  const value = datesField.value.trim();
+  const parsed = parseExperienceDateRange(value);
+  let message = "";
+  if (!value) {
+    message = "Experience dates are required.";
+  } else if (!parsed) {
+    message = "Use date format like Dec 2023 - Nov 2024, or Dec 2023 - Present.";
+  } else if (!parsed.isPresent) {
+    const start = comparableMonth(parsed.startLabel);
+    const end = comparableMonth(parsed.endLabel);
+    if (start !== null && end !== null && end < start) {
+      message = "End month must be the same as or after the start month.";
+    }
+  }
+  setControlError(datesField, message);
+  return !message;
+}
+
+function setupExperienceDateControls() {
+  const datesField = document.getElementById("experienceDates");
+  const startPicker = document.getElementById("experienceStartMonth");
+  const endPicker = document.getElementById("experienceEndMonth");
+  const currentRole = document.getElementById("experienceCurrentRole");
+  if (!datesField || !startPicker || !endPicker || !currentRole || datesField.dataset.dateReady === "true") return;
+  datesField.dataset.dateReady = "true";
+  datesField.addEventListener("input", () => {
+    setExperienceDatePickersFromValue(datesField.value);
+    validateExperienceDates();
+  });
+  startPicker.addEventListener("change", syncExperienceDatesFromPickers);
+  endPicker.addEventListener("change", syncExperienceDatesFromPickers);
+  currentRole.addEventListener("change", syncExperienceDatesFromPickers);
+  setExperienceDatePickersFromValue(datesField.value);
 }
 
 function normalizeResume(data = {}) {
@@ -2981,6 +3244,7 @@ function clearExperienceForm() {
   document.getElementById("experience-form").reset();
   document.getElementById("experience-id").value = "";
   document.getElementById("experienceHomeSlot").value = "";
+  setExperienceDatePickersFromValue("");
   renderExperienceHomeLimitSelect();
   document.getElementById("experienceAccent").value = "#0a6f6b";
   document.getElementById("experienceImageFit").value = "cover";
@@ -2992,6 +3256,7 @@ function clearExperienceForm() {
   document.getElementById("experience-image-file-name").textContent = "Choose an image";
   state.experiencePreviewImage = "";
   state.experienceImageRemoved = false;
+  clearValidationUi(document.getElementById("experience-form"));
   renderExperiencePreview();
 }
 
@@ -3116,7 +3381,7 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
       <div class="media-fieldset-head">
         <strong>${escapeHtml(group.label)} ${assetNumber}</strong>
         <div class="media-fieldset-actions">
-          <select id="${mediaInputId("mediaType", group.id, index)}">
+          <select id="${mediaInputId("mediaType", group.id, index)}" required aria-label="${escapeHtml(group.label)} ${assetNumber} media type">
             <option${(item.type || "Image") === "Image" ? " selected" : ""}>Image</option>
             <option${item.type === "Video" ? " selected" : ""}>Video</option>
           </select>
@@ -3126,21 +3391,21 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
       </div>
       <label>
         Asset title
-        <input id="${mediaInputId("mediaTitle", group.id, index)}" type="text" value="${escapeHtml(item.title || "")}" placeholder="${group.id === "initialSketch" ? "Rough layout sketch" : "Final carousel design"}">
+        <input id="${mediaInputId("mediaTitle", group.id, index)}" type="text" maxlength="120" value="${escapeHtml(item.title || "")}" placeholder="${group.id === "initialSketch" ? "Rough layout sketch" : "Final carousel design"}">
       </label>
       <label>
         Image URL / thumbnail URL
-        <input id="${mediaInputId("mediaUrl", group.id, index)}" type="text" value="${embeddedImage ? "" : escapeHtml(src)}" placeholder="https:// or uploaded image">
+        <input id="${mediaInputId("mediaUrl", group.id, index)}" type="text" maxlength="500" value="${embeddedImage ? "" : escapeHtml(src)}" placeholder="https:// or uploaded image">
       </label>
       <label>
         Video link
-        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" value="${escapeHtml(item.videoUrl || "")}" placeholder="Drive, YouTube, Vimeo, or direct video link">
+        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" maxlength="500" value="${escapeHtml(item.videoUrl || "")}" placeholder="Drive, YouTube, Vimeo, or direct video link">
       </label>
       <label class="upload-box asset-drop-zone" data-drop-media="${group.id}" data-drop-media-index="${index}">
         <span>Drop image / video thumbnail</span>
-        <input id="${mediaInputId("mediaFile", group.id, index)}" type="file" accept="image/*,video/mp4,video/webm,video/ogg" data-detail-group="${group.id}" data-detail-index="${index}">
+        <input id="${mediaInputId("mediaFile", group.id, index)}" type="file" accept=".jpg,.jpeg,.png,.webp,.gif,.mp4,.webm,.ogv,.ogg,image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg" data-detail-group="${group.id}" data-detail-index="${index}">
         <strong id="${mediaInputId("mediaFileName", group.id, index)}">${src ? "Existing image selected" : "Choose or drop image"}</strong>
-        <small>Videos play from public links.</small>
+        <small>Images: JPG, PNG, WebP, GIF, 1 KB-100 MB. Videos: MP4/WebM/OGG; paste a public playback link.</small>
         <button class="mini-button" type="button" data-clear-media-image="${group.id}" data-clear-media-image-index="${index}">Remove image</button>
       </label>
       <label>
@@ -3162,7 +3427,7 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
       </label>
       <label class="wide">
         Asset text
-        <textarea id="${mediaInputId("mediaDescription", group.id, index)}" rows="3" placeholder="Optional text below this photo/video card.">${escapeHtml(item.description || "")}</textarea>
+        <textarea id="${mediaInputId("mediaDescription", group.id, index)}" rows="3" maxlength="500" placeholder="Optional text below this photo/video card.">${escapeHtml(item.description || "")}</textarea>
       </label>
     </article>
   `;
@@ -3246,8 +3511,12 @@ function clearMediaFields() {
 
 function clearDetailMediaImage(groupId, index) {
   delete state.detailMediaImages[mediaImageKey(groupId, index)];
-  mediaField("mediaUrl", groupId, index).value = "";
-  mediaField("mediaFile", groupId, index).value = "";
+  const urlField = mediaField("mediaUrl", groupId, index);
+  const fileField = mediaField("mediaFile", groupId, index);
+  urlField.value = "";
+  fileField.value = "";
+  clearControlError(urlField);
+  clearControlError(fileField);
   mediaField("mediaFileName", groupId, index).textContent = "Choose or drop image";
   renderPreview();
 }
@@ -3256,7 +3525,9 @@ function clearDetailMediaItem(groupId, index) {
   clearDetailMediaImage(groupId, index);
   mediaField("mediaType", groupId, index).value = "Image";
   mediaField("mediaTitle", groupId, index).value = "";
-  mediaField("mediaVideoUrl", groupId, index).value = "";
+  const videoField = mediaField("mediaVideoUrl", groupId, index);
+  videoField.value = "";
+  clearControlError(videoField);
   mediaField("mediaDescription", groupId, index).value = "";
   renderPreview();
 }
@@ -3295,27 +3566,40 @@ async function processDetailMediaFile(file, groupId, index, input) {
   const fileName = mediaField("mediaFileName", groupId, index);
   if (!file) {
     if (fileName) fileName.textContent = "Choose or drop image";
+    clearControlError(input);
     return;
   }
 
-  if (file.type?.startsWith("video/")) {
+  if (fileMatches(file, ALLOWED_VIDEO_MIME_TYPES, ALLOWED_VIDEO_EXTENSIONS)) {
+    const message = validateVideoAssetFile(file);
+    if (message) {
+      setControlError(input, message);
+      if (fileName) fileName.textContent = "Choose or drop image";
+      if (input) input.value = "";
+      showToast(message);
+      return;
+    }
     const typeField = mediaField("mediaType", groupId, index);
     if (typeField) typeField.value = "Video";
     if (fileName) fileName.textContent = "Paste a public video link";
     if (input) input.value = "";
+    clearControlError(input);
     showToast("Use a public Drive, YouTube, Vimeo, or direct link for videos.");
     renderPreview();
     return;
   }
 
-  if (!file.type?.startsWith("image/")) {
+  const imageError = validateImageFile(file, "Campaign asset image");
+  if (imageError) {
+    setControlError(input, imageError);
     if (fileName) fileName.textContent = "Choose or drop image";
     if (input) input.value = "";
-    showToast("Use an image thumbnail, or paste a public video link.");
+    showToast(imageError);
     return;
   }
 
   if (fileName) fileName.textContent = file.name;
+  clearControlError(input);
   showLoadingBanner("Preparing campaign asset...");
   try {
     state.detailMediaImages[mediaImageKey(groupId, index)] = await readFileAsDataUrl(file, {
@@ -3398,6 +3682,7 @@ function setupDetailMediaControls() {
 function clearProjectImage() {
   const imageInput = document.getElementById("image");
   if (imageInput) imageInput.value = "";
+  clearControlError(imageInput);
   state.previewImage = "";
   state.projectImageRemoved = true;
   document.getElementById("image-file-name").textContent = "No thumbnail selected";
@@ -3407,6 +3692,7 @@ function clearProjectImage() {
 function clearExperienceImage() {
   const imageInput = document.getElementById("experienceImage");
   if (imageInput) imageInput.value = "";
+  clearControlError(imageInput);
   state.experiencePreviewImage = "";
   state.experienceImageRemoved = true;
   document.getElementById("experience-image-file-name").textContent = "No image selected";
@@ -3440,9 +3726,22 @@ function renderAdminExperienceList() {
     : `<div class="empty-state"><strong>No draft experiences yet.</strong></div>`;
 }
 
+function validateExperienceForSave(experience) {
+  const form = document.getElementById("experience-form");
+  const imageInput = document.getElementById("experienceImage");
+  validateExperienceDates();
+  if (!experience.image) {
+    setControlError(imageInput, "Experience card image is required. Upload a JPG, PNG, WebP, or GIF.");
+  } else {
+    clearControlError(imageInput);
+  }
+  return validateNativeForm(form, "Please fix the highlighted experience fields.");
+}
+
 async function handleExperienceSave(event) {
   event.preventDefault();
   const nextExperience = formExperience();
+  if (!validateExperienceForSave(nextExperience)) return;
   const nextSiteContent = siteContentWithExperienceHomeLimit();
   if (!(await confirmAction("Save this experience as a draft?", "Save Experience"))) return;
 
@@ -3497,6 +3796,7 @@ async function handleAdminExperienceAction(event) {
   document.getElementById("experienceCompany").value = experience.company;
   document.getElementById("experienceTitle").value = experience.title;
   document.getElementById("experienceDates").value = experience.dates;
+  setExperienceDatePickersFromValue(experience.dates);
   document.getElementById("experienceLocation").value = experience.location;
   document.getElementById("experienceHeadline").value = experience.headline;
   document.getElementById("experienceSummary").value = experience.summary;
@@ -3598,20 +3898,22 @@ function renderResumeAdmin() {
 
 async function readResumePdfAsDataUrl(file) {
   if (!file) return "";
-  const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
-  if (!isPdf) throw new Error("Please choose a PDF resume.");
+  const message = validateResumePdfFile(file);
+  if (message) throw new Error(message);
   return readRawFileAsDataUrl(file);
 }
 
 async function readResumePreviewAsDataUrl(file) {
   if (!file) return "";
-  if (!file.type?.startsWith("image/")) throw new Error("Please choose an image for the resume preview.");
+  const message = validateImageFile(file, "Resume preview image");
+  if (message) throw new Error(message);
   const blob = await compressedImageBlob(file);
   return blob ? readRawFileAsDataUrl(blob) : readFileAsDataUrl(file);
 }
 
 async function saveResumeDraft(event) {
   event.preventDefault();
+  if (!validateNativeForm(document.getElementById("resume-form"), "Please fix the highlighted resume fields.")) return;
   if (!(await confirmAction("Save this resume as a draft?", "Save Resume"))) return;
   try {
     saveDraftPortfolio(portfolioSnapshot({ resume: formResume() }));
@@ -3644,19 +3946,24 @@ function setupResumeAdmin() {
   resetResumeDraftInputs();
   document.getElementById("resume-label").value = state.resume.label || defaultResume.label;
   renderResumeAdmin();
+  setupInlineValidation(form);
 
   form.addEventListener("input", renderResumeAdmin);
   form.addEventListener("submit", saveResumeDraft);
   document.getElementById("reset-resume-draft").addEventListener("click", resetResumeDraft);
   document.getElementById("clear-resume-file").addEventListener("click", () => {
-    document.getElementById("resume-file").value = "";
+    const resumeFileInput = document.getElementById("resume-file");
+    resumeFileInput.value = "";
+    clearControlError(resumeFileInput);
     state.resumeFileDraft = "";
     state.resumeFileNameDraft = "";
     state.resumeFileRemoved = true;
     renderResumeAdmin();
   });
   document.getElementById("clear-resume-preview").addEventListener("click", () => {
-    document.getElementById("resume-preview-file").value = "";
+    const previewInput = document.getElementById("resume-preview-file");
+    previewInput.value = "";
+    clearControlError(previewInput);
     state.resumePreviewDraft = "";
     state.resumePreviewRemoved = true;
     renderResumeAdmin();
@@ -3669,8 +3976,10 @@ function setupResumeAdmin() {
       state.resumeFileDraft = await readResumePdfAsDataUrl(file);
       state.resumeFileNameDraft = file.name || defaultResume.fileName;
       state.resumeFileRemoved = false;
+      clearControlError(event.target);
       renderResumeAdmin();
     } catch (error) {
+      setControlError(event.target, error.message || "Could not read resume.");
       showToast(error.message || "Could not read resume.");
       event.target.value = "";
     } finally {
@@ -3684,8 +3993,10 @@ function setupResumeAdmin() {
     try {
       state.resumePreviewDraft = await readResumePreviewAsDataUrl(file);
       state.resumePreviewRemoved = false;
+      clearControlError(event.target);
       renderResumeAdmin();
     } catch (error) {
+      setControlError(event.target, error.message || "Could not read resume preview.");
       showToast(error.message || "Could not read resume preview.");
       event.target.value = "";
     } finally {
@@ -4106,6 +4417,9 @@ function setupAdmin() {
   setupContentEditor();
   setupResumeAdmin();
 
+  setupInlineValidation(document.getElementById("experience-form"));
+  setupInlineValidation(form);
+  setupExperienceDateControls();
   document.getElementById("experience-form").addEventListener("submit", handleExperienceSave);
   document.getElementById("experience-form").addEventListener("input", renderExperiencePreview);
   document.getElementById("experience-form").addEventListener("change", renderExperiencePreview);
@@ -4115,6 +4429,18 @@ function setupAdmin() {
   document.getElementById("experienceImage").addEventListener("change", async (event) => {
     const file = event.target.files?.[0];
     document.getElementById("experience-image-file-name").textContent = file ? file.name : "Choose an image";
+    const imageError = validateImageFile(file, "Experience card image");
+    if (imageError) {
+      setControlError(event.target, imageError);
+      event.target.value = "";
+      document.getElementById("experience-image-file-name").textContent = "Choose an image";
+      state.experiencePreviewImage = "";
+      state.experienceImageRemoved = true;
+      renderExperiencePreview();
+      showToast(imageError);
+      return;
+    }
+    clearControlError(event.target);
     if (file) showLoadingBanner("Preparing experience image...");
     try {
       state.experiencePreviewImage = file ? await readFileAsDataUrl(file) : "";
@@ -4138,6 +4464,18 @@ function setupAdmin() {
   imageInput.addEventListener("change", async (event) => {
     const file = event.target.files?.[0];
     document.getElementById("image-file-name").textContent = file ? file.name : "Choose an image";
+    const imageError = validateImageFile(file, "Project thumbnail");
+    if (imageError) {
+      setControlError(event.target, imageError);
+      event.target.value = "";
+      document.getElementById("image-file-name").textContent = "Choose an image";
+      state.previewImage = "";
+      state.projectImageRemoved = true;
+      renderPreview();
+      showToast(imageError);
+      return;
+    }
+    clearControlError(event.target);
     if (file) showLoadingBanner("Preparing image preview...");
     try {
       state.previewImage = file ? await readFileAsDataUrl(file) : "";
@@ -4374,6 +4712,89 @@ function applyExperienceHomeSlotChoice(experienceItems, activeExperience) {
   });
 }
 
+function mediaItemHasDraftContent(item = {}) {
+  return Boolean(
+    item.title
+    || item.src
+    || item.videoUrl
+    || item.description
+  );
+}
+
+function validateMediaGroupsForSave() {
+  let isValid = true;
+  MEDIA_GROUPS.forEach((group) => {
+    document.querySelectorAll(`[data-media-group="${group.id}"]`).forEach((fieldset) => {
+      const index = Number(fieldset.dataset.mediaIndex);
+      const typeField = mediaField("mediaType", group.id, index);
+      const titleField = mediaField("mediaTitle", group.id, index);
+      const urlField = mediaField("mediaUrl", group.id, index);
+      const videoField = mediaField("mediaVideoUrl", group.id, index);
+      const descriptionField = mediaField("mediaDescription", group.id, index);
+      [typeField, titleField, urlField, videoField, descriptionField].forEach(clearControlError);
+      const item = {
+        type: typeField?.value || "Image",
+        title: titleField?.value.trim() || "",
+        src: state.detailMediaImages[mediaImageKey(group.id, index)] || urlField?.value.trim() || "",
+        videoUrl: videoField?.value.trim() || "",
+        description: descriptionField?.value.trim() || ""
+      };
+      if (!mediaItemHasDraftContent(item)) return;
+
+      if (item.type === "Video") {
+        if (!item.videoUrl) {
+          setControlError(videoField, "Video assets need a public Drive, YouTube, Vimeo, or direct video link.");
+          isValid = false;
+        } else if (!safeUrl(item.videoUrl)) {
+          setControlError(videoField, "Enter a full public video URL starting with https://.");
+          isValid = false;
+        }
+        if (item.src && !validImageSource(item.src)) {
+          setControlError(urlField, "Thumbnail URL must be https://, an assets/uploads path, or an uploaded image.");
+          isValid = false;
+        }
+        return;
+      }
+
+      if (!item.src) {
+        setControlError(urlField, "Image assets need an uploaded image or image URL.");
+        isValid = false;
+      } else if (!validImageSource(item.src)) {
+        setControlError(urlField, "Image URL must be https://, an assets/uploads path, or an uploaded image.");
+        isValid = false;
+      }
+    });
+  });
+  if (!isValid) showToast("Please fix the highlighted campaign asset fields.");
+  return isValid;
+}
+
+function validateProjectForSave(project) {
+  const form = document.getElementById("project-form");
+  const imageInput = document.getElementById("image");
+  const linkInput = document.getElementById("link");
+  clearControlError(imageInput);
+  clearControlError(linkInput);
+
+  if (!project.image) {
+    setControlError(imageInput, "Project thumbnail is required. Upload a JPG, PNG, WebP, or GIF.");
+  }
+
+  if (project.mediaType === "Video") {
+    if (!project.link) {
+      setControlError(linkInput, "Video projects need a public project/video link.");
+    } else if (!safeUrl(project.link)) {
+      setControlError(linkInput, "Enter a full public URL starting with https://.");
+    }
+  } else if (project.link && !safeUrl(project.link)) {
+    setControlError(linkInput, "Enter a full URL starting with https://.");
+  }
+
+  const mediaGroupsValid = validateMediaGroupsForSave();
+  const formValid = validateNativeForm(form, "Please fix the highlighted project fields.");
+  return mediaGroupsValid && formValid;
+}
+
 async function handleProjectSave(event) {
   event.preventDefault();
   if (state.loadingCount) {
@@ -4391,6 +4812,8 @@ async function handleProjectSave(event) {
   if (existingProject && !nextProject.image && !state.projectImageRemoved) {
     nextProject.image = existingProject.image;
   }
+
+  if (!validateProjectForSave(nextProject)) return;
 
   if (placementUsesWork(nextPlacement) && !nextProject.experienceId) {
     const experienceSelect = document.getElementById("experience");
@@ -4475,6 +4898,7 @@ function clearForm() {
   state.previewImage = "";
   state.projectImageRemoved = false;
   clearMediaFields();
+  clearValidationUi(document.getElementById("project-form"));
   renderPreview({ resetScroll: true });
 }
 

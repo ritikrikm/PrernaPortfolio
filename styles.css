@@ -566,6 +566,20 @@ body.theme-night :is(.button.danger, .mini-button.danger, .icon-button.danger, .
   border-color: #fff7fb;
 }
 
+body.theme-night :is(.required-mark, .field-error) {
+  color: #ffadc8;
+}
+
+body.theme-night :is(.has-field-error > input, .has-field-error > select, .has-field-error > textarea, .has-field-error .media-fieldset-actions select) {
+  border-color: #ffadc8;
+  box-shadow: 0 0 0 3px rgba(255, 173, 200, 0.18);
+}
+
+body.theme-night .upload-box.has-field-error {
+  background: #3b1f32;
+  border-color: #ffadc8;
+}
+
 body.theme-night :is(.draft-badge, .content-color-dot, .swatch-preview) {
   border-color: rgba(255, 247, 251, 0.74);
 }
@@ -3304,11 +3318,41 @@ label {
   font-weight: 900;
 }
 
+.required-mark {
+  color: #b42318;
+  font-weight: 950;
+}
+
 .field-hint {
   color: var(--muted);
   font-size: 0.76rem;
   font-weight: 750;
   line-height: 1.35;
+}
+
+.field-error {
+  display: block;
+  color: #b42318;
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.field-error[hidden] {
+  display: none;
+}
+
+.has-field-error > input,
+.has-field-error > select,
+.has-field-error > textarea,
+.has-field-error .media-fieldset-actions select {
+  border-color: #b42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.14);
+}
+
+.upload-box.has-field-error {
+  background: #fff4f2;
+  border-color: #b42318;
 }
 
 .wide {
