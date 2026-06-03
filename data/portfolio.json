@@ -1069,7 +1069,7 @@
       ],
       "mediaType": "Multimedia",
       "role": "Entrepreneur",
-      "year": "-",
+      "year": "2024",
       "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Procreate",
       "summary": "The Creative Bud was an independent art and design brand built around original illustrations and handcrafted products. The brand aimed to transform everyday stationery and lifestyle items into meaningful, artist-driven experiences through storytelling, creativity, and thoughtful design. By combining traditional craftsmanship with contemporary illustration, The Creative Bud fostered a community that valued creativity, self-expression, and unique handmade products.",
       "whatPrernaDid": "Founded and managed The Creative Bud, overseeing brand strategy, product design, illustration, social media marketing, content creation, packaging design, and customer engagement. Developed original artwork and handcrafted product collections while building a loyal community through storytelling-led branding and digital content.",
@@ -1258,6 +1258,16 @@
             "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9e7540ffb5c9130664af.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           }
         ]
       },
@@ -1276,12 +1286,12 @@
       ],
       "mediaType": "Video",
       "role": "Freelance Designer",
-      "year": "",
+      "year": "2024",
       "tools": "Photoshop, Premiere pro, After Effects",
-      "summary": ".",
-      "whatPrernaDid": ".",
+      "summary": "Avanti Nagral is an independent singer-songwriter, content creator, and digital influencer known for her music, storytelling, and advocacy around identity, culture, and self-expression.",
+      "whatPrernaDid": "I collaborated on her music content by shooting and editing music videos and promotional video assets, helping translate her artistic vision into engaging visual narratives for digital audiences.",
       "impact": "",
-      "link": "",
+      "link": "https://youtu.be/iP_9CQ_TKbU?si=D-b8TfgGaoxPn-Mw",
       "accent": "#0a6f6b",
       "imageFit": "cover",
       "imagePosition": "center center",
@@ -1291,33 +1301,64 @@
       "featuredImageZoom": "100",
       "detailImageFit": "cover",
       "detailImagePosition": "center center",
-      "detailImageZoom": "100",
+      "detailImageZoom": "110",
       "mediaGroupMeta": {
         "initialSketch": {
-          "label": "Music Videos",
+          "label": "Long form Music Video",
           "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
         },
         "finalOutput": {
-          "label": "Final Output",
+          "label": "Short form Content",
           "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
         }
       },
       "mediaGroups": {
         "initialSketch": [
           {
-            "type": "Image",
+            "type": "Video",
             "title": "",
-            "src": "",
+            "src": "assets/uploads/1ba0a444432f2805e8ed.webp",
             "videoUrl": "https://www.youtube.com/watch?v=iP_9CQ_TKbU",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "120"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/cdf976c22db0d4f6b619.webp",
+            "videoUrl": "https://www.instagram.com/reel/C7B0Uf-R51q/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "Behind the Scenes",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/b7623f34e7b35cec791a.webp",
+            "videoUrl": "https://www.instagram.com/reel/C2w0VlBxdNX/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/d406ccdf7bb1e0a7724e.webp",
+            "videoUrl": "https://www.instagram.com/reel/C0Ohk3TRSKe/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
             "description": "",
             "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
-        ],
-        "finalOutput": []
+        ]
       },
-      "image": ""
+      "image": "assets/uploads/98e73bcb92ff7bf6d7cf.webp"
     },
     {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
@@ -1532,17 +1573,17 @@
       }
     },
     "home": {
-      "eyebrow": "Graphic design work",
+      "eyebrow": "  ",
       "headline": "Hi! I am Prerna Sharma!",
       "typewriterPrefix": "I am",
       "typewriterWords": [
-        "a Graphic Designer",
-        "a Motion Designer",
+        "a Visual Designer",
+        "an Art Director",
         "a Brand Illustrator",
         "a Visual Storyteller",
-        "a Creative Maker"
+        "a Multimedia Designer"
       ],
-      "summary": "I specialize in visual design, branding, social media, Art direction, illustration, and digital storytelling.",
+      "summary": "I specialize in Multimedia Design, Branding, Social Media, Art Direction, Illustration, and Visual Storytelling.",
       "primaryAction": "View Experience",
       "secondaryAction": "Contact",
       "quickScanEyebrow": "Quick scan",
