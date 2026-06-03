@@ -1,0 +1,74 @@
+name: DEV App Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Target environment"
+        required: true
+        default: "qa"
+        type: choice
+        options:
+          - dev
+          - qa
+          - uat
+          - prod
+
+jobs:
+  app-pipeline:
+    runs-on: ubuntu-latest
+
+    env:
+      TARGET_ENV: ${{ github.event.inputs.target_env || 'qa' }}
+
+    steps:
+      - name: Checkout DEV Code
+        uses: actions/checkout@v4
+
+      - name: Build Application
+        run: echo "Building HTML/CSS/JS application"
+
+      - name: Unit Tests
+        run: echo "Developer unit tests would run here"
+
+      - name: Deploy to DEV
+        run: echo "Deploying app to DEV"
+
+      - name: Trigger QA Smoke Pipeline
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.QA_REPO_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/ritikrikm/Portfolio-Automation/dispatches \
+            -d '{"event_type":"run-qa-tests","client_payload":{"env":"dev","test_suite":"smoke"}}'
+
+      - name: Deploy to QA
+        run: echo "Deploying app to QA"
+
+      - name: Trigger QA Regression Pipeline
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.QA_REPO_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/ritikrikm/Portfolio-Automation/dispatches \
+            -d '{"event_type":"run-qa-tests","client_payload":{"env":"qa","test_suite":"regression"}}'
+
+      - name: QA Approval Before UAT
+        if: ${{ env.TARGET_ENV == 'uat' || env.TARGET_ENV == 'prod' }}
+        run: echo "QA/Manager approval required before UAT"
+
+      - name: Deploy to UAT
+        if: ${{ env.TARGET_ENV == 'uat' || env.TARGET_ENV == 'prod' }}
+        run: echo "Deploying app to UAT"
+
+      - name: Business Approval Before PROD
+        if: ${{ env.TARGET_ENV == 'prod' }}
+        run: echo "Business approval required before PROD"
+
+      - name: Deploy to PROD
+        if: ${{ env.TARGET_ENV == 'prod' }}
+        run: echo "Deploying app to PROD"
