@@ -34,9 +34,116 @@
       "detailImageFit": "contain",
       "detailImagePosition": "center center",
       "detailImageZoom": "100"
+    },
+    {
+      "id": "freelance-the-creative-bud",
+      "company": "Freelance/ The creative Bud",
+      "title": "Designer",
+      "dates": "Jul 2018 - Nov 2024",
+      "location": "India",
+      "headline": "Creative Ideation, Multimedia Designing, Video editing, Motion Graphics, Client servicing, Marketing.",
+      "summary": "My freelance journey began with a passion for art, storytelling, and visual communication. Over the years, I have partnered with brands, creators, and influencers to create illustrations, social media campaigns, motion graphics, and video content. These experiences allowed me to work across diverse creative challenges, strengthen my problem-solving skills, and develop a versatile design style that balances aesthetics with strategic communication.",
+      "impact": "worked with 10+ big global brands with 100% satisfactory outcomes",
+      "homeSlot": "",
+      "accent": "#0a6f6b",
+      "image": "assets/uploads/7c97b9562f231a8a4a93.webp",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100"
     }
   ],
   "projects": [
+    {
+      "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Podcasts",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing",
+        "Social Media"
+      ],
+      "mediaType": "Video",
+      "role": "Video Editor",
+      "year": "2025",
+      "tools": "Photoshop, Premiere Pro, After effects",
+      "summary": "Through collaborations with artists, influencers, and digital media platforms, I explored video editing as a tool for storytelling, audience engagement, and content creation across music and entertainment formats.",
+      "whatPrernaDid": "Edited long-form videos and social content for creators such as Avanti Nagral and Miss Malini Trending, managing storytelling, pacing, client communication, and post-production. I was also involved in content shoots, contributing to both the production and editing process to create engaging digital experiences.",
+      "impact": "",
+      "link": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "105",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "105",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Podcasts",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Challenges",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/f3a254cf18540cf4b87e.webp",
+            "videoUrl": "https://www.instagram.com/reel/CtrJ1BTRyj7/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c66241ed93e4905d97f6.webp",
+            "videoUrl": "https://www.instagram.com/reel/Cu3m_oys3G9/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c6b0e4fae218cbbe4bef.webp",
+            "videoUrl": "https://www.instagram.com/reel/CvE-roepdwE/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/22f3267eefe83d0c4e69.webp",
+            "videoUrl": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "110"
+          }
+        ]
+      },
+      "image": "assets/uploads/cac22fc8ec8054f140d7.webp"
+    },
     {
       "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
       "placement": "both",
@@ -1272,6 +1379,94 @@
         ]
       },
       "image": "assets/uploads/59545f74e6a682d41a7d.webp"
+    },
+    {
+      "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Podcasts",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing",
+        "Social Media"
+      ],
+      "mediaType": "Video",
+      "role": "Video Editor",
+      "year": "2025",
+      "tools": "Photoshop, Premiere Pro, After effects",
+      "summary": "Through collaborations with artists, influencers, and digital media platforms, I explored video editing as a tool for storytelling, audience engagement, and content creation across music and entertainment formats.",
+      "whatPrernaDid": "Edited long-form videos and social content for creators such as Avanti Nagral and Miss Malini Trending, managing storytelling, pacing, client communication, and post-production. I was also involved in content shoots, contributing to both the production and editing process to create engaging digital experiences.",
+      "impact": "",
+      "link": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "105",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "105",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Podcasts",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Challenges",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/f3a254cf18540cf4b87e.webp",
+            "videoUrl": "https://www.instagram.com/reel/CtrJ1BTRyj7/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c66241ed93e4905d97f6.webp",
+            "videoUrl": "https://www.instagram.com/reel/Cu3m_oys3G9/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c6b0e4fae218cbbe4bef.webp",
+            "videoUrl": "https://www.instagram.com/reel/CvE-roepdwE/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/22f3267eefe83d0c4e69.webp",
+            "videoUrl": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "110"
+          }
+        ]
+      },
+      "image": "assets/uploads/cac22fc8ec8054f140d7.webp"
     },
     {
       "id": "5105d37f-b84e-46eb-b9e8-366f28d531c6",
