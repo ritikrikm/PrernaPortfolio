@@ -1,0 +1,70 @@
+pipeline {
+agent any
+
+stages {
+    stage('Checkout') {
+        steps {
+            checkout scm
+        }
+    }
+    stage('Build') {
+        steps {
+            echo 'Building HTML/CSS/JS application'
+        }
+    }
+    stage('Unit Tests') {
+        steps {
+            echo 'Developer Unit Tests would run here'
+        }
+    }
+    stage('Deploy DEV') {
+        steps {
+            echo 'Deploying application to DEV'
+        }
+    }
+    stage('Trigger QA Smoke') {
+        steps {
+            build job: 'QA-Automation',
+            parameters: [
+                string(name: 'TEST_SUITE', value: 'smoke'),
+                string(name: 'ENV', value: 'dev')
+            ]
+        }
+    }
+    stage('Deploy QA') {
+        steps {
+            echo 'Deploying application to QA'
+        }
+    }
+    stage('Trigger QA Regression') {
+        steps {
+            build job: 'QA-Automation',
+            parameters: [
+                string(name: 'TEST_SUITE', value: 'regression'),
+                string(name: 'ENV', value: 'qa')
+            ]
+        }
+    }
+    stage('QA Approval') {
+        steps {
+            input message: 'QA Approved? Deploy to UAT?'
+        }
+    }
+    stage('Deploy UAT') {
+        steps {
+            echo 'Deploying application to UAT'
+        }
+    }
+    stage('Business Approval') {
+        steps {
+            input message: 'Business Approved? Deploy to PROD?'
+        }
+    }
+    stage('Deploy PROD') {
+        steps {
+            echo 'Deploying application to PROD'
+        }
+    }
+}
+
+}
