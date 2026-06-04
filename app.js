@@ -127,27 +127,10 @@ const defaultSiteContent = {
     headline: "Graphic designer with campaign discipline and a handmade visual voice.",
     sketchImage: "assets/designer-sketch.png",
     body: [
-      "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details.",
-      "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
+      "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details."
     ],
     sketchAlt: "Sketch-style illustration of a designer creating at a desk",
-    timeline: [
-      {
-        dates: "2023-2024",
-        title: "Executive - Design, MSL Global",
-        text: "Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production."
-      },
-      {
-        dates: "2023",
-        title: "Communications Designer, Cultre Boat",
-        text: "Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands."
-      },
-      {
-        dates: "2018-2024",
-        title: "Founder / Creative Entrepreneur, The Creative Bud",
-        text: "Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling."
-      }
-    ]
+    timeline: []
   },
   contact: {
     eyebrow: "Contact",
@@ -265,17 +248,7 @@ const CONTENT_FIELDS = [
   { page: "about", key: "about.headline", label: "About headline", path: "about.headline", type: "textarea" },
   { page: "about", key: "about.sketchImage", label: "About photo", path: "about.sketchImage", type: "image", helper: "Upload JPG, PNG, WebP, or GIF. The image is compressed before saving." },
   { page: "about", key: "about.body.0", label: "About paragraph 1", path: "about.body.0", type: "textarea" },
-  { page: "about", key: "about.body.1", label: "About paragraph 2", path: "about.body.1", type: "textarea" },
   { page: "about", key: "about.sketchAlt", label: "Sketch image alt text", path: "about.sketchAlt", type: "textarea" },
-  { page: "about", key: "about.timeline.0.dates", label: "Timeline 1 dates", path: "about.timeline.0.dates" },
-  { page: "about", key: "about.timeline.0.title", label: "Timeline 1 title", path: "about.timeline.0.title" },
-  { page: "about", key: "about.timeline.0.text", label: "Timeline 1 text", path: "about.timeline.0.text", type: "textarea" },
-  { page: "about", key: "about.timeline.1.dates", label: "Timeline 2 dates", path: "about.timeline.1.dates" },
-  { page: "about", key: "about.timeline.1.title", label: "Timeline 2 title", path: "about.timeline.1.title" },
-  { page: "about", key: "about.timeline.1.text", label: "Timeline 2 text", path: "about.timeline.1.text", type: "textarea" },
-  { page: "about", key: "about.timeline.2.dates", label: "Timeline 3 dates", path: "about.timeline.2.dates" },
-  { page: "about", key: "about.timeline.2.title", label: "Timeline 3 title", path: "about.timeline.2.title" },
-  { page: "about", key: "about.timeline.2.text", label: "Timeline 3 text", path: "about.timeline.2.text", type: "textarea" },
   { page: "contact", key: "contact.eyebrow", label: "Contact eyebrow", path: "contact.eyebrow" },
   { page: "contact", key: "contact.headline", label: "Contact headline", path: "contact.headline", type: "textarea" },
   { page: "contact", key: "contact.cards.0.icon", label: "Email icon", path: "contact.cards.0.icon" },
@@ -2354,6 +2327,7 @@ function setupAbout() {
   const bodyWrap = document.querySelector(".about-copy");
   bodyWrap.querySelectorAll("p:not(.eyebrow)").forEach((item) => item.remove());
   about.body.forEach((paragraph, index) => {
+    if (!String(paragraph || "").trim()) return;
     const item = document.createElement("p");
     item.textContent = paragraph;
     item.dataset.contentKey = `about.body.${index}`;
@@ -2361,15 +2335,7 @@ function setupAbout() {
     if (color) item.style.color = color;
     bodyWrap.append(item);
   });
-  document.querySelector(".timeline").innerHTML = about.timeline
-    .map((item, index) => `
-      <article>
-        <span${textStyle(`about.timeline.${index}.dates`)}>${escapeHtml(item.dates)}</span>
-        <strong${textStyle(`about.timeline.${index}.title`)}>${escapeHtml(item.title)}</strong>
-        <p${textStyle(`about.timeline.${index}.text`)}>${escapeHtml(item.text)}</p>
-      </article>
-    `)
-    .join("");
+  document.querySelector(".timeline")?.remove();
 }
 
 function setupContact() {
@@ -4383,16 +4349,7 @@ function pagePreviewMarkup(pageId) {
         </div>
         <p${previewAttributes("about.eyebrow", "eyebrow")}${textStyle("about.eyebrow")}>${escapeHtml(content.about.eyebrow)}</p>
         <h3${previewAttributes("about.headline")}${textStyle("about.headline")}>${escapeHtml(content.about.headline)}</h3>
-        ${content.about.body.map((item, index) => `<p${previewAttributes(`about.body.${index}`)}${textStyle(`about.body.${index}`)}>${escapeHtml(item)}</p>`).join("")}
-        <div class="mini-timeline-preview">
-          ${content.about.timeline.map((item, index) => `
-            <span>
-              <em${previewAttributes(`about.timeline.${index}.dates`)}>${escapeHtml(item.dates)}</em>
-              <strong${previewAttributes(`about.timeline.${index}.title`)}${textStyle(`about.timeline.${index}.title`)}>${escapeHtml(item.title)}</strong>
-              <small${previewAttributes(`about.timeline.${index}.text`)}${textStyle(`about.timeline.${index}.text`)}>${escapeHtml(item.text)}</small>
-            </span>
-          `).join("")}
-        </div>
+        ${content.about.body.map((item, index) => String(item || "").trim() ? `<p${previewAttributes(`about.body.${index}`)}${textStyle(`about.body.${index}`)}>${escapeHtml(item)}</p>` : "").join("")}
         <small${previewAttributes("about.sketchAlt")}>Sketch alt: ${escapeHtml(content.about.sketchAlt)}</small>
       </div>
     `;
