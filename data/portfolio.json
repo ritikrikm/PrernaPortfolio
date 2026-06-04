@@ -44,7 +44,7 @@
       "headline": "Creative Ideation, Multimedia Designing, Video editing, Motion Graphics, Client servicing, Marketing.",
       "summary": "My freelance journey began with a passion for art, storytelling, and visual communication. Over the years, I have partnered with brands, creators, and influencers to create illustrations, social media campaigns, motion graphics, and video content. These experiences allowed me to work across diverse creative challenges, strengthen my problem-solving skills, and develop a versatile design style that balances aesthetics with strategic communication.",
       "impact": "worked with 10+ big global brands with 100% satisfactory outcomes",
-      "homeSlot": "",
+      "homeSlot": "3",
       "accent": "#0a6f6b",
       "image": "assets/uploads/7c97b9562f231a8a4a93.webp",
       "imageFit": "cover",
@@ -56,6 +56,433 @@
     }
   ],
   "projects": [
+    {
+      "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
+      "placement": "both",
+      "experienceId": "cultreboat",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Devan's Coffee",
+      "category": "Social Media",
+      "categories": [
+        "Social Media",
+        "Graphic Design",
+        "Multimedia"
+      ],
+      "mediaType": "Multimedia",
+      "role": "",
+      "year": "2023",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Figma",
+      "summary": "Devan's Coffee is a heritage coffee and tea brand known for its rich legacy and premium products. The objective was to strengthen the brand's digital presence by creating visually cohesive and engaging content that reflected its craftsmanship, quality, and authentic coffee culture.",
+      "whatPrernaDid": "For Devan's Coffee, I developed content strategies, designed social media creatives and aesthetic feed layouts, and created storytelling-led content that highlighted the brand's heritage, products, and coffee culture while maintaining a consistent visual identity across digital platforms.",
+      "impact": "",
+      "link": "",
+      "accent": "#3d0900",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Social Content",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Stories",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/16e4f1a6afd0eb5c0200.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8651dbf78278fd2c513c.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/99bceeacb80271d2ff80.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b1d025c6cfc889295f31.webp",
+            "videoUrl": "",
+            "description": "Social Media grid",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/494bb075f016b499eeee.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "105"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/29d8874fe9f262cd208a.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "105"
+          }
+        ]
+      },
+      "image": "assets/uploads/3a8370496de5785c9682.webp"
+    },
+    {
+      "id": "5105d37f-b84e-46eb-b9e8-366f28d531c6",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Music Videos",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing"
+      ],
+      "mediaType": "Video",
+      "role": "Freelance Designer",
+      "year": "2024",
+      "tools": "Photoshop, Premiere pro, After Effects",
+      "summary": "Avanti Nagral is an independent singer-songwriter, content creator, and digital influencer known for her music, storytelling, and advocacy around identity, culture, and self-expression.",
+      "whatPrernaDid": "I collaborated on her music content by shooting and editing music videos and promotional video assets, helping translate her artistic vision into engaging visual narratives for digital audiences.",
+      "impact": "",
+      "link": "https://youtu.be/iP_9CQ_TKbU?si=D-b8TfgGaoxPn-Mw",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "110",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Long form Music Video",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Short form Content",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/1ba0a444432f2805e8ed.webp",
+            "videoUrl": "https://www.youtube.com/watch?v=iP_9CQ_TKbU",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "120"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/cdf976c22db0d4f6b619.webp",
+            "videoUrl": "https://www.instagram.com/reel/C7B0Uf-R51q/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "Behind the Scenes",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/b7623f34e7b35cec791a.webp",
+            "videoUrl": "https://www.instagram.com/reel/C2w0VlBxdNX/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/d406ccdf7bb1e0a7724e.webp",
+            "videoUrl": "https://www.instagram.com/reel/C0Ohk3TRSKe/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/98e73bcb92ff7bf6d7cf.webp"
+    },
+    {
+      "id": "3d87439e-8a5a-4501-b7aa-99d20a1d31f1",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "3",
+      "featuredRank": "3",
+      "title": "The Creative Bud",
+      "category": "Branding",
+      "categories": [
+        "Branding",
+        "Social Media",
+        "Graphic Design",
+        "Illustration",
+        "Multimedia"
+      ],
+      "mediaType": "Multimedia",
+      "role": "Entrepreneur",
+      "year": "2024",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Procreate",
+      "summary": "The Creative Bud was an independent art and design brand built around original illustrations and handcrafted products. The brand aimed to transform everyday stationery and lifestyle items into meaningful, artist-driven experiences through storytelling, creativity, and thoughtful design. By combining traditional craftsmanship with contemporary illustration, The Creative Bud fostered a community that valued creativity, self-expression, and unique handmade products.",
+      "whatPrernaDid": "Founded and managed The Creative Bud, overseeing brand strategy, product design, illustration, social media marketing, content creation, packaging design, and customer engagement. Developed original artwork and handcrafted product collections while building a loyal community through storytelling-led branding and digital content.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Initial Sketches",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/457887ca0c13d8697572.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/45dcb19daaedce41bd22.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/91d88cd2b7f7ce52f878.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/395ab72aaa40f051cf39.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/c663c323380f9ef0f38e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9b4510fca1358629b394.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/bbb847273872504dd132.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0dad8911f4e3ce563e27.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/13c1cd268f49adb1057b.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/915632433d2f30bdad4b.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/9c5daa617b22492c8db5.webp",
+            "videoUrl": "https://drive.google.com/file/d/1maRoXVqu83StC70V8-qy5HdEnMDJH_Wt/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/54db956e810ad754fbe1.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0bda363f1e5e02a1036f.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/54c14fc758741665d137.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/004feaa8d5bd8e655fbf.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/522f58cafa50c0edd538.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8f23f994c73aeb543001.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/28397de60b7c19ef1c74.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/8a54f164737585a80b2e.webp"
+    },
     {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
@@ -241,113 +668,6 @@
         ]
       },
       "image": "assets/uploads/cac22fc8ec8054f140d7.webp"
-    },
-    {
-      "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
-      "placement": "both",
-      "experienceId": "cultreboat",
-      "homeSlot": "",
-      "featuredRank": "",
-      "title": "Devan's Coffee",
-      "category": "Social Media",
-      "categories": [
-        "Social Media"
-      ],
-      "mediaType": "Multimedia",
-      "role": "",
-      "year": "2023",
-      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Figma",
-      "summary": "Devan's Coffee is a heritage coffee and tea brand known for its rich legacy and premium products. The objective was to strengthen the brand's digital presence by creating visually cohesive and engaging content that reflected its craftsmanship, quality, and authentic coffee culture.",
-      "whatPrernaDid": "For Devan's Coffee, I developed content strategies, designed social media creatives and aesthetic feed layouts, and created storytelling-led content that highlighted the brand's heritage, products, and coffee culture while maintaining a consistent visual identity across digital platforms.",
-      "impact": "",
-      "link": "",
-      "accent": "#3d0900",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "featuredImageFit": "cover",
-      "featuredImagePosition": "center center",
-      "featuredImageZoom": "100",
-      "detailImageFit": "cover",
-      "detailImagePosition": "center center",
-      "detailImageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Social Content",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Stories",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
-      "mediaGroups": {
-        "initialSketch": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/16e4f1a6afd0eb5c0200.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/8651dbf78278fd2c513c.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/99bceeacb80271d2ff80.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/b1d025c6cfc889295f31.webp",
-            "videoUrl": "",
-            "description": "Social Media grid",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          }
-        ],
-        "finalOutput": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/494bb075f016b499eeee.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "105"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/29d8874fe9f262cd208a.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "105"
-          }
-        ]
-      },
-      "image": "assets/uploads/3a8370496de5785c9682.webp"
     },
     {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
@@ -1171,8 +1491,8 @@
     },
     {
       "id": "3d87439e-8a5a-4501-b7aa-99d20a1d31f1",
-      "placement": "featured",
-      "experienceId": "",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
       "homeSlot": "3",
       "featuredRank": "3",
       "title": "The Creative Bud",
@@ -1490,8 +1810,8 @@
     },
     {
       "id": "5105d37f-b84e-46eb-b9e8-366f28d531c6",
-      "placement": "featured",
-      "experienceId": "",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
       "homeSlot": "",
       "featuredRank": "",
       "title": "Music Videos",
@@ -1682,7 +2002,9 @@
       "title": "Devan's Coffee",
       "category": "Social Media",
       "categories": [
-        "Social Media"
+        "Social Media",
+        "Graphic Design",
+        "Multimedia"
       ],
       "mediaType": "Multimedia",
       "role": "",
