@@ -125,6 +125,7 @@ const defaultSiteContent = {
   about: {
     eyebrow: "About the designer",
     headline: "Graphic designer with campaign discipline and a handmade visual voice.",
+    sketchImage: "assets/designer-sketch.png",
     body: [
       "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details.",
       "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
@@ -178,6 +179,27 @@ const defaultSiteContent = {
       }
     ]
   },
+  footer: {
+    quote: "Making visuals that feel handmade, thoughtful, and impossible to scroll past.",
+    socials: [
+      {
+        icon: "in",
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/"
+      },
+      {
+        icon: "G",
+        label: "Gmail",
+        href: "mailto:visualartist.prerna@gmail.com"
+      },
+      {
+        icon: "Be",
+        label: "Behance",
+        href: "https://www.behance.net/gallery/177375659"
+      }
+    ],
+    rights: "All rights reserved."
+  },
   appearance: {
     pageBackground: "#fff8ef",
     inkColor: "#16120f",
@@ -195,6 +217,7 @@ const CONTENT_PAGES = [
   { id: "global", label: "Header" },
   { id: "work", label: "Work" },
   { id: "featured", label: "Featured Projects" },
+  { id: "footer", label: "Footer" },
   { id: "appearance", label: "Appearance" }
 ];
 
@@ -240,6 +263,7 @@ const CONTENT_FIELDS = [
   { page: "featured", key: "featured.searchPlaceholder", label: "Featured projects search placeholder", path: "featured.searchPlaceholder" },
   { page: "about", key: "about.eyebrow", label: "About eyebrow", path: "about.eyebrow" },
   { page: "about", key: "about.headline", label: "About headline", path: "about.headline", type: "textarea" },
+  { page: "about", key: "about.sketchImage", label: "About photo", path: "about.sketchImage", type: "image", helper: "Upload JPG, PNG, WebP, or GIF. The image is compressed before saving." },
   { page: "about", key: "about.body.0", label: "About paragraph 1", path: "about.body.0", type: "textarea" },
   { page: "about", key: "about.body.1", label: "About paragraph 2", path: "about.body.1", type: "textarea" },
   { page: "about", key: "about.sketchAlt", label: "Sketch image alt text", path: "about.sketchAlt", type: "textarea" },
@@ -270,6 +294,11 @@ const CONTENT_FIELDS = [
   { page: "contact", key: "contact.cards.3.label", label: "Behance label", path: "contact.cards.3.label" },
   { page: "contact", key: "contact.cards.3.value", label: "Behance text", path: "contact.cards.3.value" },
   { page: "contact", key: "contact.cards.3.href", label: "Behance link", path: "contact.cards.3.href" },
+  { page: "footer", key: "footer.quote", label: "Footer quote", path: "footer.quote", type: "textarea" },
+  { page: "footer", key: "footer.socials.0.href", label: "Footer LinkedIn link", path: "footer.socials.0.href" },
+  { page: "footer", key: "footer.socials.1.href", label: "Footer Gmail link", path: "footer.socials.1.href" },
+  { page: "footer", key: "footer.socials.2.href", label: "Footer Behance link", path: "footer.socials.2.href" },
+  { page: "footer", key: "footer.rights", label: "Rights text", path: "footer.rights" },
   { page: "appearance", key: "appearance.pageBackground", label: "Page background", path: "appearance.pageBackground", type: "color" },
   { page: "appearance", key: "appearance.inkColor", label: "Main text color", path: "appearance.inkColor", type: "color" },
   { page: "appearance", key: "appearance.accentColor", label: "Accent color", path: "appearance.accentColor", type: "color" },
@@ -818,6 +847,17 @@ function setText(selector, value, key = "") {
   }
 }
 
+function setElementText(element, value, key = "") {
+  if (!element) return;
+  element.textContent = value || "";
+  if (key) {
+    element.dataset.contentKey = key;
+    const color = state.siteContent?.appearance?.textStyles?.[key]?.color || "";
+    if (color) element.style.color = color;
+    else element.style.removeProperty("color");
+  }
+}
+
 function storedTheme() {
   try {
     return localStorage.getItem(THEME_STORE_KEY) === "night" ? "night" : "day";
@@ -909,6 +949,7 @@ function applySiteContent() {
     ["/contact", nav.contact, "global.nav.contact"]
   ].forEach(([route, label, key]) => setText(`.main-nav a[data-route="${route}"]`, label, key));
   updateResumeLinks();
+  setupFooter();
 }
 
 function cloneItems(items = []) {
@@ -1975,6 +2016,7 @@ async function renderRoute() {
   if (name === "/about") setupAbout();
   if (name === "/contact") setupContact();
   if (name === "/admin" || name === "/studio") setupAdmin();
+  setupFooter();
   updateResumeLinks();
   app.focus({ preventScroll: true });
   window.requestAnimationFrame(() => {
@@ -2302,7 +2344,11 @@ function setupFeaturedProjectsPage() {
 function setupAbout() {
   const about = state.siteContent.about;
   const image = document.querySelector(".sketch-card img");
-  if (image) image.alt = about.sketchAlt || defaultSiteContent.about.sketchAlt;
+  if (image) {
+    image.src = safeMediaSrc(about.sketchImage || defaultSiteContent.about.sketchImage);
+    image.alt = about.sketchAlt || defaultSiteContent.about.sketchAlt;
+    image.dataset.contentKey = "about.sketchImage";
+  }
   setText(".about-copy .eyebrow", about.eyebrow, "about.eyebrow");
   setText(".about-copy h1", about.headline, "about.headline");
   const bodyWrap = document.querySelector(".about-copy");
@@ -2340,6 +2386,36 @@ function setupContact() {
     `)
     .join("");
   renderResumeCallout();
+}
+
+function setupFooter() {
+  const footerElement = document.getElementById("site-footer");
+  if (!footerElement) return;
+  const { name } = routeParts();
+  const isAdminRoute = name === "/admin" || name === "/studio";
+  footerElement.hidden = isAdminRoute;
+  if (isAdminRoute) return;
+
+  const footer = state.siteContent.footer || defaultSiteContent.footer;
+  const socials = Array.isArray(footer.socials) && footer.socials.length
+    ? footer.socials
+    : defaultSiteContent.footer.socials;
+
+  setText(".footer-quote", footer.quote || defaultSiteContent.footer.quote, "footer.quote");
+  setText(".footer-rights", footer.rights || defaultSiteContent.footer.rights, "footer.rights");
+  setText(".footer-year", "2026", "");
+
+  const socialNav = footerElement.querySelector(".footer-socials");
+  socialNav.innerHTML = socials.slice(0, 3).map((item, index) => {
+    const href = safeHref(item.href || "#");
+    const label = item.label || defaultSiteContent.footer.socials[index]?.label || "Social";
+    const icon = item.icon || defaultSiteContent.footer.socials[index]?.icon || label.slice(0, 2);
+    return `
+      <a class="footer-social-link footer-social-${escapeHtml(label.toLowerCase())}" href="${escapeHtml(href)}" aria-label="${escapeHtml(label)}" ${href.startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>
+        <span${textStyle(`footer.socials.${index}.icon`)}>${escapeHtml(icon)}</span>
+      </a>
+    `;
+  }).join("");
 }
 
 function resumePreviewMarkup(resume = state.resume) {
@@ -4212,19 +4288,24 @@ function renderContentFieldList() {
     .map((field) => {
       const value = contentFieldValue(field);
       const isColor = field.type === "color";
+      const isImage = field.type === "image";
       const style = state.siteContent.appearance?.textStyles?.[field.key]?.color || "";
       const isDirty = contentFieldDirty(field);
       const isPreviewing = state.previewContentField === field.key;
+      const summary = isImage
+        ? value ? "Custom image selected" : "Using default image"
+        : isColor ? value : String(value).slice(0, 140) || "Empty";
       return `
         <article class="content-field-row ${isDirty ? "draft-dirty" : ""} ${isPreviewing ? "is-preview-selected" : ""}" data-content-field="${escapeHtml(field.key)}">
           <div>
             <strong>${escapeHtml(field.label)}</strong>
-            <small>${escapeHtml(isColor ? value : String(value).slice(0, 140) || "Empty")}</small>
+            <small>${escapeHtml(summary)}</small>
             ${isDirty ? renderDirtyBadge() : ""}
           </div>
           <div class="content-field-actions">
             ${style ? `<span class="content-color-dot" style="--dot-color: ${escapeHtml(style)}"></span>` : ""}
             ${isColor ? `<span class="content-color-dot" style="--dot-color: ${escapeHtml(value)}"></span>` : ""}
+            ${isImage && value ? `<span class="content-image-dot"><img src="${escapeHtml(safeMediaSrc(value))}" alt=""></span>` : ""}
             <button class="icon-button" type="button" data-preview-content="${escapeHtml(field.key)}" aria-label="Preview ${escapeHtml(field.label)}">◉</button>
             <button class="icon-button" type="button" data-edit-content="${escapeHtml(field.key)}" aria-label="Edit ${escapeHtml(field.label)}">✎</button>
             <button class="icon-button delete" type="button" data-reset-content="${escapeHtml(field.key)}" aria-label="Reset ${escapeHtml(field.label)}">↺</button>
@@ -4245,8 +4326,12 @@ function previewAttributes(key, className = "") {
 function pagePreviewMarkup(pageId) {
   const content = state.siteContent;
   if (pageId === "about") {
+    const aboutImage = safeMediaSrc(content.about.sketchImage || defaultSiteContent.about.sketchImage);
     return `
       <div class="mini-page-preview">
+        <div${previewAttributes("about.sketchImage", "mini-image-preview")}>
+          ${aboutImage ? `<img src="${escapeHtml(aboutImage)}" alt="${escapeHtml(content.about.sketchAlt || "About image preview")}">` : `<span>No image selected</span>`}
+        </div>
         <p${previewAttributes("about.eyebrow", "eyebrow")}${textStyle("about.eyebrow")}>${escapeHtml(content.about.eyebrow)}</p>
         <h3${previewAttributes("about.headline")}${textStyle("about.headline")}>${escapeHtml(content.about.headline)}</h3>
         ${content.about.body.map((item, index) => `<p${previewAttributes(`about.body.${index}`)}${textStyle(`about.body.${index}`)}>${escapeHtml(item)}</p>`).join("")}
@@ -4260,6 +4345,24 @@ function pagePreviewMarkup(pageId) {
           `).join("")}
         </div>
         <small${previewAttributes("about.sketchAlt")}>Sketch alt: ${escapeHtml(content.about.sketchAlt)}</small>
+      </div>
+    `;
+  }
+  if (pageId === "footer") {
+    return `
+      <div class="mini-page-preview mini-footer-preview">
+        <p class="eyebrow">Footer</p>
+        <blockquote${previewAttributes("footer.quote")}${textStyle("footer.quote")}>${escapeHtml(content.footer.quote)}</blockquote>
+        <div class="mini-footer-socials">
+          ${content.footer.socials.map((item, index) => `
+            <span>
+              <b${previewAttributes(`footer.socials.${index}.icon`)}${textStyle(`footer.socials.${index}.icon`)}>${escapeHtml(item.icon)}</b>
+              <strong>${escapeHtml(item.label)}</strong>
+              <small${previewAttributes(`footer.socials.${index}.href`)}>${escapeHtml(item.href)}</small>
+            </span>
+          `).join("")}
+        </div>
+        <small${previewAttributes("footer.rights")}${textStyle("footer.rights")}>2026 · ${escapeHtml(content.footer.rights)}</small>
       </div>
     `;
   }
@@ -4398,6 +4501,30 @@ function contentFieldByKey(key) {
 
 function fieldInputMarkup(field) {
   const value = contentFieldValue(field);
+  if (field.type === "image") {
+    const imageSrc = safeMediaSrc(value || defaultSiteContent.about.sketchImage);
+    return `
+      <div class="content-image-picker">
+        <div class="content-image-preview">
+          ${imageSrc ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(field.label)} preview">` : `<span>No image selected</span>`}
+        </div>
+        <label>
+          Image URL or asset path
+          <input id="content-edit-value" type="text" value="${escapeHtml(value)}" placeholder="assets/designer-sketch.png">
+        </label>
+        <label class="upload-box">
+          <span>Upload new image</span>
+          <input id="content-edit-file" type="file" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
+          <strong id="content-edit-file-name">Choose an image</strong>
+          <small class="field-hint">JPG, PNG, WebP, or GIF. 1 KB-100 MB; compressed before saving.</small>
+        </label>
+        <label class="inline-check">
+          <input id="content-clear-image" type="checkbox">
+          Reset to the default sketch image
+        </label>
+      </div>
+    `;
+  }
   if (field.type === "textarea" || field.type === "list") {
     return `<textarea id="content-edit-value" rows="6">${escapeHtml(value)}</textarea>`;
   }
@@ -4405,6 +4532,14 @@ function fieldInputMarkup(field) {
     return `<input id="content-edit-value" type="color" value="${escapeHtml(value || "#16120f")}">`;
   }
   return `<input id="content-edit-value" type="text" value="${escapeHtml(value)}">`;
+}
+
+async function readContentImageAsDataUrl(file) {
+  if (!file) return "";
+  const message = validateImageFile(file, "About photo");
+  if (message) throw new Error(message);
+  const blob = await compressedImageBlob(file);
+  return blob ? readRawFileAsDataUrl(blob) : readFileAsDataUrl(file);
 }
 
 function showContentEditDialog(field) {
@@ -4423,7 +4558,7 @@ function showContentEditDialog(field) {
         Text
         ${fieldInputMarkup(field)}
       </label>
-      ${field.type !== "color" ? `
+      ${field.type !== "color" && field.type !== "image" ? `
         <label>
           Text color
           <input id="content-edit-color" type="color" value="${escapeHtml(currentColor || state.siteContent.appearance.inkColor || "#16120f")}">
@@ -4448,15 +4583,42 @@ function showContentEditDialog(field) {
     document.removeEventListener("keydown", handleKeydown);
   };
 
-  const applyValue = () => {
+  const applyValue = async () => {
     const input = modal.querySelector("#content-edit-value");
     const rawValue = input.value;
-    const nextValue = field.type === "list"
+    let nextValue = field.type === "list"
       ? rawValue.split("\n").map((item) => item.trim()).filter(Boolean)
       : rawValue;
+
+    if (field.type === "image") {
+      const file = modal.querySelector("#content-edit-file")?.files?.[0];
+      const resetToDefault = modal.querySelector("#content-clear-image")?.checked;
+      if (resetToDefault) {
+        nextValue = "";
+      } else if (file) {
+        showLoadingBanner("Preparing about photo...");
+        try {
+          nextValue = await readContentImageAsDataUrl(file);
+        } catch (error) {
+          hideLoadingBanner();
+          setControlError(modal.querySelector("#content-edit-file"), error.message || "Could not read image.");
+          showToast(error.message || "Could not read image.");
+          return;
+        }
+        hideLoadingBanner();
+      } else {
+        nextValue = rawValue.trim();
+      }
+
+      if (nextValue && !validImageSource(nextValue)) {
+        setControlError(input, "Use an uploaded image, assets/... path, data image, or full https:// image URL.");
+        return;
+      }
+    }
+
     setPathValue(state.siteContent, field.path, nextValue);
 
-    if (field.type !== "color") {
+    if (field.type !== "color" && field.type !== "image") {
       const colorInput = modal.querySelector("#content-edit-color");
       const defaultColor = currentColor || state.siteContent.appearance.inkColor || "#16120f";
       const colorChanged = colorInput.value.toLowerCase() !== defaultColor.toLowerCase();
@@ -4488,6 +4650,17 @@ function showContentEditDialog(field) {
     modal.querySelector("#content-use-custom-color").checked = true;
   });
 
+  modal.querySelector("#content-edit-file")?.addEventListener("change", (event) => {
+    const file = event.target.files?.[0];
+    modal.querySelector("#content-edit-file-name").textContent = file ? file.name : "Choose an image";
+    clearControlError(event.target);
+    const imageError = validateImageFile(file, "About photo");
+    if (imageError) {
+      setControlError(event.target, imageError);
+      showToast(imageError);
+    }
+  });
+
   modal.addEventListener("click", (event) => {
     if (event.target === modal || event.target.closest("[data-content-cancel]")) close();
     if (event.target.closest("[data-content-save]")) applyValue();
@@ -4504,7 +4677,7 @@ function showContentEditDialog(field) {
   document.body.append(modal);
   document.body.classList.add("modal-open");
   document.addEventListener("keydown", handleKeydown);
-  modal.querySelector("#content-edit-value").focus({ preventScroll: true });
+  modal.querySelector("#content-edit-value, #content-edit-file")?.focus({ preventScroll: true });
 }
 
 async function handleContentFieldAction(event) {
