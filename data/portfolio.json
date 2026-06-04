@@ -1369,7 +1369,17 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/9e7540ffb5c9130664af.webp",
+            "src": "assets/uploads/8f23f994c73aeb543001.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/28397de60b7c19ef1c74.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1378,7 +1388,7 @@
           }
         ]
       },
-      "image": "assets/uploads/59545f74e6a682d41a7d.webp"
+      "image": "assets/uploads/8a54f164737585a80b2e.webp"
     },
     {
       "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
