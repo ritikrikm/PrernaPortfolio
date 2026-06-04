@@ -1,0 +1,106 @@
+name: DEV App Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Target environment"
+        required: true
+        default: "qa"
+        type: choice
+        options:
+          - dev
+          - qa
+          - uat
+          - prod
+
+jobs:
+  app-pipeline:
+    runs-on: ubuntu-latest
+
+    env:
+      TARGET_ENV: ${{ github.event.inputs.target_env || 'qa' }}
+
+    steps:
+      - name: Checkout DEV Code
+        uses: actions/checkout@v4
+
+      - name: Build Application
+        run: echo "Building HTML/CSS/JS application"
+
+      - name: Static Smoke Checks
+        run: |
+          node --check app.js
+          node - <<'NODE'
+          const fs = require('fs');
+          JSON.parse(fs.readFileSync('data/portfolio.json', 'utf8'));
+          for (const file of ['index.html', 'styles.css', 'api/publish.js', 'api/auth.js']) {
+            if (!fs.existsSync(file)) throw new Error(`${file} is missing`);
+          }
+          console.log('Static smoke checks passed');
+          NODE
+
+      - name: Static Regression Checks
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const app = fs.readFileSync('app.js', 'utf8');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const publish = fs.readFileSync('api/publish.js', 'utf8');
+          const config = fs.readFileSync('api/publish-config.js', 'utf8');
+          const githubCheck = fs.readFileSync('api/github-check.js', 'utf8');
+          const apiText = publish + config + githubCheck;
+          const testingPublish = /PUBLISH_TARGET_BRANCH\s*=\s*"testing"/.test(apiText);
+          const required = [
+            ['publish branch target is valid', testingPublish || /GITHUB_BRANCH\s*=\s*"main"/.test(publish)],
+            ['date picker exists', app.includes('openExperienceDatePicker') && html.includes('experienceDatePopover')],
+            ['about photo editor exists', app.includes('about.sketchImage')],
+            ['footer content exists', app.includes('footer.quote') && html.includes('site-footer')],
+            ['upload validation exists', app.includes('validateImageFile') && app.includes('validateResumePdfFile')]
+          ];
+          const failed = required.filter(([, ok]) => !ok);
+          if (failed.length) throw new Error(`Regression checks failed: ${failed.map(([name]) => name).join(', ')}`);
+          console.log('Static regression checks passed');
+          NODE
+
+      - name: Deploy to DEV
+        run: echo "Deploying app to DEV"
+
+      - name: Trigger QA Smoke Pipeline
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.QA_REPO_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/ritikrikm/Portfolio-Automation/dispatches \
+            -d '{"event_type":"run-qa-tests","client_payload":{"env":"dev","test_suite":"smoke"}}'
+
+      - name: Deploy to QA
+        run: echo "Deploying app to QA"
+
+      - name: Trigger QA Regression Pipeline
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.QA_REPO_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/ritikrikm/Portfolio-Automation/dispatches \
+            -d '{"event_type":"run-qa-tests","client_payload":{"env":"qa","test_suite":"regression"}}'
+
+      - name: QA Approval Before UAT
+        if: ${{ env.TARGET_ENV == 'uat' || env.TARGET_ENV == 'prod' }}
+        run: echo "QA/Manager approval required before UAT"
+
+      - name: Deploy to UAT
+        if: ${{ env.TARGET_ENV == 'uat' || env.TARGET_ENV == 'prod' }}
+        run: echo "Deploying app to UAT"
+
+      - name: Business Approval Before PROD
+        if: ${{ env.TARGET_ENV == 'prod' }}
+        run: echo "Business approval required before PROD"
+
+      - name: Deploy to PROD
+        if: ${{ env.TARGET_ENV == 'prod' }}
+        run: echo "Deploying app to PROD"

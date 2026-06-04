@@ -34,6 +34,25 @@
       "detailImageFit": "contain",
       "detailImagePosition": "center center",
       "detailImageZoom": "100"
+    },
+    {
+      "id": "freelance-the-creative-bud",
+      "company": "Freelance/ The creative Bud",
+      "title": "Designer",
+      "dates": "Jul 2018 - Nov 2024",
+      "location": "India",
+      "headline": "Creative Ideation, Multimedia Designing, Video editing, Motion Graphics, Client servicing, Marketing.",
+      "summary": "My freelance journey began with a passion for art, storytelling, and visual communication. Over the years, I have partnered with brands, creators, and influencers to create illustrations, social media campaigns, motion graphics, and video content. These experiences allowed me to work across diverse creative challenges, strengthen my problem-solving skills, and develop a versatile design style that balances aesthetics with strategic communication.",
+      "impact": "worked with 10+ big global brands with 100% satisfactory outcomes",
+      "homeSlot": "3",
+      "accent": "#0a6f6b",
+      "image": "assets/uploads/7c97b9562f231a8a4a93.webp",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100"
     }
   ],
   "projects": [
@@ -46,7 +65,9 @@
       "title": "Devan's Coffee",
       "category": "Social Media",
       "categories": [
-        "Social Media"
+        "Social Media",
+        "Graphic Design",
+        "Multimedia"
       ],
       "mediaType": "Multimedia",
       "role": "",
@@ -145,6 +166,324 @@
       "image": "assets/uploads/3a8370496de5785c9682.webp"
     },
     {
+      "id": "5105d37f-b84e-46eb-b9e8-366f28d531c6",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Music Videos",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing"
+      ],
+      "mediaType": "Video",
+      "role": "Freelance Designer",
+      "year": "2024",
+      "tools": "Photoshop, Premiere pro, After Effects",
+      "summary": "Avanti Nagral is an independent singer-songwriter, content creator, and digital influencer known for her music, storytelling, and advocacy around identity, culture, and self-expression.",
+      "whatPrernaDid": "I collaborated on her music content by shooting and editing music videos and promotional video assets, helping translate her artistic vision into engaging visual narratives for digital audiences.",
+      "impact": "",
+      "link": "https://youtu.be/iP_9CQ_TKbU?si=D-b8TfgGaoxPn-Mw",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "110",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Long form Music Video",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Short form Content",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/1ba0a444432f2805e8ed.webp",
+            "videoUrl": "https://www.youtube.com/watch?v=iP_9CQ_TKbU",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "120"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/cdf976c22db0d4f6b619.webp",
+            "videoUrl": "https://www.instagram.com/reel/C7B0Uf-R51q/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "Behind the Scenes",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/b7623f34e7b35cec791a.webp",
+            "videoUrl": "https://www.instagram.com/reel/C2w0VlBxdNX/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/d406ccdf7bb1e0a7724e.webp",
+            "videoUrl": "https://www.instagram.com/reel/C0Ohk3TRSKe/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/98e73bcb92ff7bf6d7cf.webp"
+    },
+    {
+      "id": "3d87439e-8a5a-4501-b7aa-99d20a1d31f1",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "3",
+      "featuredRank": "3",
+      "title": "The Creative Bud",
+      "category": "Branding",
+      "categories": [
+        "Branding",
+        "Social Media",
+        "Graphic Design",
+        "Illustration",
+        "Multimedia"
+      ],
+      "mediaType": "Multimedia",
+      "role": "Entrepreneur",
+      "year": "2024",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Procreate",
+      "summary": "The Creative Bud was an independent art and design brand built around original illustrations and handcrafted products. The brand aimed to transform everyday stationery and lifestyle items into meaningful, artist-driven experiences through storytelling, creativity, and thoughtful design. By combining traditional craftsmanship with contemporary illustration, The Creative Bud fostered a community that valued creativity, self-expression, and unique handmade products.",
+      "whatPrernaDid": "Founded and managed The Creative Bud, overseeing brand strategy, product design, illustration, social media marketing, content creation, packaging design, and customer engagement. Developed original artwork and handcrafted product collections while building a loyal community through storytelling-led branding and digital content.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Initial Sketches",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/457887ca0c13d8697572.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/45dcb19daaedce41bd22.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/91d88cd2b7f7ce52f878.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/395ab72aaa40f051cf39.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/c663c323380f9ef0f38e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9b4510fca1358629b394.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/bbb847273872504dd132.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0dad8911f4e3ce563e27.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/13c1cd268f49adb1057b.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/915632433d2f30bdad4b.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/9c5daa617b22492c8db5.webp",
+            "videoUrl": "https://drive.google.com/file/d/1maRoXVqu83StC70V8-qy5HdEnMDJH_Wt/view?usp=drive_link",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/54db956e810ad754fbe1.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0bda363f1e5e02a1036f.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/54c14fc758741665d137.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/004feaa8d5bd8e655fbf.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/522f58cafa50c0edd538.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8f23f994c73aeb543001.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/28397de60b7c19ef1c74.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/8a54f164737585a80b2e.webp"
+    },
+    {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
       "placement": "both",
       "experienceId": "cultreboat",
@@ -189,10 +528,20 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/a6110466d5edd7e858bc.webp",
+            "src": "assets/uploads/4ec31e7349263c65ae1c.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b488f16e860f96c4c955.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -231,6 +580,94 @@
         ]
       },
       "image": "assets/uploads/cd6a3266c94c89397692.webp"
+    },
+    {
+      "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Podcasts",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing",
+        "Social Media"
+      ],
+      "mediaType": "Video",
+      "role": "Video Editor",
+      "year": "2025",
+      "tools": "Photoshop, Premiere Pro, After effects",
+      "summary": "Through collaborations with artists, influencers, and digital media platforms, I explored video editing as a tool for storytelling, audience engagement, and content creation across music and entertainment formats.",
+      "whatPrernaDid": "Edited long-form videos and social content for creators such as Avanti Nagral and Miss Malini Trending, managing storytelling, pacing, client communication, and post-production. I was also involved in content shoots, contributing to both the production and editing process to create engaging digital experiences.",
+      "impact": "",
+      "link": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Podcasts",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Challenges",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/f3a254cf18540cf4b87e.webp",
+            "videoUrl": "https://www.instagram.com/reel/CtrJ1BTRyj7/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c66241ed93e4905d97f6.webp",
+            "videoUrl": "https://www.instagram.com/reel/Cu3m_oys3G9/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c6b0e4fae218cbbe4bef.webp",
+            "videoUrl": "https://www.instagram.com/reel/CvE-roepdwE/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/22f3267eefe83d0c4e69.webp",
+            "videoUrl": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/cac22fc8ec8054f140d7.webp"
     },
     {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
@@ -1054,8 +1491,8 @@
     },
     {
       "id": "3d87439e-8a5a-4501-b7aa-99d20a1d31f1",
-      "placement": "featured",
-      "experienceId": "",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
       "homeSlot": "3",
       "featuredRank": "3",
       "title": "The Creative Bud",
@@ -1069,7 +1506,7 @@
       ],
       "mediaType": "Multimedia",
       "role": "Entrepreneur",
-      "year": "-",
+      "year": "2024",
       "tools": "Photoshop, Illustrator, Premiere pro, After Effects, Procreate",
       "summary": "The Creative Bud was an independent art and design brand built around original illustrations and handcrafted products. The brand aimed to transform everyday stationery and lifestyle items into meaningful, artist-driven experiences through storytelling, creativity, and thoughtful design. By combining traditional craftsmanship with contemporary illustration, The Creative Bud fostered a community that valued creativity, self-expression, and unique handmade products.",
       "whatPrernaDid": "Founded and managed The Creative Bud, overseeing brand strategy, product design, illustration, social media marketing, content creation, packaging design, and customer engagement. Developed original artwork and handcrafted product collections while building a loyal community through storytelling-led branding and digital content.",
@@ -1120,7 +1557,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/8ae253c04768d264dde8.webp",
+            "src": "assets/uploads/91d88cd2b7f7ce52f878.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1130,7 +1567,7 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/d8249c6480f7d0e52a52.webp",
+            "src": "assets/uploads/395ab72aaa40f051cf39.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1140,7 +1577,47 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/083ccbddb524888335a0.webp",
+            "src": "assets/uploads/c663c323380f9ef0f38e.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/9b4510fca1358629b394.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/bbb847273872504dd132.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/0dad8911f4e3ce563e27.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/13c1cd268f49adb1057b.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "cover",
@@ -1218,10 +1695,205 @@
             "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8f23f994c73aeb543001.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/28397de60b7c19ef1c74.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
           }
         ]
       },
-      "image": "assets/uploads/59545f74e6a682d41a7d.webp"
+      "image": "assets/uploads/8a54f164737585a80b2e.webp"
+    },
+    {
+      "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Podcasts",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing",
+        "Social Media"
+      ],
+      "mediaType": "Video",
+      "role": "Video Editor",
+      "year": "2025",
+      "tools": "Photoshop, Premiere Pro, After effects",
+      "summary": "Through collaborations with artists, influencers, and digital media platforms, I explored video editing as a tool for storytelling, audience engagement, and content creation across music and entertainment formats.",
+      "whatPrernaDid": "Edited long-form videos and social content for creators such as Avanti Nagral and Miss Malini Trending, managing storytelling, pacing, client communication, and post-production. I was also involved in content shoots, contributing to both the production and editing process to create engaging digital experiences.",
+      "impact": "",
+      "link": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Podcasts",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Challenges",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/f3a254cf18540cf4b87e.webp",
+            "videoUrl": "https://www.instagram.com/reel/CtrJ1BTRyj7/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c66241ed93e4905d97f6.webp",
+            "videoUrl": "https://www.instagram.com/reel/Cu3m_oys3G9/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/c6b0e4fae218cbbe4bef.webp",
+            "videoUrl": "https://www.instagram.com/reel/CvE-roepdwE/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/22f3267eefe83d0c4e69.webp",
+            "videoUrl": "https://youtu.be/0Y193lvlcWM?si=uhfMGm1fFcxGAJlk",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/cac22fc8ec8054f140d7.webp"
+    },
+    {
+      "id": "5105d37f-b84e-46eb-b9e8-366f28d531c6",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "Music Videos",
+      "category": "Video Editing",
+      "categories": [
+        "Video Editing"
+      ],
+      "mediaType": "Video",
+      "role": "Freelance Designer",
+      "year": "2024",
+      "tools": "Photoshop, Premiere pro, After Effects",
+      "summary": "Avanti Nagral is an independent singer-songwriter, content creator, and digital influencer known for her music, storytelling, and advocacy around identity, culture, and self-expression.",
+      "whatPrernaDid": "I collaborated on her music content by shooting and editing music videos and promotional video assets, helping translate her artistic vision into engaging visual narratives for digital audiences.",
+      "impact": "",
+      "link": "https://youtu.be/iP_9CQ_TKbU?si=D-b8TfgGaoxPn-Mw",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "110",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Long form Music Video",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Short form Content",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/1ba0a444432f2805e8ed.webp",
+            "videoUrl": "https://www.youtube.com/watch?v=iP_9CQ_TKbU",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "120"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/cdf976c22db0d4f6b619.webp",
+            "videoUrl": "https://www.instagram.com/reel/C7B0Uf-R51q/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "Behind the Scenes",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/b7623f34e7b35cec791a.webp",
+            "videoUrl": "https://www.instagram.com/reel/C2w0VlBxdNX/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Video",
+            "title": "",
+            "src": "assets/uploads/d406ccdf7bb1e0a7724e.webp",
+            "videoUrl": "https://www.instagram.com/reel/C0Ohk3TRSKe/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/98e73bcb92ff7bf6d7cf.webp"
     },
     {
       "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
@@ -1268,10 +1940,20 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/a6110466d5edd7e858bc.webp",
+            "src": "assets/uploads/4ec31e7349263c65ae1c.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b488f16e860f96c4c955.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -1320,7 +2002,9 @@
       "title": "Devan's Coffee",
       "category": "Social Media",
       "categories": [
-        "Social Media"
+        "Social Media",
+        "Graphic Design",
+        "Multimedia"
       ],
       "mediaType": "Multimedia",
       "role": "",
@@ -1421,12 +2105,12 @@
   ],
   "siteContent": {
     "global": {
-      "metaTitle": "Prerna Sharma | Graphic Designer",
+      "metaTitle": "Prerna Sharma | Multimedia Designer",
       "metaDescription": "Prerna Sharma design work for graphic design, branding, motion graphics, illustration, and multimedia campaign work.",
       "skipLink": "Skip to site",
       "brandSymbol": "PS",
       "brandName": "Prerna Sharma",
-      "brandSubtitle": "Graphic Designer + Motion Artist",
+      "brandSubtitle": "Multimedia Visual Designer",
       "nav": {
         "home": "Home",
         "work": "Work",
@@ -1436,17 +2120,17 @@
       }
     },
     "home": {
-      "eyebrow": "Graphic design work",
+      "eyebrow": "  ",
       "headline": "Hi! I am Prerna Sharma!",
       "typewriterPrefix": "I am",
       "typewriterWords": [
-        "a Graphic Designer",
-        "a Motion Designer",
+        "a Visual Designer",
+        "an Art Director",
         "a Brand Illustrator",
         "a Visual Storyteller",
-        "a Creative Maker"
+        "a Multimedia Designer"
       ],
-      "summary": "I specialize in visual design, branding, social media, Art direction, illustration, and digital storytelling.",
+      "summary": "I specialize in Multimedia Design, Branding, Social Media, Art Direction, Illustration, and Visual Storytelling.",
       "primaryAction": "View Experience",
       "secondaryAction": "Contact",
       "quickScanEyebrow": "Quick scan",
@@ -1468,8 +2152,8 @@
           "text": "Photoshop, Illustrator, Premiere Pro, After Effects,  InDesign, Figma, Procreate"
         }
       ],
-      "featuredEyebrow": "Featured projects",
-      "featuredHeadline": "Small, polished project pieces recruiters can scan first.",
+      "featuredEyebrow": "",
+      "featuredHeadline": "Check out the selected featured projects!",
       "featuredFilters": [
         "All",
         "Branding",
@@ -1480,7 +2164,7 @@
         "Multimedia"
       ],
       "workEyebrow": "Work experience",
-      "workHeadline": "Start with work experience, then open the projects inside each role.",
+      "workHeadline": "Explore each role to discover the projects, campaigns, and creative experiences that shaped my journey as a designer.",
       "workVisibleCount": 3
     },
     "work": {
@@ -1495,27 +2179,27 @@
     },
     "about": {
       "eyebrow": "About the designer",
-      "headline": "Graphic designer with campaign discipline and a handmade visual voice.",
+      "headline": "Designer, Storyteller & Creative Problem Solver",
       "body": [
-        "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details.",
-        "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
+        "Hi, I am Prerna, a designer, storyteller, and lifelong creative. I've always loved finding ways to turn ideas into something people can see, feel, and connect with. My journey has taken me through Graphic Designing, Branding, Social Media, Illustration, Video Editing, Motion Graphics, and emerging media, allowing me to work on everything from social impact campaigns to music videos and creative businesses. What excites me most is the opportunity to tell meaningful stories, solve creative challenges, and create work that resonates with people long after they've seen it.",
+        ""
       ],
-      "sketchAlt": "Sketch-style illustration of a designer creating at a desk",
+      "sketchAlt": "",
       "timeline": [
         {
-          "dates": "2023-2024",
-          "title": "Executive - Design, MSL Global",
-          "text": "Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production."
+          "dates": "",
+          "title": "",
+          "text": ""
         },
         {
-          "dates": "2023",
-          "title": "Communications Designer, Cultre Boat",
-          "text": "Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands."
+          "dates": "",
+          "title": "",
+          "text": ""
         },
         {
-          "dates": "2018-2024",
-          "title": "Founder / Creative Entrepreneur, The Creative Bud",
-          "text": "Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling."
+          "dates": "",
+          "title": "",
+          "text": ""
         }
       ]
     },
@@ -1562,7 +2246,7 @@
     "label": "Download Resume",
     "file": "assets/resume/prerna-sharma-resume.pdf",
     "fileName": "PrernaSharma_DesignResume.pdf",
-    "previewImage": "",
-    "updatedAt": "2026-05-30T18:44:56.780Z"
+    "previewImage": "assets/resume/prerna-sharma-resume-preview.webp",
+    "updatedAt": "2026-06-04T01:59:26.452Z"
   }
 }

@@ -1,0 +1,106 @@
+pipeline {
+agent any
+
+stages {
+    stage('Checkout') {
+        steps {
+            checkout scm
+        }
+    }
+    stage('Build') {
+        steps {
+            echo 'Building HTML/CSS/JS application'
+        }
+    }
+    stage('Static Smoke Checks') {
+        steps {
+            sh '''
+              node --check app.js
+              node - <<'NODE'
+              const fs = require('fs');
+              JSON.parse(fs.readFileSync('data/portfolio.json', 'utf8'));
+              for (const file of ['index.html', 'styles.css', 'api/publish.js', 'api/auth.js']) {
+                if (!fs.existsSync(file)) throw new Error(`${file} is missing`);
+              }
+              console.log('Static smoke checks passed');
+              NODE
+            '''
+        }
+    }
+    stage('Static Regression Checks') {
+        steps {
+            sh '''
+              node - <<'NODE'
+              const fs = require('fs');
+              const app = fs.readFileSync('app.js', 'utf8');
+              const html = fs.readFileSync('index.html', 'utf8');
+              const publish = fs.readFileSync('api/publish.js', 'utf8');
+              const config = fs.readFileSync('api/publish-config.js', 'utf8');
+              const githubCheck = fs.readFileSync('api/github-check.js', 'utf8');
+              const apiText = publish + config + githubCheck;
+              const testingPublish = /PUBLISH_TARGET_BRANCH\\s*=\\s*"testing"/.test(apiText);
+              const required = [
+                ['publish branch target is valid', testingPublish || /GITHUB_BRANCH\\s*=\\s*"main"/.test(publish)],
+                ['date picker exists', app.includes('openExperienceDatePicker') && html.includes('experienceDatePopover')],
+                ['about photo editor exists', app.includes('about.sketchImage')],
+                ['footer content exists', app.includes('footer.quote') && html.includes('site-footer')],
+                ['upload validation exists', app.includes('validateImageFile') && app.includes('validateResumePdfFile')]
+              ];
+              const failed = required.filter(([, ok]) => !ok);
+              if (failed.length) throw new Error(`Regression checks failed: ${failed.map(([name]) => name).join(', ')}`);
+              console.log('Static regression checks passed');
+              NODE
+            '''
+        }
+    }
+    stage('Deploy DEV') {
+        steps {
+            echo 'Deploying application to DEV'
+        }
+    }
+    stage('Trigger QA Smoke') {
+        steps {
+            build job: 'QA-Automation',
+            parameters: [
+                string(name: 'TEST_SUITE', value: 'smoke'),
+                string(name: 'ENV', value: 'dev')
+            ]
+        }
+    }
+    stage('Deploy QA') {
+        steps {
+            echo 'Deploying application to QA'
+        }
+    }
+    stage('Trigger QA Regression') {
+        steps {
+            build job: 'QA-Automation',
+            parameters: [
+                string(name: 'TEST_SUITE', value: 'regression'),
+                string(name: 'ENV', value: 'qa')
+            ]
+        }
+    }
+    stage('QA Approval') {
+        steps {
+            input message: 'QA Approved? Deploy to UAT?'
+        }
+    }
+    stage('Deploy UAT') {
+        steps {
+            echo 'Deploying application to UAT'
+        }
+    }
+    stage('Business Approval') {
+        steps {
+            input message: 'Business Approved? Deploy to PROD?'
+        }
+    }
+    stage('Deploy PROD') {
+        steps {
+            echo 'Deploying application to PROD'
+        }
+    }
+}
+
+}
