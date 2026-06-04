@@ -57,6 +57,104 @@
   ],
   "projects": [
     {
+      "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
+      "placement": "both",
+      "experienceId": "cultreboat",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "The Monk world",
+      "category": "Social Media",
+      "categories": [
+        "Social Media",
+        "Graphic Design"
+      ],
+      "mediaType": "Multimedia",
+      "role": "",
+      "year": "2023",
+      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
+      "summary": "The Monk World is a premium eyewear brand that blends luxury, craftsmanship, and individuality through limited-edition optical frames and sunglasses. The brand aims to position eyewear as a statement of personal style rather than just a functional accessory, emphasizing exclusivity, design, and self-expression.",
+      "whatPrernaDid": "For The Monk World, I conceptualized and designed social media content that showcased the brand's premium eyewear collections, craftsmanship, and philosophy of individuality. Through storytelling-led creatives and visually cohesive feed designs, the content reinforced the brand's luxury positioning and unique identity.",
+      "impact": "",
+      "link": "",
+      "accent": "#2b291d",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Social Grid",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Social Content",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/4ec31e7349263c65ae1c.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b488f16e860f96c4c955.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/aed3f3fdd9d3a735a45f.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/5e193345f0f55b8c0b5c.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/e287f3a2d9aa1dbc4948.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/cd6a3266c94c89397692.webp"
+    },
+    {
       "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
       "placement": "both",
       "experienceId": "freelance-the-creative-bud",
@@ -79,13 +177,13 @@
       "accent": "#0a6f6b",
       "imageFit": "cover",
       "imagePosition": "center center",
-      "imageZoom": "105",
+      "imageZoom": "100",
       "featuredImageFit": "cover",
       "featuredImagePosition": "center center",
       "featuredImageZoom": "100",
       "detailImageFit": "cover",
       "detailImagePosition": "center center",
-      "detailImageZoom": "105",
+      "detailImageZoom": "100",
       "mediaGroupMeta": {
         "initialSketch": {
           "label": "Podcasts",
@@ -138,7 +236,7 @@
             "description": "",
             "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "110"
+            "imageZoom": "100"
           }
         ]
       },
@@ -250,94 +348,6 @@
         ]
       },
       "image": "assets/uploads/3a8370496de5785c9682.webp"
-    },
-    {
-      "id": "29ab514e-aa44-4e54-8bec-62be0b5743f3",
-      "placement": "both",
-      "experienceId": "cultreboat",
-      "homeSlot": "",
-      "featuredRank": "",
-      "title": "The Monk world",
-      "category": "Social Media",
-      "categories": [
-        "Social Media",
-        "Graphic Design"
-      ],
-      "mediaType": "Multimedia",
-      "role": "",
-      "year": "2023",
-      "tools": "Photoshop, Illustrator, Premiere pro, After Effects",
-      "summary": "The Monk World is a premium eyewear brand that blends luxury, craftsmanship, and individuality through limited-edition optical frames and sunglasses. The brand aims to position eyewear as a statement of personal style rather than just a functional accessory, emphasizing exclusivity, design, and self-expression.",
-      "whatPrernaDid": "For The Monk World, I conceptualized and designed social media content that showcased the brand's premium eyewear collections, craftsmanship, and philosophy of individuality. Through storytelling-led creatives and visually cohesive feed designs, the content reinforced the brand's luxury positioning and unique identity.",
-      "impact": "",
-      "link": "",
-      "accent": "#2b291d",
-      "imageFit": "cover",
-      "imagePosition": "center center",
-      "imageZoom": "100",
-      "featuredImageFit": "cover",
-      "featuredImagePosition": "center center",
-      "featuredImageZoom": "100",
-      "detailImageFit": "cover",
-      "detailImagePosition": "center center",
-      "detailImageZoom": "100",
-      "mediaGroupMeta": {
-        "initialSketch": {
-          "label": "Social Grid",
-          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
-        },
-        "finalOutput": {
-          "label": "Social Content",
-          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
-        }
-      },
-      "mediaGroups": {
-        "initialSketch": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/a6110466d5edd7e858bc.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "contain",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          }
-        ],
-        "finalOutput": [
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/aed3f3fdd9d3a735a45f.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/5e193345f0f55b8c0b5c.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          },
-          {
-            "type": "Image",
-            "title": "",
-            "src": "assets/uploads/e287f3a2d9aa1dbc4948.webp",
-            "videoUrl": "",
-            "description": "",
-            "imageFit": "cover",
-            "imagePosition": "center center",
-            "imageZoom": "100"
-          }
-        ]
-      },
-      "image": "assets/uploads/cd6a3266c94c89397692.webp"
     },
     {
       "id": "46f01488-2443-43db-a50e-b58831a15a44",
@@ -1413,13 +1423,13 @@
       "accent": "#0a6f6b",
       "imageFit": "cover",
       "imagePosition": "center center",
-      "imageZoom": "105",
+      "imageZoom": "100",
       "featuredImageFit": "cover",
       "featuredImagePosition": "center center",
       "featuredImageZoom": "100",
       "detailImageFit": "cover",
       "detailImagePosition": "center center",
-      "detailImageZoom": "105",
+      "detailImageZoom": "100",
       "mediaGroupMeta": {
         "initialSketch": {
           "label": "Podcasts",
@@ -1472,7 +1482,7 @@
             "description": "",
             "imageFit": "cover",
             "imagePosition": "center center",
-            "imageZoom": "110"
+            "imageZoom": "100"
           }
         ]
       },
@@ -1610,10 +1620,20 @@
           {
             "type": "Image",
             "title": "",
-            "src": "assets/uploads/a6110466d5edd7e858bc.webp",
+            "src": "assets/uploads/4ec31e7349263c65ae1c.webp",
             "videoUrl": "",
             "description": "",
             "imageFit": "contain",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b488f16e860f96c4c955.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
             "imagePosition": "center center",
             "imageZoom": "100"
           }
@@ -1810,8 +1830,8 @@
           "text": "Photoshop, Illustrator, Premiere Pro, After Effects,  InDesign, Figma, Procreate"
         }
       ],
-      "featuredEyebrow": "Featured projects",
-      "featuredHeadline": "Small, polished project pieces recruiters can scan first.",
+      "featuredEyebrow": "",
+      "featuredHeadline": "Check out the selected featured projects!",
       "featuredFilters": [
         "All",
         "Branding",
@@ -1822,7 +1842,7 @@
         "Multimedia"
       ],
       "workEyebrow": "Work experience",
-      "workHeadline": "Start with work experience, then open the projects inside each role.",
+      "workHeadline": "Explore each role to discover the projects, campaigns, and creative experiences that shaped my journey as a designer.",
       "workVisibleCount": 3
     },
     "work": {
@@ -1837,27 +1857,27 @@
     },
     "about": {
       "eyebrow": "About the designer",
-      "headline": "Graphic designer with campaign discipline and a handmade visual voice.",
+      "headline": "Designer, Storyteller & Creative Problem Solver",
       "body": [
-        "Prerna creates brand visuals, campaign assets, motion graphics, social content, illustration, and digital storytelling work. Her project showcase connects practical production skills with expressive, human visual details.",
-        "Recruiters can use the Work section to open each experience and see what she created there: campaign graphics, motion pieces, social layouts, illustration-led products, and brand systems."
+        "Hi, I am Prerna, a designer, storyteller, and lifelong creative. I've always loved finding ways to turn ideas into something people can see, feel, and connect with. My journey has taken me through Graphic Designing, Branding, Social Media, Illustration, Video Editing, Motion Graphics, and emerging media, allowing me to work on everything from social impact campaigns to music videos and creative businesses. What excites me most is the opportunity to tell meaningful stories, solve creative challenges, and create work that resonates with people long after they've seen it.",
+        ""
       ],
-      "sketchAlt": "Sketch-style illustration of a designer creating at a desk",
+      "sketchAlt": "",
       "timeline": [
         {
-          "dates": "2023-2024",
-          "title": "Executive - Design, MSL Global",
-          "text": "Large-scale campaign visuals, brand consistency, motion assets, and cross-functional creative production."
+          "dates": "",
+          "title": "",
+          "text": ""
         },
         {
-          "dates": "2023",
-          "title": "Communications Designer, Cultre Boat",
-          "text": "Social media grids, campaign concepts, copy, graphics, and video assets for multiple brands."
+          "dates": "",
+          "title": "",
+          "text": ""
         },
         {
-          "dates": "2018-2024",
-          "title": "Founder / Creative Entrepreneur, The Creative Bud",
-          "text": "Illustration-led products, client commissions, custom stationery, calendars, cards, and social selling."
+          "dates": "",
+          "title": "",
+          "text": ""
         }
       ]
     },
@@ -1904,7 +1924,7 @@
     "label": "Download Resume",
     "file": "assets/resume/prerna-sharma-resume.pdf",
     "fileName": "PrernaSharma_DesignResume.pdf",
-    "previewImage": "",
-    "updatedAt": "2026-05-30T18:44:56.780Z"
+    "previewImage": "assets/resume/prerna-sharma-resume-preview.webp",
+    "updatedAt": "2026-06-04T01:59:26.452Z"
   }
 }
