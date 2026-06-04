@@ -424,7 +424,7 @@ function validateImageFile(file, label = "Image") {
 function validateVideoAssetFile(file) {
   if (!file) return "";
   if (!fileMatches(file, ALLOWED_VIDEO_MIME_TYPES, ALLOWED_VIDEO_EXTENSIONS)) {
-    return "Video assets must be MP4, WebM, or OGG. Paste a public video link after selecting Video.";
+    return "Video assets must be MP4, WebM, or OGG. Paste a public Instagram, Drive, YouTube, Vimeo, or direct video link after selecting Video.";
   }
   if (file.size > IMAGE_UPLOAD_MAX_BYTES) {
     return `Video file is too large. Maximum test upload size is ${formatBytes(IMAGE_UPLOAD_MAX_BYTES)}; use a public link instead.`;
@@ -2571,6 +2571,45 @@ function googleDriveFileId(url = "") {
   }
 }
 
+function instagramEmbedPath(url = "") {
+  const safe = safeVideoSrc(url);
+  if (!safe || !safe.includes(":") || safe.startsWith("data:video/")) return "";
+  try {
+    const parsed = new URL(safe);
+    const hostname = parsed.hostname.replace(/^www\./, "").toLowerCase();
+    if (hostname !== "instagram.com" && hostname !== "instagr.am") return "";
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    const typeIndex = parts.findIndex((part) => ["p", "reel", "reels", "tv"].includes(part.toLowerCase()));
+    if (typeIndex === -1) return "";
+    const type = parts[typeIndex].toLowerCase() === "reels" ? "reel" : parts[typeIndex].toLowerCase();
+    const shortcode = parts[typeIndex + 1];
+    return shortcode ? `/${type}/${encodeURIComponent(shortcode)}/embed` : "";
+  } catch {
+    return "";
+  }
+}
+
+function instagramEmbedUrl(url = "") {
+  const path = instagramEmbedPath(url);
+  return path ? `https://www.instagram.com${path}` : "";
+}
+
+function videoProvider(url = "") {
+  const safe = safeVideoSrc(url);
+  if (!safe || !safe.includes(":") || safe.startsWith("data:video/")) return "";
+  try {
+    const parsed = new URL(safe);
+    const hostname = parsed.hostname.replace(/^www\./, "").toLowerCase();
+    if (hostname === "instagram.com" || hostname === "instagr.am") return "instagram";
+    if (hostname.includes("drive.google.com")) return "drive";
+    if (hostname.includes("youtube.com") || hostname.includes("youtu.be")) return "youtube";
+    if (hostname.includes("vimeo.com")) return "vimeo";
+  } catch {
+    return "";
+  }
+  return "";
+}
+
 function videoThumbnailUrl(url = "") {
   const safe = safeVideoSrc(url);
   if (!safe || !safe.includes(":") || safe.startsWith("data:video/")) return "";
@@ -2826,6 +2865,8 @@ function videoEmbedUrl(url = "") {
   if (!safe) return "";
   if (!safe.includes(":") || safe.startsWith("data:video/")) return safe;
   const parsed = new URL(safe);
+  const instagramEmbed = instagramEmbedUrl(safe);
+  if (instagramEmbed) return instagramEmbed;
   if (parsed.hostname.includes("drive.google.com")) {
     const pathFileId = parsed.pathname.match(/\/file\/d\/([^/]+)/)?.[1];
     const queryFileId = parsed.searchParams.get("id");
@@ -2856,7 +2897,15 @@ function mediaPreviewMarkup(item, project) {
     if (isDirectVideoUrl(videoUrl)) {
       return `<video src="${escapeHtml(videoUrl)}" controls autoplay playsinline></video>`;
     }
-    return `<iframe src="${escapeHtml(videoEmbedUrl(videoUrl))}" title="${escapeHtml(item.title || project.title)} video preview" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    const provider = videoProvider(videoUrl);
+    const providerClass = provider ? ` embed-${provider}` : "";
+    const fallback = provider === "instagram"
+      ? `<a class="lightbox-external-link" href="${escapeHtml(videoUrl)}" target="_blank" rel="noreferrer">Open on Instagram</a>`
+      : "";
+    return `
+      <iframe class="${providerClass.trim()}" src="${escapeHtml(videoEmbedUrl(videoUrl))}" title="${escapeHtml(item.title || project.title)} video preview" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      ${fallback}
+    `;
   }
 
   if (imageSrc) {
@@ -3653,7 +3702,7 @@ function mediaFieldset(group, index, item = emptyMediaItem()) {
       </label>
       <label>
         Video link
-        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" maxlength="500" value="${escapeHtml(item.videoUrl || "")}" placeholder="Drive, YouTube, Vimeo, or direct video link">
+        <input id="${mediaInputId("mediaVideoUrl", group.id, index)}" type="url" maxlength="500" value="${escapeHtml(item.videoUrl || "")}" placeholder="Instagram, Drive, YouTube, Vimeo, or direct video link">
       </label>
       <label class="upload-box asset-drop-zone" data-drop-media="${group.id}" data-drop-media-index="${index}">
         <span>Drop image / video thumbnail</span>
@@ -3838,7 +3887,7 @@ async function processDetailMediaFile(file, groupId, index, input) {
     if (fileName) fileName.textContent = "Paste a public video link";
     if (input) input.value = "";
     clearControlError(input);
-    showToast("Use a public Drive, YouTube, Vimeo, or direct link for videos.");
+    showToast("Use a public Instagram, Drive, YouTube, Vimeo, or direct link for videos.");
     renderPreview();
     return;
   }
@@ -5094,7 +5143,7 @@ function validateMediaGroupsForSave() {
 
       if (item.type === "Video") {
         if (!item.videoUrl) {
-          setControlError(videoField, "Video assets need a public Drive, YouTube, Vimeo, or direct video link.");
+          setControlError(videoField, "Video assets need a public Instagram, Drive, YouTube, Vimeo, or direct video link.");
           isValid = false;
         } else if (!safeUrl(item.videoUrl)) {
           setControlError(videoField, "Enter a full public video URL starting with https://.");
@@ -5215,7 +5264,7 @@ async function handleProjectSave(event) {
       siteContent: state.siteContent
     });
   } catch {
-    alert("This draft is too large for browser storage. Images are compressed before saving and moved into GitHub assets after publishing, but videos should use public Drive, YouTube, Vimeo, or direct links.");
+    alert("This draft is too large for browser storage. Images are compressed before saving and moved into GitHub assets after publishing, but videos should use public Instagram, Drive, YouTube, Vimeo, or direct links.");
     return;
   }
 

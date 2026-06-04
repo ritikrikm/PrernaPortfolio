@@ -2449,6 +2449,27 @@ h3 {
   border-radius: var(--radius);
 }
 
+.lightbox-media iframe.embed-instagram {
+  width: min(100%, 540px);
+  height: min(82vh, 760px);
+  background: #fff;
+}
+
+.lightbox-external-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 10px 16px;
+  color: var(--ink);
+  background: var(--gold);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 rgba(22, 18, 15, 0.18);
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .lightbox-caption {
   display: flex;
   flex-wrap: wrap;
