@@ -2394,6 +2394,7 @@
     "about": {
       "eyebrow": "About the designer",
       "headline": "Designer, Storyteller & Creative Problem Solver",
+      "sketchImage": "assets/uploads/a3a3b3c567b5e57708c2.webp",
       "body": [
         "Hi, I am Prerna, a designer, storyteller, and lifelong creative. I've always loved finding ways to turn ideas into something people can see, feel, and connect with. My journey has taken me through Graphic Designing, Branding, Social Media, Illustration, Video Editing, Motion Graphics, and emerging media, allowing me to work on everything from social impact campaigns to music videos and creative businesses. What excites me most is the opportunity to tell meaningful stories, solve creative challenges, and create work that resonates with people long after they've seen it.",
         ""
@@ -2443,9 +2444,30 @@
           "icon": "Be",
           "label": "Behance",
           "value": "Behance project gallery",
-          "href": "https://www.behance.net/gallery/177375659"
+          "href": "https://www.behance.net/ThePrernaSharma"
         }
       ]
+    },
+    "footer": {
+      "quote": "Making visuals that feel impactful and impossible to scroll past.",
+      "socials": [
+        {
+          "icon": "in",
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/the-prerna-sharma/"
+        },
+        {
+          "icon": "G",
+          "label": "Gmail",
+          "href": "mailto:visualartist.prerna@gmail.com"
+        },
+        {
+          "icon": "Be",
+          "label": "Behance",
+          "href": "https://www.behance.net/ThePrernaSharma"
+        }
+      ],
+      "rights": "All rights reserved."
     },
     "appearance": {
       "pageBackground": "#fff8ef",
@@ -2459,8 +2481,8 @@
   "resume": {
     "label": "Download Resume",
     "file": "assets/resume/prerna-sharma-resume.pdf",
-    "fileName": "DesignResume_PrernaSharma.pdf",
+    "fileName": "PrernaSharma_DesignResume.pdf",
     "previewImage": "assets/resume/prerna-sharma-resume-preview.webp",
-    "updatedAt": "2026-06-05T04:06:41.035Z"
+    "updatedAt": "2026-06-04T01:59:26.452Z"
   }
 }
