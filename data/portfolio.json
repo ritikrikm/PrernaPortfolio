@@ -57,6 +57,113 @@
   ],
   "projects": [
     {
+      "id": "9132dd75-7fa4-4689-a5b5-98874a3e77a6",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "KidsToyStore Logo Design",
+      "category": "Branding",
+      "categories": [
+        "Branding"
+      ],
+      "mediaType": "Image",
+      "role": "",
+      "year": "2025",
+      "tools": "Photoshop, Illustrtator",
+      "summary": "Kids Toy Store is a children's toy brand dedicated to bringing joy, creativity, and learning through play. Offering a wide range of toys for different age groups, the brand aims to create fun and engaging experiences that inspire imagination, curiosity, and childhood development while fostering meaningful moments between children and their families.",
+      "whatPrernaDid": "Designed the logo identity for KidsToy Store, developing a playful and colorful visual system that reflects the brand's focus on fun, creativity, and childhood imagination. The final design combines engaging toy-inspired elements with a cohesive wordmark to create a memorable and approachable brand identity.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Concept",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/db2eede558c0c391a042.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/419e16c02cd15ec2c3b9.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/aa027226e4a3a61c1d21.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/dd4555720aab8a6d57e3.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/644e34fc44006492e407.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b3811e6777ac5fa9231d.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/65e0d8cccfbba37efe58.webp"
+    },
+    {
       "id": "e0f3c928-453c-4228-8dda-ebbddf4c4768",
       "placement": "both",
       "experienceId": "cultreboat",
@@ -1719,6 +1826,113 @@
         ]
       },
       "image": "assets/uploads/8a54f164737585a80b2e.webp"
+    },
+    {
+      "id": "9132dd75-7fa4-4689-a5b5-98874a3e77a6",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "KidsToyStore Logo Design",
+      "category": "Branding",
+      "categories": [
+        "Branding"
+      ],
+      "mediaType": "Image",
+      "role": "",
+      "year": "2025",
+      "tools": "Photoshop, Illustrtator",
+      "summary": "Kids Toy Store is a children's toy brand dedicated to bringing joy, creativity, and learning through play. Offering a wide range of toys for different age groups, the brand aims to create fun and engaging experiences that inspire imagination, curiosity, and childhood development while fostering meaningful moments between children and their families.",
+      "whatPrernaDid": "Designed the logo identity for KidsToy Store, developing a playful and colorful visual system that reflects the brand's focus on fun, creativity, and childhood imagination. The final design combines engaging toy-inspired elements with a cohesive wordmark to create a memorable and approachable brand identity.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "100",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "100",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "100",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Concept",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Final Output",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/db2eede558c0c391a042.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/419e16c02cd15ec2c3b9.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/aa027226e4a3a61c1d21.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/dd4555720aab8a6d57e3.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/644e34fc44006492e407.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/b3811e6777ac5fa9231d.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/65e0d8cccfbba37efe58.webp"
     },
     {
       "id": "16eaec07-0213-4de2-bbdf-7301a1ed6ed4",
