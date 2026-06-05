@@ -57,6 +57,113 @@
   ],
   "projects": [
     {
+      "id": "6e1829fe-f64c-42ec-9951-6e3b7c56ae6e",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "VAGE Logistics Logo Design",
+      "category": "Branding",
+      "categories": [
+        "Branding"
+      ],
+      "mediaType": "Image",
+      "role": "",
+      "year": "2025",
+      "tools": "Photoshop, Illustrator",
+      "summary": "VAGE Logistics is a cargo and transportation company offering logistics solutions across air, sea, and road networks. The objective was to create a professional and memorable logo that communicates the company's reliability, efficiency, and multi-modal transportation capabilities.",
+      "whatPrernaDid": "Designed the logo identity for VAGE Logistics by exploring concepts that visually represented the company's core services. The final logo integrates symbols of air, sea, and road freight into the wordmark, creating a strong and recognizable identity that reflects the brand's end-to-end logistics solutions.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "105",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "105",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "105",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Concept",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Mockup",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/274445a6869dde90d34a.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/38e83807d2fe85c14334.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/4b54ee917a55d2e83a04.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/81185c7bc2145c3b2990.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/e1bc9950da094b979037.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8d33b4f0f5d2853225fe.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/37aa986f774c6c42f79e.webp"
+    },
+    {
       "id": "9132dd75-7fa4-4689-a5b5-98874a3e77a6",
       "placement": "both",
       "experienceId": "freelance-the-creative-bud",
@@ -1826,6 +1933,113 @@
         ]
       },
       "image": "assets/uploads/8a54f164737585a80b2e.webp"
+    },
+    {
+      "id": "6e1829fe-f64c-42ec-9951-6e3b7c56ae6e",
+      "placement": "both",
+      "experienceId": "freelance-the-creative-bud",
+      "homeSlot": "",
+      "featuredRank": "",
+      "title": "VAGE Logistics Logo Design",
+      "category": "Branding",
+      "categories": [
+        "Branding"
+      ],
+      "mediaType": "Image",
+      "role": "",
+      "year": "2025",
+      "tools": "Photoshop, Illustrator",
+      "summary": "VAGE Logistics is a cargo and transportation company offering logistics solutions across air, sea, and road networks. The objective was to create a professional and memorable logo that communicates the company's reliability, efficiency, and multi-modal transportation capabilities.",
+      "whatPrernaDid": "Designed the logo identity for VAGE Logistics by exploring concepts that visually represented the company's core services. The final logo integrates symbols of air, sea, and road freight into the wordmark, creating a strong and recognizable identity that reflects the brand's end-to-end logistics solutions.",
+      "impact": "",
+      "link": "",
+      "accent": "#0a6f6b",
+      "imageFit": "cover",
+      "imagePosition": "center center",
+      "imageZoom": "105",
+      "featuredImageFit": "cover",
+      "featuredImagePosition": "center center",
+      "featuredImageZoom": "105",
+      "detailImageFit": "cover",
+      "detailImagePosition": "center center",
+      "detailImageZoom": "105",
+      "mediaGroupMeta": {
+        "initialSketch": {
+          "label": "Concept",
+          "helper": "Early sketches, rough routes, mood explorations, draft frames, or work-in-progress visuals."
+        },
+        "finalOutput": {
+          "label": "Mockup",
+          "helper": "Finished campaign visuals, edited videos, final posts, approved layouts, or production-ready assets."
+        }
+      },
+      "mediaGroups": {
+        "initialSketch": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/274445a6869dde90d34a.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/38e83807d2fe85c14334.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/4b54ee917a55d2e83a04.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/81185c7bc2145c3b2990.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ],
+        "finalOutput": [
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/e1bc9950da094b979037.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          },
+          {
+            "type": "Image",
+            "title": "",
+            "src": "assets/uploads/8d33b4f0f5d2853225fe.webp",
+            "videoUrl": "",
+            "description": "",
+            "imageFit": "cover",
+            "imagePosition": "center center",
+            "imageZoom": "100"
+          }
+        ]
+      },
+      "image": "assets/uploads/37aa986f774c6c42f79e.webp"
     },
     {
       "id": "9132dd75-7fa4-4689-a5b5-98874a3e77a6",
