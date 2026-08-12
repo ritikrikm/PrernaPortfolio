@@ -9,7 +9,7 @@ on:
       - 'automation/**'
 
 jobs:
-  inspect-and-apply:
+  apply:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -27,13 +27,5 @@ jobs:
           npm install playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Inspect live Tucows application
-        run: node automation/inspect-tucows.js
-
-      - name: Upload diagnostic screenshot
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: tucows-form-diagnostic
-          path: tucows-form.png
-          if-no-files-found: ignore
+      - name: Submit live Tucows application
+        run: node automation/apply-tucows.js
