@@ -1,0 +1,29 @@
+name: Inspect Magnet Application
+
+on:
+  push:
+    branches:
+      - job-apply-bot
+    paths:
+      - '.github/workflows/job-inspect-magnet.yml'
+      - 'jobbot/inspect-magnet.js'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Inspect Magnet Lever form
+        run: node jobbot/inspect-magnet.js
