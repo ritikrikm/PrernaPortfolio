@@ -23,11 +23,49 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function choose(page, id, text) {
   const input = page.locator(`#${id}`);
+  await input.waitFor({ state: 'visible', timeout: 20000 });
   await input.scrollIntoViewIfNeeded();
-  await input.click({ force: true });
-  const option = page.getByRole('option', { name: text, exact: true });
-  await option.waitFor({ state: 'visible', timeout: 10000 });
-  await option.click();
+
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      await input.click({ force: true });
+      await sleep(350 * attempt);
+
+      const exactOption = page.getByRole('option', { name: text, exact: true });
+      if (await exactOption.isVisible().catch(() => false)) {
+        await exactOption.click();
+        return;
+      }
+
+      // Greenhouse uses a React combobox; typing forces its option list to render reliably.
+      await input.fill('').catch(() => {});
+      await input.type(text, { delay: 35 }).catch(() => {});
+      await sleep(500);
+      if (await exactOption.isVisible().catch(() => false)) {
+        await exactOption.click();
+        return;
+      }
+
+      // Fallback for runs where the virtualized option list is not exposed to ARIA immediately.
+      const textOption = page.getByText(text, { exact: true }).last();
+      if (await textOption.isVisible().catch(() => false)) {
+        await textOption.click();
+        return;
+      }
+
+      await page.keyboard.press('ArrowDown').catch(() => {});
+      await page.keyboard.press('Enter').catch(() => {});
+      await sleep(400);
+      const value = await input.inputValue().catch(() => '');
+      if (value && value.toLowerCase().includes(text.split(' ')[0].toLowerCase())) return;
+
+      await page.keyboard.press('Escape').catch(() => {});
+    } catch (err) {
+      if (attempt === 5) throw err;
+    }
+  }
+
+  throw new Error(`Could not select ${text} in ${id}`);
 }
 
 async function successVisible(page) {
