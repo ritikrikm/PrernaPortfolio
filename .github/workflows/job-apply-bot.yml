@@ -9,9 +9,9 @@ on:
       - 'automation/**'
 
 jobs:
-  apply:
+  browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,11 +21,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Playwright
+      - name: Install Playwright client
         run: |
           npm init -y >/dev/null 2>&1
           npm install playwright@1.55.0
-          npx playwright install --with-deps chromium
 
-      - name: Submit live Tucows application
-        run: node automation/apply-tucows.js
+      - name: Verify fresh design roles in real Chrome
+        run: node automation/verify-batch.js
