@@ -33,8 +33,12 @@ async function choose(page, id, text) {
 
   const response = await page.goto(JOB_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   if (!response || response.status() !== 200) throw new Error(`Job page unavailable: HTTP ${response && response.status()}`);
-  if (!/Graphic Designer/i.test(await page.title())) throw new Error('Expected live Graphic Designer application was not loaded');
-  if (await page.getByRole('button', { name: /submit application/i }).count() !== 1) throw new Error('Submit application button not found');
+
+  const heading = page.getByRole('heading', { name: 'Graphic Designer', exact: true }).first();
+  await heading.waitFor({ state: 'visible', timeout: 20000 });
+  const submit = page.getByRole('button', { name: /submit application/i });
+  await submit.waitFor({ state: 'visible', timeout: 20000 });
+  console.log('LIVE_APPLICATION_CONFIRMED');
 
   await page.locator('#first_name').fill(answers.firstName);
   await page.locator('#last_name').fill(answers.lastName);
@@ -54,7 +58,6 @@ async function choose(page, id, text) {
   await choose(page, 'question_31057599003', 'No');
   await choose(page, 'question_31057600003', 'Job Board');
   await choose(page, 'question_31057601003', 'Yes');
-  // Based on the currently known temporary work authorization, use the conservative truthful answer for future sponsorship.
   await choose(page, 'question_31226868003', 'Yes');
   await page.locator('#question_31057602003').fill(answers.salary);
   await choose(page, 'question_31057603003', 'Yes');
@@ -74,17 +77,14 @@ async function choose(page, id, text) {
   }
 
   console.log('FORM_READY: all required known fields populated and resume attached');
-
-  const submit = page.getByRole('button', { name: /submit application/i });
   await submit.scrollIntoViewIfNeeded();
   await submit.click();
 
-  // Allow Greenhouse validation / invisible reCAPTCHA / submission response to resolve.
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(6000);
 
-  const captchaFrame = page.frames().some(f => /recaptcha|captcha/i.test(f.url()) && /challenge/i.test(f.url()));
+  const captchaChallenge = page.frames().some(f => /recaptcha|captcha/i.test(f.url()) && /challenge|bframe/i.test(f.url()));
   const bodyText = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
-  if (captchaFrame || /verify you are human|captcha challenge/i.test(bodyText)) {
+  if (captchaChallenge || /verify you are human|captcha challenge/i.test(bodyText)) {
     throw new Error('CAPTCHA_BLOCKED: employer site requested an interactive human verification');
   }
 
@@ -102,7 +102,7 @@ async function choose(page, id, text) {
   console.log('APPLICATION_SUBMITTED_SUCCESSFULLY');
   console.log('FINAL_URL:', page.url());
   await browser.close();
-})().catch(async err => {
+})().catch(err => {
   console.error(err.stack || err);
   process.exit(1);
 });
