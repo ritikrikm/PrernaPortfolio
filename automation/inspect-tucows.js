@@ -1,6 +1,14 @@
 const { chromium } = require('playwright');
 
 const JOB_URL = 'https://job-boards.greenhouse.io/domains/jobs/7773448003';
+const IDS = [
+  'country',
+  'question_31057599003',
+  'question_31057600003',
+  'question_31057601003',
+  'question_31226868003',
+  'question_31057603003'
+];
 
 (async () => {
   const browser = await chromium.launch({ headless: true });
@@ -12,58 +20,25 @@ const JOB_URL = 'https://job-boards.greenhouse.io/domains/jobs/7773448003';
   console.log('HTTP status:', response && response.status());
   console.log('Final URL:', page.url());
   console.log('Title:', await page.title());
+  await page.waitForTimeout(2000);
 
-  await page.waitForTimeout(2500);
-
-  const h1 = await page.locator('h1').first().textContent().catch(() => null);
-  console.log('H1:', h1 && h1.trim());
-  console.log('Submit buttons:', await page.getByRole('button', { name: /submit application/i }).count());
-
-  const fields = await page.locator('input, textarea, select').evaluateAll((els) => els.map((el, i) => ({
-    i,
-    tag: el.tagName,
-    type: el.getAttribute('type'),
-    name: el.getAttribute('name'),
-    id: el.id,
-    placeholder: el.getAttribute('placeholder'),
-    ariaLabel: el.getAttribute('aria-label'),
-    required: el.required,
-    value: el.value
-  })));
-  console.log('FIELDS_JSON=' + JSON.stringify(fields));
-
-  const labels = await page.locator('label').evaluateAll((els) => els.map((el, i) => ({
-    i,
-    text: (el.innerText || el.textContent || '').trim().replace(/\s+/g, ' '),
-    forAttr: el.getAttribute('for')
-  })).filter(x => x.text));
-  console.log('LABELS_JSON=' + JSON.stringify(labels));
-
-  const buttons = await page.getByRole('button').evaluateAll((els) => els.map((el, i) => ({
-    i,
-    text: (el.innerText || el.textContent || '').trim().replace(/\s+/g, ' '),
-    ariaLabel: el.getAttribute('aria-label'),
-    type: el.getAttribute('type')
-  })).filter(x => x.text || x.ariaLabel));
-  console.log('BUTTONS_JSON=' + JSON.stringify(buttons));
-
-  const comboCount = await page.getByRole('combobox').count();
-  console.log('COMBOBOX_COUNT=' + comboCount);
-  for (let i = 0; i < comboCount; i++) {
-    const combo = page.getByRole('combobox').nth(i);
-    const attrs = await combo.evaluate(el => ({
-      name: el.getAttribute('name'),
-      id: el.id,
-      ariaLabel: el.getAttribute('aria-label'),
-      ariaControls: el.getAttribute('aria-controls'),
-      placeholder: el.getAttribute('placeholder'),
-      value: el.value
-    })).catch(() => ({}));
-    console.log(`COMBO_${i}=` + JSON.stringify(attrs));
+  for (const id of IDS) {
+    const input = page.locator(`#${id}`);
+    console.log(`\n=== OPTIONS FOR ${id} ===`);
+    if (await input.count() === 0) {
+      console.log('INPUT_NOT_FOUND');
+      continue;
+    }
+    await input.scrollIntoViewIfNeeded();
+    await input.click({ force: true });
+    await page.waitForTimeout(300);
+    const options = await page.getByRole('option').allTextContents().catch(() => []);
+    console.log(JSON.stringify(options.map(x => x.trim()).filter(Boolean)));
+    await page.keyboard.press('Escape').catch(() => {});
+    await page.waitForTimeout(150);
   }
 
-  await page.screenshot({ path: 'tucows-form.png', fullPage: true });
-  console.log('Saved tucows-form.png');
+  await page.screenshot({ path: 'tucows-options.png', fullPage: true });
   await browser.close();
 })().catch(err => {
   console.error(err.stack || err);
