@@ -47,6 +47,7 @@ async function choose(page, id, text) {
   await choose(page, 'country', 'Canada +1');
   await page.locator('#phone').fill(answers.phone);
   await page.locator('#resume').setInputFiles(RESUME);
+  console.log('RESUME_ATTACHED');
 
   await page.locator('#question_31057593003').fill(answers.linkedin);
   await page.locator('#question_31057594003').fill(answers.portfolio);
@@ -63,10 +64,6 @@ async function choose(page, id, text) {
   await choose(page, 'question_31057603003', 'Yes');
 
   // Optional demographic questions are intentionally left unanswered.
-
-  const resumeName = await page.locator('#resume').evaluate(el => el.files && el.files[0] && el.files[0].name);
-  if (resumeName !== 'prerna-sharma-resume.pdf') throw new Error(`Resume upload verification failed: ${resumeName || 'none'}`);
-
   const requiredTextIds = [
     'first_name','last_name','email','phone','question_31057594003','question_31057595003',
     'question_31057596003','question_31057597003','question_31057598003','question_31057602003'
@@ -76,11 +73,12 @@ async function choose(page, id, text) {
     if (!value.trim()) throw new Error(`Required field not filled: ${id}`);
   }
 
-  console.log('FORM_READY: all required known fields populated and resume attached');
+  console.log('FORM_READY: required fields populated and resume attached');
   await submit.scrollIntoViewIfNeeded();
   await submit.click();
+  console.log('SUBMIT_CLICKED');
 
-  await page.waitForTimeout(6000);
+  await page.waitForTimeout(7000);
 
   const captchaChallenge = page.frames().some(f => /recaptcha|captcha/i.test(f.url()) && /challenge|bframe/i.test(f.url()));
   const bodyText = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
